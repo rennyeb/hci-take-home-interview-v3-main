@@ -4,17 +4,17 @@ import React, { useState } from "react";
 //TODO rename
 //TODO tidy, document
 interface TextInputProps {
-  onInputChange: (value: string) => void;
+  onFirstNameChange: (value: string) => void;
   onButtonClick: () => void;
 }
 
-const TextInput: React.FC<TextInputProps> = ({ onInputChange , onButtonClick}) => {
-  const [inputValue, setInputValue] = useState<string>("");
+const TextInput: React.FC<TextInputProps> = ({ onFirstNameChange, onButtonClick }) => {
+  const [firstName, setFirstName] = useState<string>("");
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
-    setInputValue(newValue);
-    onInputChange(newValue); // Send input value to parent component
+    setFirstName(newValue);
+    onFirstNameChange(newValue); // Send input value to parent component
   };
 
   const handleClick = () => {
@@ -25,14 +25,23 @@ const TextInput: React.FC<TextInputProps> = ({ onInputChange , onButtonClick}) =
 
   return (
     <div>
-      <label htmlFor="text-input">Enter Text: </label>
-      <input
-        id="text-input"
-        type="text"
-        value={inputValue}
-        onChange={handleChange}
-      />
-
+      <table>
+        <tbody>
+          <tr>
+            <td>First Name:</td>
+            <td>
+              <input
+                id="firstName"
+                type="text"
+                placeholder='e.g. John'
+                value={firstName}
+                onChange={handleFirstNameChange}
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br />
       <button onClick={handleClick}>Search</button>
     </div>
   );

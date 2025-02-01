@@ -9,19 +9,14 @@ import { useState } from 'react';
 
 function App() {
 
-  const [value, setValue] = useState(0);
-
-  const [inputValue, setInputValue] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
 
   const [responseValue, setResponseValue] = useState<string>("(not yet called)");
 
   const [isWaiting, setWaiting] = useState<boolean>(false);
-  
 
-
-
-  const handleInputChange = (value: string) => {
-    setInputValue(value); // Update state with value from child component
+  const handleFirstNameChange = (value: string) => {
+    setFirstName(value); // Update state with value from child component
   };
 
 
@@ -52,7 +47,7 @@ function App() {
       //   const queryString: string = `q=${encodeURIComponent('followers:>=60000')}&sort=followers&order=desc`;
       try {
         //TODO use javascript/typescript features to set text from  variables
-        const searchResponse: AxiosResponse = await client.get(`/api/patients/hi?name=` + inputValue);
+        const searchResponse: AxiosResponse = await client.get(`/api/patients/hi?name=` + firstName);
 
         setResponseValue(searchResponse.data.name)
 
@@ -211,13 +206,15 @@ function App() {
             {/* TODO remove unnecessary table stuff */}
             <tr>
               <td>
-                <h1>React TypeScript Example</h1>
-                <TextInput onInputChange={handleInputChange} onButtonClick={handleButtonClick} />
-                <p>You typed: {inputValue}</p>
+                <h1>Patient Visit Search</h1>
+                <TextInput onFirstNameChange={handleFirstNameChange} onButtonClick={handleButtonClick} />
+                <p>You typed: {firstName}</p>
                 <p>Response from server: <b>{responseValue}</b></p>
                 {isWaiting?<p>waiting...</p>:<p/>}
               </td>
             </tr>
+
+            {/* TODO display search results in a table, maybe with fake hyperlinks (with an alert that shows how this would link to more info) */}
 
           </tbody>
 
