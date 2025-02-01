@@ -1,15 +1,12 @@
-using PatientAdministrationSystem.Application.Entities;
 using PatientAdministrationSystem.Application.Interfaces;
 using PatientAdministrationSystem.Application.Repositories.Interfaces;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace PatientAdministrationSystem.Application.Services;
 
 public class HospitalsService : IHospitalsService
 {
 
-	//TODO chante the repo
+	//TODO change the repo
 	private readonly IPatientsRepository _repository;
 
 	public HospitalsService(IPatientsRepository repository)
@@ -34,11 +31,13 @@ public class HospitalsService : IHospitalsService
 
 		//TODO is there an equivalent of java streams which can stream the list of entities from the repo, map to responses, sort them and collate into a list, preferably an immutble one?
 
-		//sort the list into a deterministic order
-		//assume that no hospital has a null name
+		//Sort the list into a deterministic order.
+		//NB assumes that no hospital has a null name.
 		hospitals.Sort((h1, h2) => h1.Name.CompareTo(h2.Name));
 
 		return hospitals;
 
 	}
 }
+
+//TODO find all TODOs, all unused "using"... - is there a TODO marker for C# in visual studio?

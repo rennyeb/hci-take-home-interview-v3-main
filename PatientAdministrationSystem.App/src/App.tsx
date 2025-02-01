@@ -1,5 +1,7 @@
 import './App.css'
 
+import apiClient from "./api/apiClient";
+
 //TODO remove - go via the other ts file
 import axios, { AxiosResponse, AxiosRequestConfig, RawAxiosRequestHeaders } from 'axios';
 import TextInput from "./TextInput"
@@ -21,6 +23,31 @@ function App() {
 
 
   //TODO retrieve the hospitals
+  //TODO move to a function?  should the async be outside or inside the function?
+  (async () => {
+
+    const client = apiClient;
+
+
+    //TODO test e.g. url not found, server down... or put in a TODO for more advanced
+    //TODO perhaps accept a date/time range, validate that end isn't before start - do on client or server?
+    //   const queryString: string = `q=${encodeURIComponent('followers:>=60000')}&sort=followers&order=desc`;
+    try {
+      //TODO use javascript/typescript features to set text from  variables
+      const hospitalsResponse: AxiosResponse = await client.get(`/api/hospitals`);
+
+      //TODO create a structure and map it
+      console.log(hospitalsResponse.data);
+
+    } catch (err) {
+      //TODO display an error on screen
+      console.log(err);
+    }
+
+   
+  })();
+
+
 
   //TODO better function names
   const handleButtonClick = () => {
@@ -34,18 +61,16 @@ function App() {
 
       setWaiting(true)
 
-      const client = axios.create({
-        baseURL: 'https://localhost:7260/',
-      });
+      //TODO remove
+      // const client = axios.create({
+      //   baseURL: 'https://localhost:7260/',
+      // });
+
+      const client = apiClient;
 
 
       //TODO test e.g. url not found, server down... or put in a TODO for more advanced
       //TODO perhaps accept a date/time range, validate that end isn't before start - do on client or server?
-      const config: AxiosRequestConfig = {
-        headers: {
-          'Content-Type': 'application/json',
-        } as RawAxiosRequestHeaders,
-      };
       //   const queryString: string = `q=${encodeURIComponent('followers:>=60000')}&sort=followers&order=desc`;
       try {
         //TODO use javascript/typescript features to set text from  variables
