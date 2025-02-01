@@ -2,7 +2,6 @@ import './App.css'
 
 //TODO remove - go via the other ts file
 import axios, { AxiosResponse, AxiosRequestConfig, RawAxiosRequestHeaders } from 'axios';
-import TestComponent from "./TestComponent"
 import TextInput from "./TextInput"
 import { useState } from 'react';
 
@@ -180,6 +179,7 @@ function App() {
 
   return (
     <div>
+      <img  src="./public/hci-main-logo.svg" alt="HCI logo" />
       {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         <h1>Implement me4</h1>
       </div> */}
