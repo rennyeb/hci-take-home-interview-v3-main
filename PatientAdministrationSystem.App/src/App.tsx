@@ -3,12 +3,13 @@ import './App.css'
 import apiClient from "./api/apiClient";
 
 //TODO remove - go via the other ts file
-import axios, { AxiosResponse, AxiosRequestConfig, RawAxiosRequestHeaders } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import TextInput from "./TextInput"
 import { useState } from 'react';
 
 //TODO remove anything unused
 
+//TODO why is everything called twice, according to the browser console?  Is it because of the async?  Or is it because of the "()" at the end of the function?
 
 //TODO put types somewhere else?
 type Hospital = {
@@ -24,40 +25,61 @@ function App() {
 
   const [isWaiting, setWaiting] = useState<boolean>(false);
 
+  const [hospitalOptions, setHospitalOptions] = useState([]);
+
   const handleFirstNameChange = (value: string) => {
     setFirstName(value); // Update state with value from child component
   };
 
+  onload = () => {
 
-  //TODO retrieve the hospitals
-  //TODO move to a function?  should the async be outside or inside the function?
-  (async () => {
+    //TODO check whether already populated?
+    //Retrieve the hospitals once at page load time
+    //TODO move to a function?  should the async be outside or inside the function?
+    (async () => {
 
-    const client = apiClient;
+      const client = apiClient;
 
 
-    //TODO test e.g. url not found, server down... or put in a TODO for more advanced
-    //TODO perhaps accept a date/time range, validate that end isn't before start - do on client or server?
-    //   const queryString: string = `q=${encodeURIComponent('followers:>=60000')}&sort=followers&order=desc`;
-    try {
-      //TODO use javascript/typescript features to set text from  variables
-      const hospitalsResponse: AxiosResponse = await client.get(`/api/hospitals`);
+      //TODO test e.g. url not found, server down... or put in a TODO for more advanced
+      //TODO perhaps accept a date/time range, validate that end isn't before start - do on client or server?
+      //   const queryString: string = `q=${encodeURIComponent('followers:>=60000')}&sort=followers&order=desc`;
+      try {
+        //TODO use javascript/typescript features to set text from  variables
+        const hospitalsResponse: AxiosResponse = await client.get(`/api/hospitals`);
 
-      //TODO need to find out how to do this - might need to loop through?
-      //TODO should hospital option be a component, with an onchoose/onclick or something?
-      // var hospitals: Hospital[]=hospitalsResponse;
+        //TODO need to find out how to do this - might need to loop through?  get chatgpt to gen some code
+        //TODO should hospital option be a component, with an onchoose/onclick or something?
+        // var hospitals: Hospital[]=hospitalsResponse;
 
-      //TODO create a structure and map it
-      console.log(hospitalsResponse.data);
 
-    } catch (err) {
-      //TODO display an error on screen
-      console.log(err);
-    }
+        //TODO add in the "any hospital" option
 
-   
-  })();
+        //TODO use the right types
+        const formattedOptions = hospitalsResponse.data.map((hospitalResponse: { name: any; guid: any; }) => ({
+          value: hospitalResponse.name,//TODO are these right?
+          label: hospitalResponse.guid,
+        }));
 
+        //TODO remove
+        console.log("formattedOptions: " + JSON.stringify(formattedOptions))
+
+        setHospitalOptions(formattedOptions);
+
+        //TODO create a structure and map it
+        // console.log(hospitalsResponse.data);
+
+      } catch (err) {
+        //TODO display an error on screen
+        console.log(err);
+      }
+
+
+    })();
+
+
+
+  }
 
 
   //TODO better function names
@@ -98,6 +120,10 @@ function App() {
       setWaiting(false)
 
     })();
+
+
+
+
 
 
   }
@@ -208,11 +234,13 @@ function App() {
 
   //TODO turn off server, see where to trap connection refused error, timeouts...
 
-//TODO create a "clear" button
+  //TODO create a "clear" button
 
+
+  //TODO put all this in a component
   return (
     <div>
-      <img  src="./public/hci-main-logo.svg" alt="HCI logo" />
+      <img src="./public/hci-main-logo.svg" alt="HCI logo" />
       {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         <h1>Implement me4</h1>
       </div> */}
@@ -248,7 +276,7 @@ function App() {
                 <TextInput onFirstNameChange={handleFirstNameChange} onButtonClick={handleButtonClick} />
                 <p>You typed: {firstName}</p>
                 <p>Response from server: <b>{responseValue}</b></p>
-                {isWaiting?<p>waiting...</p>:<p/>}
+                {isWaiting ? <p>waiting...</p> : <p />}
               </td>
             </tr>
 
