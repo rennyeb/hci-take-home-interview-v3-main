@@ -58,8 +58,14 @@ function App() {
         //TODO use the right types
         const formattedOptions = hospitalsResponse.data.map((hospitalResponse: { name: any; guid: any; }) => ({
           value: hospitalResponse.name,//TODO are these right?
-          label: hospitalResponse.guid,
+          label: hospitalResponse.guid
         }));
+
+        //prepend the actual hospitals with a wildcard option
+        formattedOptions.unshift({
+          value: "(Any hospital)",
+          label: null
+        });
 
         //TODO remove
         console.log("formattedOptions: " + JSON.stringify(formattedOptions))
@@ -270,10 +276,11 @@ function App() {
 
             {/* //TODO might not need to bother with a component?  Or have one component that does everything? */}
             {/* TODO remove unnecessary table stuff */}
+            {/* //TODO react to hospital option change */}
             <tr>
               <td>
                 <h1>Patient Visit Search</h1>
-                <TextInput onFirstNameChange={handleFirstNameChange} onButtonClick={handleButtonClick} />
+                <TextInput onFirstNameChange={handleFirstNameChange} onButtonClick={handleButtonClick} hospitalOptions={hospitalOptions}/>
                 <p>You typed: {firstName}</p>
                 <p>Response from server: <b>{responseValue}</b></p>
                 {isWaiting ? <p>waiting...</p> : <p />}

@@ -6,9 +6,10 @@ import React, { useState } from "react";
 interface TextInputProps {
   onFirstNameChange: (value: string) => void;
   onButtonClick: () => void;
+  hospitalOptions: string[];//TODO better type
 }
 
-const TextInput: React.FC<TextInputProps> = ({ onFirstNameChange, onButtonClick }) => {
+const TextInput: React.FC<TextInputProps> = ({ onFirstNameChange, onButtonClick, hospitalOptions }) => {
   const [firstName, setFirstName] = useState<string>("");
 
   const handleFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,8 +56,9 @@ const TextInput: React.FC<TextInputProps> = ({ onFirstNameChange, onButtonClick 
             <td>Hospital:</td>
             <td>
 
-              <select id="hospital">
+
                 {/* //TODO populate from state */}
+                <select id="hospital">
                 <option value="*">(Any hospital)</option>
                 <option value="St. Mary's">St. Mary's</option>
               </select>
