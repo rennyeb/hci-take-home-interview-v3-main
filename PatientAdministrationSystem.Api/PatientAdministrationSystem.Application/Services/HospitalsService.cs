@@ -7,9 +7,9 @@ public class HospitalsService : IHospitalsService
 {
 
 	//TODO change the repo
-	private readonly IPatientsRepository _repository;
+	private readonly IHospitalsRepository _repository;
 
-	public HospitalsService(IPatientsRepository repository)
+	public HospitalsService(IHospitalsRepository repository)
 	{
 		_repository = repository;
 	}
@@ -21,12 +21,12 @@ public class HospitalsService : IHospitalsService
 
 		HospitalResponse hospital2 = new HospitalResponse();
 		hospital2.Name = "Test2";
-		hospital2.GUID = "Test2GUID";//TODO use a type for the guid, see what the entity does
+		//hospital2.GUID =  "Test2GUID";//TODO use a type for the guid, see what the entity does
 		hospitals.Add(hospital2);
 
 		HospitalResponse hospital1 = new HospitalResponse();
 		hospital1.Name = "Test1";
-		hospital1.GUID = "Test1GUID";//TODO use a type for the guid, see what the entity does
+		//hospital1.GUID = "Test1GUID";//TODO use a type for the guid, see what the entity does
 		hospitals.Add(hospital1);
 
 		//TODO is there an equivalent of java streams which can stream the list of entities from the repo, map to responses, sort them and collate into a list, preferably an immutble one?

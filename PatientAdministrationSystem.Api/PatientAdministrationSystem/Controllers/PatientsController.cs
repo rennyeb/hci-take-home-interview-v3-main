@@ -3,6 +3,8 @@ using PatientAdministrationSystem.Application.Interfaces;
 using System.Net.WebSockets;
 using System;
 using System.Text.Json;
+using PatientAdministrationSystem.Application.Services;
+using System.Diagnostics;
 
 namespace Hci.Ah.Home.Api.Gateway.Controllers.Patients;
 
@@ -19,6 +21,20 @@ public class PatientsController : ControllerBase
 	}
 
 	// Define your API contracts here
+
+	[HttpGet]
+	[Route("hospitalVisits")]
+	//TODO should parameter names be initial upper?
+	public IActionResult getPatientHospitalVisits([FromQuery] PatientHospitalVisitsRequest patientHospitalVisitsRequest)
+	{
+		List<PatientHospitalVisitResponse> patientHospitalVisits = _patientsService.getPatientHospitalVisits(patientHospitalVisitsRequest);
+		//TODO remove
+		//Debug.WriteLine("hi");
+		return Ok(patientHospitalVisits);
+
+	}
+
+
 
 	//TODO note where caches could come in handy
 
@@ -41,4 +57,6 @@ public class PatientsController : ControllerBase
 	{
 		return "hi2! " + name;
 	}
+
+
 }

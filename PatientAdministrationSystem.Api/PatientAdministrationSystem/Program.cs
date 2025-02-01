@@ -24,6 +24,7 @@ builder.Services.AddCors(options =>
 
 
 builder.Services.AddScoped<IPatientsRepository, PatientsRepository>();
+builder.Services.AddScoped<IHospitalsRepository, HospitalsRepository>();
 builder.Services.AddScoped<IPatientsService, PatientsService>();
 
 //Added during coding exercise

@@ -53,8 +53,6 @@ function App() {
         // var hospitals: Hospital[]=hospitalsResponse;
 
 
-        //TODO add in the "any hospital" option
-
         //TODO use the right types
         const formattedOptions = hospitalsResponse.data.map((hospitalResponse: { name: any; guid: any; }) => ({
           value: hospitalResponse.name,//TODO are these right?
