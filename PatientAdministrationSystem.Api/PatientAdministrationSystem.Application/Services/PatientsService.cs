@@ -1,6 +1,7 @@
 using PatientAdministrationSystem.Application.Entities;
 using PatientAdministrationSystem.Application.Interfaces;
 using PatientAdministrationSystem.Application.Repositories.Interfaces;
+using System.Diagnostics;
 using System.Linq.Expressions;
 
 namespace PatientAdministrationSystem.Application.Services;
@@ -22,7 +23,26 @@ public class PatientsService : IPatientsService
 
 	public List<PatientHospitalVisitResponse> getPatientHospitalVisits(PatientHospitalVisitsRequest patientHospitalVisitsRequest)
 	{
-		List<PatientHospitalVisitResponse>  patientHospitalVisits = new List<PatientHospitalVisitResponse>();
+		List<PatientHospitalVisitResponse> patientHospitalVisits = new List<PatientHospitalVisitResponse>();
+
+		//TODO might have to go via patients, if that's the way the test data has been set up
+
+		//TODO the filtering - first on hospitals, then on patient names (if available)
+		_hospitalsRepository.getAll().ForEach(hospitalEntity =>
+		{
+			Debug.WriteLine(hospitalEntity.Name);
+
+			ICollection<PatientHospitalRelation>? patientHospitals = hospitalEntity.PatientHospitals;
+			if (patientHospitals != null)
+			{
+				foreach (var patientHospitalRelation in hospitalEntity.PatientHospitals)
+				{
+					Debug.WriteLine(patientHospitalRelation.VisitId);
+
+				}
+			}
+
+		});
 
 		//TODO temp
 		PatientHospitalVisitResponse patientHospitalVisitResponse = new PatientHospitalVisitResponse();
