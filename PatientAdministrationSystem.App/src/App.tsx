@@ -9,6 +9,13 @@ import { useState } from 'react';
 
 //TODO remove anything unused
 
+
+//TODO put types somewhere else?
+type Hospital = {
+  name: string;
+  guid: string;
+};
+
 function App() {
 
   const [firstName, setFirstName] = useState<string>("");
@@ -35,6 +42,10 @@ function App() {
     try {
       //TODO use javascript/typescript features to set text from  variables
       const hospitalsResponse: AxiosResponse = await client.get(`/api/hospitals`);
+
+      //TODO need to find out how to do this - might need to loop through?
+      //TODO should hospital option be a component, with an onchoose/onclick or something?
+      // var hospitals: Hospital[]=hospitalsResponse;
 
       //TODO create a structure and map it
       console.log(hospitalsResponse.data);
