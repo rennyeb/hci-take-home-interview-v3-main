@@ -32,7 +32,21 @@ public class HciDataContext : DbContext, IHciDataContext
 				{
 					Id = new Guid("ff0c022e-1aff-4ad8-2231-08db0378ac98"),
 					Name = "Default hospital"
-				}
+				},
+
+
+			   // Extra test data added
+			   new HospitalEntity
+			   {
+				   Id = new Guid("9ca78c33-4590-43c1-a7c4-55696a5efd45"),
+				   Name = "St James's"
+			   },
+				 new HospitalEntity
+				 {
+					 Id = new Guid("9ca78c33-4590-43c1-a7c4-55696a5efd46"),
+					 Name = "St Vincent's"
+				 }
+
 			);
 
 		modelBuilder.Entity<PatientEntity>();
@@ -94,22 +108,6 @@ public class HciDataContext : DbContext, IHciDataContext
 
 
 
-		// Extra test data added
-		modelBuilder.Entity<HospitalEntity>()
-		   .HasData(
-			   new HospitalEntity
-			   {
-				   Id = new Guid("9ca78c33-4590-43c1-a7c4-55696a5efd45"),
-				   Name = "St James's"
-			   }
-		   );
-		modelBuilder.Entity<HospitalEntity>()
-		   .HasData(
-			   new HospitalEntity
-			   {
-				   Id = new Guid("9ca78c33-4590-43c1-a7c4-55696a5efd46"),
-				   Name = "St Vincent's"
-			   }
-		   );
+
 	}
 }

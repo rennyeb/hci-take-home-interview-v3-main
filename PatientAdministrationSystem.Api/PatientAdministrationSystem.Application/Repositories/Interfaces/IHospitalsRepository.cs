@@ -5,5 +5,7 @@ namespace PatientAdministrationSystem.Application.Repositories.Interfaces;
 
 public interface IHospitalsRepository
 {
-    // Add interfaces here for your repository methods
+	// Add interfaces here for your repository methods
+
+	List<HospitalEntity> getAll();
 }

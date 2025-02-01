@@ -16,6 +16,17 @@ public class HospitalsService : IHospitalsService
 
 	public List<HospitalResponse> getAll()
 	{
+		List<HospitalResponse>
+				hospitalResponses = _repository.getAll().ConvertAll(historyEntity => new HospitalResponse() { Name = historyEntity.Name, GUID = historyEntity.Id }).ToList();
+
+		//Sort the list into a deterministic order.
+		//NB assumes that no hospital has a null name.
+
+		//TODO what to do about null possibility?
+		hospitalResponses.Sort((hospitalResponse1, hospitalResponse2) => hospitalResponse1.Name.CompareTo(hospitalResponse2.Name));
+		return hospitalResponses;
+
+		//TODO remove the below
 		List<HospitalResponse> hospitals = new List<HospitalResponse>();
 		//TODO temp - use the repo instead, then sort - create a test for the sorting, see how to mock out behaviour in c#
 

@@ -14,6 +14,12 @@ public class HospitalsRepository : IHospitalsRepository
         _context = context;
     }
 
+    //TOOD describe design decision to turn into a list
+    public List<HospitalEntity> getAll()
+    {
+        return _context.Hospitals.ToList();
+    }
+
 
 
     // Add logic here for your querying the data context

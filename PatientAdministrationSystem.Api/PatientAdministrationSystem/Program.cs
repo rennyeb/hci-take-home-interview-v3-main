@@ -78,6 +78,21 @@ using (var serviceScope = app.Services.CreateScope())
 		Name = "Default hospital"
 	});
 
+
+
+	// Extra test data added
+	dbContext.Hospitals.Add(new HospitalEntity
+	{
+		Id = new Guid("9ca78c33-4590-43c1-a7c4-55696a5efd46"),
+		Name = "St Vincent's"
+	});
+	dbContext.Hospitals.Add(new HospitalEntity
+	{
+		Id = new Guid("9ca78c33-4590-43c1-a7c4-55696a5efd45"),
+		Name = "St James's"
+	});
+
+
 	dbContext.Patients.Add(new PatientEntity
 	{
 		Id = new Guid("c00b9ff3-b1b6-42fe-8b5a-4c28408fb64a"),
