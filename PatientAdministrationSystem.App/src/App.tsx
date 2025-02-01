@@ -20,6 +20,8 @@ function App() {
   };
 
 
+  //TODO retrieve the hospitals
+
   //TODO better function names
   const handleButtonClick = () => {
     // console.log("button clicked, input value=" + inputValue)

@@ -27,7 +27,7 @@ const TextInput: React.FC<TextInputProps> = ({ onFirstNameChange, onButtonClick 
     <div>
       <table>
         <tbody>
-        <tr>
+          <tr>
             <td>First Name:</td>
             <td>
               <input
@@ -46,22 +46,29 @@ const TextInput: React.FC<TextInputProps> = ({ onFirstNameChange, onButtonClick 
                 id="lastName"
                 type="text"
                 placeholder='e.g. Smith'
-                // value={lastName}
-                // onChange={handleLastNameChange}
+              // value={lastName}
+              // onChange={handleLastNameChange}
               />
             </td>
           </tr>
           <tr>
             <td>Hospital:</td>
             <td>
+
+              <select id="hospital">
+                {/* //TODO populate from state */}
+                <option value="*">(Any hospital)</option>
+                <option value="St. Mary's">St. Mary's</option>
+              </select>
+
               {/* //TODO change to a drop-down that is populated at form load?  Include an entry of "any hospital", make sure they're sorted alphabetically, type-ahead might be nice, might be nice to keep the selection from last time */}
-              <input
+              {/* <input
                 id="hospital"
                 type="text"
                 placeholder='e.g. Smith'
-                // value={lastName}
-                // onChange={handleLastNameChange}
-              />
+              // value={lastName}
+              // onChange={handleLastNameChange}
+              /> */}
             </td>
 
             {/* //TODO could add date range for visit */}
