@@ -75,22 +75,12 @@ const TextInput: React.FC<TextInputProps> = ({ onFirstNamePrefixChange, onLastNa
 
               {/* //TODO populate from state */}
               <select id="hospital" value={selected} onChange={(e) => setSelected(e.target.value)}>
-                <option value="*">(Any hospital)</option>
-                <option value="St. Mary's">St. Mary's</option>
 
-                {options.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
+                {hospitalOptions.map((hospitalOption, index) => (
+                  <option key={index} value={hospitalOption.hospitalId}>
+                    {hospitalOption.name}
                   </option>
                 ))}
-
-
-
-                {/* {hospitalOptions.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
-                ))} */}
 
 
                 {/* dynamically add an option for each hospital */}

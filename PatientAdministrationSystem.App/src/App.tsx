@@ -65,14 +65,14 @@ function App() {
 
         //TODO use the right types
         const hospitals = hospitalsResponse.data.map((hospitalResponse: { name: any; id: any; }) => ({
-          value: hospitalResponse.name,//TODO are these right?
-          label: hospitalResponse.id
+          name: hospitalResponse.name,//TODO are these right?
+          hospitalId: hospitalResponse.id
         }));
 
         //prepend the actual hospitals with a wildcard option
         hospitals.unshift({
-          value: "(Any hospital)",
-          label: null
+          name: "(Any hospital)",
+          hospitalId: null
         });
 
         setHospitalOptions(hospitals);
