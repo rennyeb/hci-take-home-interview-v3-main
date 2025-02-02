@@ -58,25 +58,4 @@ public class PatientsController : ControllerBase
 
 	//TODO note where caches could come in handy
 
-	//TODO remove
-	[HttpGet]
-	[Route("hi")]
-	public IActionResult test1([FromQuery] String name)
-	{
-
-		MyPatient myPatient = new MyPatient { name = name };
-		return Ok(myPatient);
-
-	}
-
-
-	//TODO remove
-	[HttpPost]
-	[Route("hi2/{name}")]
-	public String test2([FromRoute] String name)
-	{
-		return "hi2! " + name;
-	}
-
-
 }

@@ -118,14 +118,10 @@ function App() {
       //TODO perhaps accept a date/time range, validate that end isn't before start - do on client or server?
       //   const queryString: string = `q=${encodeURIComponent('followers:>=60000')}&sort=followers&order=desc`;
       try {
-        //TODO use javascript/typescript features to set text from  variables
-        const searchResponse: AxiosResponse = await client.get(`/api/patients/hi?name=` + firstNamePrefix);
-
         //TODO do lots of awaits in series
 
-        setResponseValue(searchResponse.data.name)
 
-
+        //TODO use javascript/typescript features to set text from  variables
         //TODO encode the json payload - need a struct, but use raw json for now?
         const patientHospitalVisitsResponse: AxiosResponse = await client.get(`/api/patients/hospitalVisits`, {
           params: {
@@ -137,6 +133,10 @@ function App() {
         });
 
         console.log(patientHospitalVisitsResponse.data)
+
+
+        // setResponseValue(searchResponse.data.name)
+
 
 
       } catch (err) {
@@ -317,6 +317,28 @@ function App() {
 
             {/* TODO display search results in a table, maybe with fake hyperlinks (with an alert that shows how this would link to more info) */}
 
+          </tbody>
+
+        </table>
+
+        {/* TODO show/hide */}
+
+        {/* TODO a more advanced implementation could support ascending/descending sort, and pagination */}
+
+        <h1>Search Results</h1>
+        <table border={1}>
+          <thead>
+            <tr>
+              <th>Last Name</th>
+              <th>First Name</th>
+              <th>Hospital</th>
+              {/* //TODO format dates nicely */}
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {/* //TODO the rows */}
           </tbody>
 
         </table>
