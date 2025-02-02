@@ -5,9 +5,7 @@ namespace PatientAdministrationSystem.Application.Interfaces;
 public interface IPatientsService
 
 //TODO design decision to return a list rather than wrapping in a class that has a list as a member
-//TODO accept both empty string (once trimmed) and null as wildcards
 //TODO do a case-insensitive substring search - create tests
-
 
 {
 

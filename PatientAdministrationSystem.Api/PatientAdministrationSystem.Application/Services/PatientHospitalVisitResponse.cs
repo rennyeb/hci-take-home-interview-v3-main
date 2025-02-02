@@ -7,8 +7,6 @@ namespace PatientAdministrationSystem.Application.Services;
 public class PatientHospitalVisitResponse
 {
 
-	//TODO when to use String vs string?  Check all the code
-
 	public Guid HospitalId { get; set; }
 	public Guid PatientId { get; set; }
 	public Guid VisitId { get; set; }
