@@ -23,6 +23,26 @@ public class PatientsController : ControllerBase
 	// Define your API contracts here
 
 	[HttpGet]
+	[Route("{PatientId}")]
+	//TODO should parameter names be initial upper?
+	public IActionResult getPatient([FromRoute] Guid PatientId)
+	{
+		PatientResponse patientResponse = _patientsService.getById(PatientId);
+
+		//TODO test - curl? unit test?
+		if (patientResponse == null)
+		{
+			return NotFound();
+		}
+		else { 
+
+			return Ok(patientResponse);
+		}
+	
+
+	}
+
+	[HttpGet]
 	[Route("hospitalVisits")]
 	//TODO should parameter names be initial upper?
 	public IActionResult getPatientHospitalVisits([FromQuery] PatientHospitalVisitsRequest patientHospitalVisitsRequest)

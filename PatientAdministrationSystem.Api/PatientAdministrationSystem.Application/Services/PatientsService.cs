@@ -8,20 +8,40 @@ namespace PatientAdministrationSystem.Application.Services;
 
 public class PatientsService : IPatientsService
 {
-	//NB putting here because the code comment in the start code encourages this service to perform the visit search - possibly it might be better off on the HospitalsService
-	private readonly IHospitalsRepository _hospitalsRepository;
-
 	private readonly IPatientsRepository _patientsRepository;
-	public PatientsService(IHospitalsRepository hospitalsRepository, IPatientsRepository patientsRepository)
+	public PatientsService(IPatientsRepository patientsRepository)
 	{
-		_hospitalsRepository = hospitalsRepository;
 		_patientsRepository = patientsRepository;
 	}
 
 	// Define your patient search logic here based on the interface method definition
 
+	public PatientResponse? getById(Guid patientId)
+	{
+		PatientEntity? patientEntity = _patientsRepository.getById(patientId);
+		if (patientEntity == null)
+		{
+			return null;
+		}
+		else
+		{
+			return new PatientResponse
+			{
+				//NB could use an auto-mapper to replace this field-by-field manual mapping
+				Id = patientEntity.Id,
+				CreatedTime = patientEntity.CreatedTime,
+				UpdatedTime = patientEntity.UpdatedTime,
+				FirstName = patientEntity.FirstName,
+				LastName = patientEntity.LastName,
+				Email = patientEntity.Email
+			};
+		}
+	}
 
-	public List<PatientHospitalVisitResponse> getPatientHospitalVisits(PatientHospitalVisitsRequest patientHospitalVisitsRequest) 
+
+	//TODO use null-coalescing/null-conditional in various places, rerun tests
+
+	public List<PatientHospitalVisitResponse> getPatientHospitalVisits(PatientHospitalVisitsRequest patientHospitalVisitsRequest)
 	{
 		//TODO validate that at least part of surname is present, create an exception type, catch in controller and return a bad request with info
 
@@ -50,7 +70,7 @@ public class PatientsService : IPatientsService
 				//filter further on hospital, if required
 				//TODO test this with curl, add curl scripts to source control, mention in implementation notes
 				//TODO could have detailed logging about what is filtered in/out - but need to be careful that the logs do not contain sensitive information from production environments
-				if (patientHospitalVisitsRequest.HospitalId==null|| patientHospitalRelation.HospitalId.Equals(patientHospitalVisitsRequest.HospitalId))
+				if (patientHospitalVisitsRequest.HospitalId == null || patientHospitalRelation.HospitalId.Equals(patientHospitalVisitsRequest.HospitalId))
 				{
 					PatientHospitalVisitResponse patientHospitalVisitResponse = new PatientHospitalVisitResponse();
 					patientHospitalVisitResponse.HospitalId = patientHospitalRelation.PatientId;
@@ -60,35 +80,9 @@ public class PatientsService : IPatientsService
 
 				}
 
-
-
 			}
-			//Debug.WriteLine(patientEntity.PatientHospitals.Count);
 		}
 
-		//TODO might have to go via patients, if that's the way the test data has been set up
-
-		//TODO the filtering - first on hospitals, then on patient names (if available)
-		_hospitalsRepository.getAll().ForEach(hospitalEntity =>
-		{
-			Debug.WriteLine(hospitalEntity.Name);
-
-			ICollection<PatientHospitalRelation>? patientHospitals = hospitalEntity.PatientHospitals;
-			if (patientHospitals != null)
-			{
-				foreach (var patientHospitalRelation in hospitalEntity.PatientHospitals)
-				{
-					Debug.WriteLine(patientHospitalRelation.VisitId);
-
-				}
-			}
-
-		});
-
-		//TODO temp
-		//PatientHospitalVisitResponse patientHospitalVisitResponse = new PatientHospitalVisitResponse();
-		//patientHospitalVisits.Add(patientHospitalVisitResponse);
-		//TODO add to list
 		return patientHospitalVisits;
 	}
 

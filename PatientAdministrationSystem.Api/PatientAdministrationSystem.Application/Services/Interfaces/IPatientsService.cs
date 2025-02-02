@@ -4,6 +4,8 @@ namespace PatientAdministrationSystem.Application.Interfaces;
 
 public interface IPatientsService
 {
+	PatientResponse? getById(Guid patientId);
+
 	// Define your service interface here for use in your API and service
 
 
