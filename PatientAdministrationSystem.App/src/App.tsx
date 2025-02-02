@@ -63,28 +63,16 @@ function App() {
       //TODO test e.g. url not found, server down... or put in a TODO for more advanced
       //TODO perhaps accept a date/time range, validate that end isn't before start - do on client or server?
       try {
-        //TODO use javascript/typescript features to set text from  variables
-        const hospitalsResponse: AxiosResponse = await apiClient.get(`/api/hospitals`);
 
-        //TODO start using, remove the above
         const hospitalResponses: HospitalResponse[] = await hospitalsService.getHospitals();
-        console.log(hospitalResponses);
-
-
-        //TODO use the right types
-        //TODO use hospitalResponses directly
-        const hospitals = hospitalsResponse.data.map((hospitalResponse: { name: any; id: any; }) => ({
-          name: hospitalResponse.name,//TODO are these right?
-          hospitalId: hospitalResponse.id
-        }));
 
         //prepend the actual hospitals with a wildcard option
-        hospitals.unshift({
+        hospitalResponses.unshift({
           name: "(Any hospital)",
           hospitalId: ANY_HOSPITAL_WILDCARD
         });
 
-        setHospitalOptions(hospitals);
+        setHospitalOptions(hospitalResponses);
 
       } catch (err) {
         //TODO display an error on screen
