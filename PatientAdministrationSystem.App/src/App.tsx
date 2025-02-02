@@ -112,6 +112,7 @@ function App() {
 
       setWaiting(true)
       setError("")
+      setRows([])
 
       //TODO remove
       // const client = axios.create({
@@ -142,6 +143,53 @@ function App() {
         });
 
         console.log(patientHospitalVisitsResponse.data)
+
+        //look up the data for each entry in the response
+
+
+        //TODO use strong type
+        var theRows: any[] = [];
+
+        //TODO a "no results found" message on screen
+
+        for (const visitResponse of patientHospitalVisitsResponse.data) {
+          console.log("visitResponse: " + JSON.stringify(visitResponse))
+
+          //TODO remove
+          // patientHospitalVisitsResponse.data.forEach(visitResponse => {
+
+          //look up the hospital name
+          var hospitalName: string;
+          try {
+            //TODO deal with bad data - what if the hospital doesn't exist?
+            const hospitalResponse: any = await client.get(`/api/hospitals/${visitResponse.hospitalId}`);
+            // const hospitalResponse: AxiosResponse = await client.get(`/api/hospitals/${visitResponse.HospitalId}`);
+
+            //TODO remove
+            console.log("hospitalResponse: " + JSON.stringify(hospitalResponse))
+
+            hospitalName = hospitalResponse.data.name;
+          } catch (err) {
+            //TODO deal with other types of error
+            hospitalName = "(Not found)"
+          }
+
+
+
+          var row: any = {
+            "visitId": visitResponse.visitId,
+            "patientFirstName": visitResponse.visitId,
+            "patientLastName": visitResponse.visitId,
+            "hospitalName": hospitalName,
+            "visitDate": visitResponse.visitId
+          };
+          theRows.push(row);
+
+        }
+
+
+        //TODO rename this set/var
+        setRows(theRows);
 
 
         // setResponseValue(searchResponse.data.name)
@@ -336,30 +384,46 @@ function App() {
 
         {/* TODO a more advanced implementation could support ascending/descending sort, and pagination */}
 
-        <h1>Search Results</h1>
-        <table border={1}>
-          <thead>
-            <tr>
-              <th>Patient</th>
-              <th>Hospital</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
+        {/* only show search results if a search has been performed */}
 
-            {rows.map((row) => (
-              <tr key={row.visitId}>
-                {/* //TODO change to hyperlinks */}
-                {/* //TODO concatening for usability */}
-                <td>{row.patientFirstName} {row.patientLastName}</td>
-                <td>{row.hospitalName}</td>
-                {/* //TODO format dates nicely */}
-                <td>{row.visitDate}</td>
-              </tr>
-            ))}
-          </tbody>
 
-        </table>
+        {/* //TODO put back in */}
+        {/* {rows ? ( */}
+
+        <div>
+          <h1>Search Results</h1>
+
+          {rows.length ? (
+            <table border={1}>
+              <thead>
+                <tr>
+                  <th>Patient</th>
+                  <th>Hospital</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                {rows.map((row) => (
+                  <tr key={row.visitId}>
+                    {/* //TODO change to hyperlinks */}
+                    {/* //TODO concatening for usability */}
+                    <td>{row.patientFirstName} {row.patientLastName}</td>
+                    <td>{row.hospitalName}</td>
+                    {/* //TODO format dates nicely */}
+                    <td>{row.visitDate}</td>
+                  </tr>
+                ))}
+              </tbody>
+
+            </table>
+
+          ) : "No results found.  Please check your search criteria and try again."}
+
+        </div>
+
+
+        {/* ):""} */}
 
       </div>
     </div>
