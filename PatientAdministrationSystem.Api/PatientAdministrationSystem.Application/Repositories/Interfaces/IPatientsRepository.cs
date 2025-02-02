@@ -9,7 +9,13 @@ public interface IPatientsRepository
 
 	public PatientEntity? getById(Guid id);
 
-	//TODO describe what this does, the parameters
-	public List<PatientEntity> getByNamePrefixes(String lastNameSubstring, String? firstNameSubstring);
+	/// <summary>
+	/// Searches for patients with the specified last name prefix (mandatory) and first name prefix (optional).
+	/// The search is performed in a case-insensitive way, and surrounding whitespace is trimmed from the prefixes.  For example, a search with last name prefix "  SmI  " will find a patient by the name of "John Smith".
+	/// </summary>
+	/// <param name="lastNamePrefix">The starting letters of the patient's last name</param>
+	/// <param name="firstNamePrefix">The starting letters of the patient's first name</param>
+	/// <returns></returns>
+	public List<PatientEntity> getByNamePrefixes(String lastNamePrefix, String? firstNamePrefix);
 
 }

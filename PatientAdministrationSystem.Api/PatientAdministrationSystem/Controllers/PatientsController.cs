@@ -20,7 +20,6 @@ public class PatientsController : ControllerBase
 
 	[HttpGet]
 	[Route("{patientId}")]
-	//TODO should parameter names be initial upper?
 	public IActionResult getPatient([FromRoute] Guid patientId)
 	{
 		PatientResponse? patientResponse = _patientsService.getById(patientId);
