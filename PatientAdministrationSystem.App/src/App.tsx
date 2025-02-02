@@ -109,6 +109,8 @@ function App() {
       //   baseURL: 'https://localhost:7260/',
       // });
 
+      //TODO change "waiting" to "loading"
+
       const client = apiClient;
 
 
@@ -119,7 +121,23 @@ function App() {
         //TODO use javascript/typescript features to set text from  variables
         const searchResponse: AxiosResponse = await client.get(`/api/patients/hi?name=` + firstNamePrefix);
 
+        //TODO do lots of awaits in series
+
         setResponseValue(searchResponse.data.name)
+
+
+        //TODO encode the json payload - need a struct, but use raw json for now?
+        const patientHospitalVisitsResponse: AxiosResponse = await client.get(`/api/patients/hospitalVisits`, {
+          params: {
+            PatientFirstNamePrefix: normalise(firstNamePrefix),
+            PatientLastNamePrefix: normalise(lastNamePrefix),
+            //TODO pass in
+            HospitalId: null
+          }
+        });
+
+        console.log(patientHospitalVisitsResponse.data)
+
 
       } catch (err) {
         //TODO display an error on screen
@@ -131,15 +149,17 @@ function App() {
 
     })();
 
-
-
-
-
-
   }
 
 
-
+  const normalise = (input: string) => {
+    if (!input) {
+      return null;
+    } else {
+      input = input.trim();
+      return input.length === 0 ? null : input;
+    }
+  }
 
   // const client = axios.create({
   //   baseURL: 'https://api.github.com',
@@ -284,7 +304,9 @@ function App() {
             <tr>
               <td>
                 <h1>Patient Visit Search</h1>
-                <TextInput onFirstNamePrefixChange={handleFirstNamePrefixChange} onLastNamePrefixChange={handleLastNamePrefixChange} onButtonClick={handleButtonClick} hospitalOptions={hospitalOptions}/>
+                <TextInput onFirstNamePrefixChange={handleFirstNamePrefixChange} onLastNamePrefixChange={handleLastNamePrefixChange} onButtonClick={handleButtonClick} hospitalOptions={hospitalOptions} />
+
+                {/* //TODO pass the chosen hospital to the server too */}
 
                 {/* //TODO remove */}
                 <p>You typed: {firstNamePrefix}  {lastNamePrefix}</p>
