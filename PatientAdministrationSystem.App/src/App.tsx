@@ -32,12 +32,21 @@ function App() {
 
   const [hospitalOptions, setHospitalOptions] = useState([]);
 
+  //TODO better types?  non null value?
+  const [hospitalOption, setHospitalOption] = useState(null);
+
   const handleFirstNamePrefixChange = (value: string) => {
     setFirstNamePrefix(value); // Update state with value from child component
   }
 
   const handleLastNamePrefixChange = (value: string) => {
     setLastNamePrefix(value); // Update state with value from child component
+  }
+
+  //TODO better type
+  const handleHospitalOptionChange= (value: any) => {
+    setHospitalOption(value); // Update state with value from child component
+    console.log(value)
   }
 
   onload = () => {
@@ -133,8 +142,7 @@ function App() {
           params: {
             PatientFirstNamePrefix: normalise(firstNamePrefix),
             PatientLastNamePrefix: normalise(lastNamePrefix),
-            //TODO pass in
-            HospitalId: null
+            HospitalId: hospitalOption
           }
         });
 
@@ -393,7 +401,7 @@ function App() {
             <tr>
               <td>
                 <h1>Patient Visit Search</h1>
-                <TextInput onFirstNamePrefixChange={handleFirstNamePrefixChange} onLastNamePrefixChange={handleLastNamePrefixChange} onButtonClick={handleButtonClick} hospitalOptions={hospitalOptions} />
+                <TextInput onFirstNamePrefixChange={handleFirstNamePrefixChange} onLastNamePrefixChange={handleLastNamePrefixChange} onHospitalOptionChange={handleHospitalOptionChange} hospitalOptions={hospitalOptions} onButtonClick={handleButtonClick} />
 
                 {/* //TODO pass the chosen hospital to the server too */}
 

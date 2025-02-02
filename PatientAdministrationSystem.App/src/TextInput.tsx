@@ -6,12 +6,14 @@ import React, { useState } from "react";
 interface TextInputProps {
   onFirstNamePrefixChange: (value: string) => void;
   onLastNamePrefixChange: (value: string) => void;
+  onHospitalOptionChange: (value: any) => void;//TODO use option type
   onButtonClick: () => void;
-  // hospitalOptions: string[];//TODO better type
   hospitalOptions: any[];//TODO better type
 }
 
-const TextInput: React.FC<TextInputProps> = ({ onFirstNamePrefixChange, onLastNamePrefixChange, onButtonClick, hospitalOptions }) => {
+
+//TODO rename
+const TextInput: React.FC<TextInputProps> = ({ onFirstNamePrefixChange, onLastNamePrefixChange, onHospitalOptionChange, onButtonClick, hospitalOptions }) => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const options = ["Option 1", "Option 2", "Option 3", "Option 4"];
@@ -29,16 +31,23 @@ const TextInput: React.FC<TextInputProps> = ({ onFirstNamePrefixChange, onLastNa
     onLastNamePrefixChange(newValue); // Send input value to parent component
   };
 
+  const handleHistoryOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newValue = event.target.value;
+    setSelected(newValue);
+    onHospitalOptionChange(newValue); // Send input value to parent component
+  }
+
   const handleClick = () => {
     onButtonClick();
   }
 
-  console.log("hospitalOptions " +JSON.stringify( hospitalOptions));
+  console.log("hospitalOptions " + JSON.stringify(hospitalOptions));
 
   return (
     <div>
-      {/* //TODO not working */}
       {/* //TODO set the surname as the default field for focus */}
+
+      {/* //TODO not working */}
       {/* <form> */}
       <table>
         <tbody>
@@ -73,34 +82,17 @@ const TextInput: React.FC<TextInputProps> = ({ onFirstNamePrefixChange, onLastNa
             <td>
 
 
-              {/* //TODO populate from state */}
-              <select id="hospital" value={selected} onChange={(e) => setSelected(e.target.value)}>
+              <select id="hospital" value={selected} onChange={handleHistoryOptionChange}>
 
+                {/* dynamically add an option for each hospital */}
+                {/* //TODO type-ahead might be nice, might be nice to keep the selection from last time */}
                 {hospitalOptions.map((hospitalOption, index) => (
                   <option key={index} value={hospitalOption.hospitalId}>
                     {hospitalOption.name}
                   </option>
                 ))}
 
-
-                {/* dynamically add an option for each hospital */}
-                {/* {hospitalOptions.map(hospitalOption2 => ( */}
-                {/* <option value={hospitalOption.hospitalId}>{hospitalOption.name}</option> */}
-                {/* )} */}
-
               </select>
-
-
-
-
-              {/* //TODO change to a drop-down that is populated at form load?  Include an entry of "any hospital", make sure they're sorted alphabetically, type-ahead might be nice, might be nice to keep the selection from last time */}
-              {/* <input
-                id="hospital"
-                type="text"
-                placeholder='e.g. Smith'
-              // value={lastName}
-              // onChange={handleLastNameChange}
-              /> */}
             </td>
 
             {/* //TODO could add date range for visit */}
