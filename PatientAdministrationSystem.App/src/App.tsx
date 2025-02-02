@@ -1,6 +1,7 @@
 import './App.css'
 
 import apiClient from "./api/apiClient";
+import hospitalService from "./services/hospitalsService";
 
 //TODO remove - go via the other ts file
 import axios, { AxiosResponse } from 'axios';
@@ -15,6 +16,13 @@ type Hospital = {
   name: string;
   hospitalId: string;
 };
+
+type HospitalResponse = {
+  name: string;
+  hospitalId: string;
+};
+
+
 
 function App() {
 
@@ -53,14 +61,16 @@ function App() {
     //TODO move to a function?  should the async be outside or inside the function?
     (async () => {
 
-      const client = apiClient;
-
 
       //TODO test e.g. url not found, server down... or put in a TODO for more advanced
       //TODO perhaps accept a date/time range, validate that end isn't before start - do on client or server?
       try {
         //TODO use javascript/typescript features to set text from  variables
-        const hospitalsResponse: AxiosResponse = await client.get(`/api/hospitals`);
+        const hospitalsResponse: AxiosResponse = await apiClient.get(`/api/hospitals`);
+
+        //TODO start using, remove the above
+        // const hospitalResponses: HospitalResponse[] = await hospitalService.getHospitals();
+        // console.log(hospitalResponses);
 
 
         //TODO use the right types
@@ -103,8 +113,6 @@ function App() {
       setSearchExecuted(false)
       setSearchResults([])
 
-      const client = apiClient;
-
 
       //TODO test e.g. url not found, server down... or put in a TODO for more advanced
       //TODO perhaps accept a date/time range, validate that end isn't before start - do on client or server?
@@ -116,7 +124,7 @@ function App() {
         //TODO use javascript/typescript features to set text from  variables
         //TODO encode the json payload - need a struct, but use raw json for now?
         //TODO does the response take a generic type?
-        const patientHospitalVisitsResponse: AxiosResponse = await client.get(`/api/patients/hospitalVisits`, {
+        const patientHospitalVisitsResponse: AxiosResponse = await apiClient.get(`/api/patients/hospitalVisits`, {
           params: {
             PatientFirstNamePrefix: normalise(firstNamePrefix),
             PatientLastNamePrefix: normalise(lastNamePrefix),
@@ -169,7 +177,7 @@ function App() {
           var visitDate: Date;
           var visitDateString: string;
           try {
-            const visitResponse: AxiosResponse = await client.get(`/api/visits/${patientHospitalVisitResponse.visitId}`);
+            const visitResponse: AxiosResponse = await apiClient.get(`/api/visits/${patientHospitalVisitResponse.visitId}`);
 
             visitDate = new Date(visitResponse.data.date)
 
