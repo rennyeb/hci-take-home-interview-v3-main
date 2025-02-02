@@ -3,6 +3,8 @@ import './App.css'
 import apiClient from "./api/apiClient";
 import hospitalsService from "./services/hospitalsService";
 import patientsService from "./services/patientsService";
+import visitsService from "./services/visitsService";
+
 
 //TODO remove - go via the other ts file
 import { AxiosResponse } from 'axios';
@@ -10,6 +12,7 @@ import PatientVisitSearchCriteria from "./PatientVisitSearchCriteria"
 import PatientVisitSearchResults from "./PatientVisitSearchResults"
 import HospitalResponse from "./types/HospitalResponse";
 import PatientResponse from "./types/PatientResponse";
+import VisitResponse from "./types/VisitResponse";
 import { useState } from 'react';
 
 //TODO remove anything unused
@@ -166,6 +169,8 @@ function App() {
 
             patientFirstName = patientResponse.firstName;
             patientLastName = patientResponse.lastName;
+
+            //TODO move the 404 problems into the services
           } catch (err) {
             //TODO deal with other types of error
             patientFirstName = "(Not found)"//be resilient to data integrity issues
@@ -176,9 +181,9 @@ function App() {
           var visitDate: Date;
           var visitDateString: string;
           try {
-            const visitResponse: AxiosResponse = await apiClient.get(`/api/visits/${patientHospitalVisitResponse.visitId}`);
+            const visitResponse: VisitResponse = await visitsService.getVisit(patientHospitalVisitResponse.visitId);
 
-            visitDate = new Date(visitResponse.data.date)
+            visitDate = new Date(visitResponse.date)
 
             //Format the date nicely
             //NB should get the appropriate locale from the browser
