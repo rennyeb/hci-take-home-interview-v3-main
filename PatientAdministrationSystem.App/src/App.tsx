@@ -19,6 +19,8 @@ type Hospital = {
 
 function App() {
 
+  const ANY_HOSPITAL_WILDCARD: string = "*"
+
   const [error, setError] = useState<string>("");
   const [searchExecuted, setSearchExecuted] = useState<boolean>(false);
   const [firstNamePrefix, setFirstNamePrefix] = useState<string>("");
@@ -44,8 +46,9 @@ function App() {
   }
 
   //TODO better type
-  const handleHospitalOptionChange= (value: any) => {
+  const handleHospitalOptionChange = (value: any) => {
     setHospitalOption(value); // Update state with value from child component
+    console.log("in handleHospitalOptionChange")
     console.log(value)
   }
 
@@ -70,7 +73,7 @@ function App() {
         // var hospitals: Hospital[]=hospitalsResponse;
 
 
-        console.log(hospitalsResponse.data);	
+        console.log(hospitalsResponse.data);
 
         //TODO use the right types
         const hospitals = hospitalsResponse.data.map((hospitalResponse: { name: any; id: any; }) => ({
@@ -81,8 +84,10 @@ function App() {
         //prepend the actual hospitals with a wildcard option
         hospitals.unshift({
           name: "(Any hospital)",
-          hospitalId: null
+          hospitalId: ANY_HOSPITAL_WILDCARD
         });
+
+        console.log(hospitals);
 
         setHospitalOptions(hospitals);
 
@@ -138,11 +143,12 @@ function App() {
 
         //TODO use javascript/typescript features to set text from  variables
         //TODO encode the json payload - need a struct, but use raw json for now?
+        //TODO does the response take a generic type?
         const patientHospitalVisitsResponse: AxiosResponse = await client.get(`/api/patients/hospitalVisits`, {
           params: {
             PatientFirstNamePrefix: normalise(firstNamePrefix),
             PatientLastNamePrefix: normalise(lastNamePrefix),
-            HospitalId: hospitalOption
+            HospitalId: hospitalOption === ANY_HOSPITAL_WILDCARD ? null : hospitalOption
           }
         });
 
