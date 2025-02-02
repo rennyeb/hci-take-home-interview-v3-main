@@ -61,22 +61,21 @@ function App() {
         // var hospitals: Hospital[]=hospitalsResponse;
 
 
+        console.log(hospitalsResponse.data);	
+
         //TODO use the right types
-        const formattedOptions = hospitalsResponse.data.map((hospitalResponse: { name: any; guid: any; }) => ({
+        const hospitals = hospitalsResponse.data.map((hospitalResponse: { name: any; id: any; }) => ({
           value: hospitalResponse.name,//TODO are these right?
-          label: hospitalResponse.guid
+          label: hospitalResponse.id
         }));
 
         //prepend the actual hospitals with a wildcard option
-        formattedOptions.unshift({
+        hospitals.unshift({
           value: "(Any hospital)",
           label: null
         });
 
-        //TODO remove
-        console.log("formattedOptions: " + JSON.stringify(formattedOptions))
-
-        setHospitalOptions(formattedOptions);
+        setHospitalOptions(hospitals);
 
         //TODO create a structure and map it
         // console.log(hospitalsResponse.data);
@@ -439,13 +438,13 @@ function App() {
                 </thead>
                 <tbody>
 
-                  {searchResults.map((row) => (
-                    <tr key={row.visitId}>
+                  {searchResults.map((searchResult) => (
+                    <tr key={searchResult.visitId}>
                       {/* //TODO change to hyperlinks */}
                       {/* //TODO concatening for usability */}
-                      <td>{row.patientFirstName} {row.patientLastName}</td>
-                      <td>{row.hospitalName}</td>
-                      <td>{row.visitDate}</td>
+                      <td>{searchResult.patientFirstName} {searchResult.patientLastName}</td>
+                      <td>{searchResult.hospitalName}</td>
+                      <td>{searchResult.visitDate}</td>
                       <td><a href="#" onClick={() => alert('Not yet implemented')}>details</a></td>
                     </tr>
                   ))}
