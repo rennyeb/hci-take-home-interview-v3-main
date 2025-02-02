@@ -27,10 +27,17 @@ public class PatientsController : ControllerBase
 	//TODO should parameter names be initial upper?
 	public IActionResult getPatientHospitalVisits([FromQuery] PatientHospitalVisitsRequest patientHospitalVisitsRequest)
 	{
-		List<PatientHospitalVisitResponse> patientHospitalVisits = _patientsService.getPatientHospitalVisits(patientHospitalVisitsRequest);
-		//TODO remove
-		//Debug.WriteLine("hi");
-		return Ok(patientHospitalVisits);
+		try
+		{
+			List<PatientHospitalVisitResponse> patientHospitalVisits = _patientsService.getPatientHospitalVisits(patientHospitalVisitsRequest);
+			//TODO remove
+			//Debug.WriteLine("hi");
+			return Ok(patientHospitalVisits);
+		} catch (PatientHospitalVisitException e)
+		{
+			//TODO test this
+			return BadRequest(e.Message);
+		}
 
 	}
 
