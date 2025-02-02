@@ -34,63 +34,67 @@ const TextInput: React.FC<TextInputProps> = ({ onFirstNamePrefixChange, onLastNa
 
   return (
     <div>
-      <table>
-        <tbody>
-          <tr>
-            {/* //TODO complain client side if this value not populated */}
-            <td>Last Name prefix *:</td>
-            <td>
-              <input
-                id="lastNamePrefix"
-                type="text"
-                placeholder='e.g. Smith or Smi'
-                value={lastName}
-                onChange={handleLastNamePrefixChange}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>First Name prefix:</td>
-            <td>
-              <input
-                id="firstNamePrefix"
-                type="text"
-                placeholder='e.g. John or Jo'
-                value={firstName}
-                onChange={handleFirstNamePrefixChange}
-              />
-            </td>
-          </tr>
+      {/* //TODO not working */}
+      {/* //TODO set the surname as the default field for focus */}
+      {/* <form> */}
+        <table>
+          <tbody>
+            <tr>
+              {/* //TODO complain client side if this value not populated */}
+              <td>Last Name prefix *:</td>
+              <td>
+                <input
+                  id="lastNamePrefix"
+                  type="text"
+                  placeholder='e.g. Smith or Smi'
+                  value={lastName}
+                  onChange={handleLastNamePrefixChange}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>First Name prefix:</td>
+              <td>
+                <input
+                  id="firstNamePrefix"
+                  type="text"
+                  placeholder='e.g. John or Jo'
+                  value={firstName}
+                  onChange={handleFirstNamePrefixChange}
+                />
+              </td>
+            </tr>
 
-          <tr>
-            <td>Hospital:</td>
-            <td>
+            <tr>
+              <td>Hospital:</td>
+              <td>
 
 
-              {/* //TODO populate from state */}
-              <select id="hospital">
-                <option value="*">(Any hospital)</option>
-                <option value="St. Mary's">St. Mary's</option>
-              </select>
+                {/* //TODO populate from state */}
+                <select id="hospital">
+                  <option value="*">(Any hospital)</option>
+                  <option value="St. Mary's">St. Mary's</option>
+                </select>
 
-              {/* //TODO change to a drop-down that is populated at form load?  Include an entry of "any hospital", make sure they're sorted alphabetically, type-ahead might be nice, might be nice to keep the selection from last time */}
-              {/* <input
+                {/* //TODO change to a drop-down that is populated at form load?  Include an entry of "any hospital", make sure they're sorted alphabetically, type-ahead might be nice, might be nice to keep the selection from last time */}
+                {/* <input
                 id="hospital"
                 type="text"
                 placeholder='e.g. Smith'
               // value={lastName}
               // onChange={handleLastNameChange}
               /> */}
-            </td>
+              </td>
 
-            {/* //TODO could add date range for visit */}
+              {/* //TODO could add date range for visit */}
 
-            {/* //TODO links to the hospital home page, patient home page, visit home page... */}
-          </tr>
-        </tbody>
-      </table>
-      <br />
-      <button onClick={handleClick}>Search</button>
+              {/* //TODO links to the hospital home page, patient home page, visit home page... */}
+            </tr>
+          </tbody>
+        </table>
+        <br />
+        <button onClick={handleClick} type="submit">Search</button>
+      {/* </form> */}
     </div>
   );
 };

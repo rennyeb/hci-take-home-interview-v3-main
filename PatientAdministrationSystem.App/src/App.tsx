@@ -28,7 +28,7 @@ function App() {
 
   //TODO need the chosen hospital
 
-  const [isWaiting, setWaiting] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   const [hospitalOptions, setHospitalOptions] = useState([]);
 
@@ -104,7 +104,7 @@ function App() {
     //TODO how to set timeout?
     (async () => {
 
-      setWaiting(true)
+      setLoading(true)
       setError("")
       setSearchExecuted(false)
       setSearchResults([])
@@ -233,7 +233,7 @@ function App() {
       }
 
       //TODO enable/disable the button, as well
-      setWaiting(false)
+      setLoading(false)
 
     })();
 
@@ -399,8 +399,7 @@ function App() {
                 {/* //TODO remove */}
                 {/* //TODO should use CSS styling for the colour */}
                 <p style={{ color: 'red' }}>{error} </p>
-                <p>You typed: {firstNamePrefix}  {lastNamePrefix}</p>
-                {isWaiting ? <p>waiting...</p> : <p />}
+                {isLoading ? <p>loading...</p> : <p />}
               </td>
             </tr>
 
@@ -421,7 +420,8 @@ function App() {
         {/* {rows ? ( */}
 
 
-{/* {searchExecuted?()} */}
+{searchExecuted && (
+
         <div>
           <h1>Search Results</h1>
 
@@ -453,6 +453,8 @@ function App() {
           ) : "No results found.  Please check your search criteria and try again."}
 
         </div>
+
+)}
 
 
         {/* ):""} */}
