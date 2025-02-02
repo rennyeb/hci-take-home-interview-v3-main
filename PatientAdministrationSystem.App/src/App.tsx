@@ -153,25 +153,24 @@ function App() {
 
           //look up the hospital name
           var hospitalName: string;
-          try {
-            const hospitalResponse: HospitalResponse = await hospitalsService.getHospital(patientHospitalVisitResponse.hospitalId);
+
+          const hospitalResponse: HospitalResponse = await hospitalsService.getHospital(patientHospitalVisitResponse.hospitalId);
+          if (hospitalResponse) {
             hospitalName = hospitalResponse.name;
-          } catch (err) {
-            //TODO deal with other types of error
+          } else {
             hospitalName = "(Not found)"//be resilient to data integrity issues
           }
 
           //look up the patient name
           var patientFirstName: string;
           var patientLastName: string;
-          try {
-            const patientResponse: PatientResponse = await patientsService.getPatient(patientHospitalVisitResponse.patientId);
+          const patientResponse: PatientResponse = await patientsService.getPatient(patientHospitalVisitResponse.patientId);
+          if (patientResponse) {
 
             patientFirstName = patientResponse.firstName;
             patientLastName = patientResponse.lastName;
 
-            //TODO move the 404 problems into the services
-          } catch (err) {
+          } else {
             //TODO deal with other types of error
             patientFirstName = "(Not found)"//be resilient to data integrity issues
             patientLastName = "";
@@ -180,9 +179,8 @@ function App() {
           //look up the visit date
           var visitDate: Date;
           var visitDateString: string;
-          try {
-            const visitResponse: VisitResponse = await visitsService.getVisit(patientHospitalVisitResponse.visitId);
-
+          const visitResponse: VisitResponse = await visitsService.getVisit(patientHospitalVisitResponse.visitId);
+          if (visitResponse) {
             visitDate = new Date(visitResponse.date)
 
             //Format the date nicely
@@ -194,10 +192,7 @@ function App() {
               day: "numeric"
             });
 
-
-          } catch (err) {
-            console.log(err)
-            //TODO deal with other types of error
+          } else {
             visitDate = new Date(0);//low date value, to permit sorting against other populated dates
             visitDateString = "(Unknown)" //be resilient to data integrity issues
           }
