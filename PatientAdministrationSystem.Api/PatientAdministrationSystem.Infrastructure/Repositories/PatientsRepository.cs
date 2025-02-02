@@ -14,12 +14,11 @@ public class PatientsRepository : IPatientsRepository
 		_context = context;
 	}
 
+	// Add logic here for your querying the data context
 	public PatientEntity? getById(Guid id)
 	{
 		return _context.Patients.Where(patient => patient.Id.Equals(id)).SingleOrDefault();
 	}
-
-	// Add logic here for your querying the data context
 
 	public IQueryable<PatientEntity> getByNamePrefixes(String lastNamePrefix, String? firstNamePrefix)
 	{
@@ -35,7 +34,7 @@ public class PatientsRepository : IPatientsRepository
 			patient => patient.LastName.ToUpper().StartsWith(lastNamePrefix.Trim().ToUpper()) &&
 
 			// case-insensitive prefix match on first name, if present
-			(firstNamePrefix == null || firstNamePrefix.Trim().Length==0|| patient.FirstName.ToUpper().Contains(firstNamePrefix.Trim().ToUpper()))
+			(firstNamePrefix == null || firstNamePrefix.Trim().Length == 0 || patient.FirstName.ToUpper().Contains(firstNamePrefix.Trim().ToUpper()))
 
 			).Include(patient => patient.PatientHospitals);
 	}

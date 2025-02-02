@@ -14,15 +14,11 @@ public class HospitalsRepository : IHospitalsRepository
         _context = context;
     }
 
+	// Add logic here for your querying the data context
 
-    //TODO remove if unused
-    //TOOD describe design decision to turn into a list
-    public List<HospitalEntity> getAll()
-    {
-        return _context.Hospitals.ToList();
-    }
+	public HospitalEntity? getById(Guid id)
+	{
+		return _context.Hospitals.Where(hospital => hospital.Id.Equals(id)).SingleOrDefault();
+	}
 
-
-
-    // Add logic here for your querying the data context
 }

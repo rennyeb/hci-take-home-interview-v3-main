@@ -39,7 +39,6 @@ public class PatientsController : ControllerBase
 			return Ok(patientResponse);
 		}
 	
-
 	}
 
 	[HttpGet]
