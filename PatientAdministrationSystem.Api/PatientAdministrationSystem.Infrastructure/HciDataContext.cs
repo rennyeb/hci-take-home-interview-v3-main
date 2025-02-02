@@ -34,6 +34,7 @@ public class HciDataContext : DbContext, IHciDataContext
 					Name = "Default hospital"
 				}
 				
+				//TODO replace with original files if need be
 				//,
 			   // Extra test data added
 			  // new HospitalEntity

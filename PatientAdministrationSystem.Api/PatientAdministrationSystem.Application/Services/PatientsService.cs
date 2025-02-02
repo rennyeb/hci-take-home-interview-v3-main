@@ -11,8 +11,8 @@ public class PatientsService : IPatientsService
 	//NB putting here because the code comment in the start code encourages this service to perform the visit search - possibly it might be better off on the HospitalsService
 	private readonly IHospitalsRepository _hospitalsRepository;
 
-	private readonly IHospitalsRepository _patientsRepository;
-	public PatientsService(IHospitalsRepository hospitalsRepository, IHospitalsRepository patientsRepository)
+	private readonly IPatientsRepository _patientsRepository;
+	public PatientsService(IHospitalsRepository hospitalsRepository, IPatientsRepository patientsRepository)
 	{
 		_hospitalsRepository = hospitalsRepository;
 		_patientsRepository = patientsRepository;
@@ -23,7 +23,22 @@ public class PatientsService : IPatientsService
 
 	public List<PatientHospitalVisitResponse> getPatientHospitalVisits(PatientHospitalVisitsRequest patientHospitalVisitsRequest)
 	{
+		//TODO validate that at least part of surname is present, create an exception type, catch in controller and return a bad request with info
+
 		List<PatientHospitalVisitResponse> patientHospitalVisits = new List<PatientHospitalVisitResponse>();
+
+		foreach (PatientEntity patientEntity in _patientsRepository.getByNamePrefixes("law", null))
+		{
+			Debug.WriteLine(patientEntity.LastName);
+			Debug.WriteLine(patientEntity.PatientHospitals.Count);
+			//Iteration causes the relation to load
+			foreach (var phr in patientEntity.PatientHospitals)
+			{
+				Debug.WriteLine(phr.PatientId);
+
+			}
+			//Debug.WriteLine(patientEntity.PatientHospitals.Count);
+		}
 
 		//TODO might have to go via patients, if that's the way the test data has been set up
 

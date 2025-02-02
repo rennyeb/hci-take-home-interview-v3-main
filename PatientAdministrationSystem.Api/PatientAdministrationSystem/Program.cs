@@ -103,6 +103,7 @@ using (var serviceScope = app.Services.CreateScope())
 	//});
 
 
+
 	dbContext.Patients.Add(new PatientEntity
 	{
 		Id = new Guid("c00b9ff3-b1b6-42fe-8b5a-4c28408fb64a"),

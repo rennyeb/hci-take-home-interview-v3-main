@@ -14,6 +14,8 @@ public class HospitalsRepository : IHospitalsRepository
         _context = context;
     }
 
+
+    //TODO remove if unused
     //TOOD describe design decision to turn into a list
     public List<HospitalEntity> getAll()
     {
