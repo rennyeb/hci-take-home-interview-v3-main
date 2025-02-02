@@ -19,14 +19,15 @@ type Hospital = {
 
 function App() {
 
+  const [error, setError] = useState<string>("");
   const [firstNamePrefix, setFirstNamePrefix] = useState<string>("");
   const [lastNamePrefix, setLastNamePrefix] = useState<string>("");
 
   //TODO temp
   const [rows, setRows] = useState([
-    { id: 1, name: 'John Doe', age: 28 },
-    { id: 2, name: 'Jane Smith', age: 34 },
-    { id: 3, name: 'Sam Brown', age: 25 },
+    { visitId: 1, patientFirstName: 'John', patientLastName: 'Doe', hospitalName: "St Judes", visitDate: "2025-01-01" },
+    { visitId: 2, patientFirstName: 'Jane', patientLastName: 'Smith', hospitalName: "St Judes", visitDate: "2025-01-01" },
+    { visitId: 3, patientFirstName: 'Sam', patientLastName: 'Brown', hospitalName: "St Barts", visitDate: "2024-12-31" },
   ]);
 
   //TODO need the chosen hospital
@@ -110,6 +111,7 @@ function App() {
     (async () => {
 
       setWaiting(true)
+      setError("")
 
       //TODO remove
       // const client = axios.create({
@@ -147,8 +149,8 @@ function App() {
 
 
       } catch (err) {
-        //TODO display an error on screen
-        console.log(err);
+        //TODO might need to catch other types of error, too
+        setError(err.response.data)
       }
 
       //TODO enable/disable the button, as well
@@ -316,6 +318,8 @@ function App() {
                 {/* //TODO pass the chosen hospital to the server too */}
 
                 {/* //TODO remove */}
+                {/* //TODO should use CSS styling for the colour */}
+                <p style={{ color: 'red' }}>{error} </p>
                 <p>You typed: {firstNamePrefix}  {lastNamePrefix}</p>
                 <p>Response from server: <b>{responseValue}</b></p>
                 {isWaiting ? <p>waiting...</p> : <p />}
@@ -336,20 +340,21 @@ function App() {
         <table border={1}>
           <thead>
             <tr>
-              <th>Last Name</th>
-              <th>First Name</th>
+              <th>Patient</th>
               <th>Hospital</th>
-              {/* //TODO format dates nicely */}
               <th>Date</th>
             </tr>
           </thead>
           <tbody>
 
             {rows.map((row) => (
-              <tr key={row.id}>
-                <td>{row.id}</td>
-                <td>{row.name}</td>
-                <td>{row.age}</td>
+              <tr key={row.visitId}>
+                {/* //TODO change to hyperlinks */}
+                {/* //TODO concatening for usability */}
+                <td>{row.patientFirstName} {row.patientLastName}</td>
+                <td>{row.hospitalName}</td>
+                {/* //TODO format dates nicely */}
+                <td>{row.visitDate}</td>
               </tr>
             ))}
           </tbody>
