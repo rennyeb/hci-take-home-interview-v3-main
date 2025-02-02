@@ -1,14 +1,13 @@
 import './App.css'
 
+import { AxiosResponse } from 'axios';
 import apiClient from "./api/apiClient";
+
 import hospitalsService from "./services/hospitalsService";
 import patientsService from "./services/patientsService";
 import patientSearchService from "./services/patientSearchService";
 import visitsService from "./services/visitsService";
 
-
-//TODO remove - go via the other ts file
-import { AxiosResponse } from 'axios';
 import PatientVisitSearchCriteria from "./PatientVisitSearchCriteria"
 import PatientVisitSearchResults from "./PatientVisitSearchResults"
 import HospitalResponse from "./types/HospitalResponse";
@@ -22,7 +21,10 @@ import { useState } from 'react';
 
 function App() {
 
-  const ANY_HOSPITAL_WILDCARD: string = "*"
+  const anyHospitalOption: HospitalResponse = {
+    name: "(Any hospital)"
+    //NB no hospitalId
+  }
 
   const [error, setError] = useState<string>("");
   const [searchExecuted, setSearchExecuted] = useState<boolean>(false);
@@ -35,10 +37,8 @@ function App() {
 
   const [isLoading, setLoading] = useState<boolean>(false);
 
-  const [hospitalOptions, setHospitalOptions] = useState([]);
-
-  //TODO better types?  
-  const [hospitalOption, setHospitalOption] = useState<string>(ANY_HOSPITAL_WILDCARD);
+  const [hospitalOptions, setHospitalOptions] = useState<HospitalResponse[]>([]);
+  const [hospitalSelectedOption, setHospitalSelectedOption] = useState<HospitalResponse>();
 
   const handleFirstNamePrefixChange = (value: string) => {
     setFirstNamePrefix(value); // Update state with value from child component
@@ -48,9 +48,10 @@ function App() {
     setLastNamePrefix(value); // Update state with value from child component
   }
 
-  //TODO better type
-  const handleHospitalOptionChange = (value: any) => {
-    setHospitalOption(value); // Update state with value from child component
+  const handleHospitalSelecteOptionChange = (value: HospitalResponse) => {
+    console.log(value);
+    setHospitalSelectedOption(value); // Update state with value from child component
+    console.log(hospitalSelectedOption);//TODO not updating properly
   }
 
   onload = () => {
@@ -67,10 +68,13 @@ function App() {
         const hospitalResponses: HospitalResponse[] = await hospitalsService.getHospitals();
 
         //prepend the actual hospitals with a wildcard option
-        hospitalResponses.unshift({
-          name: "(Any hospital)",
-          hospitalId: ANY_HOSPITAL_WILDCARD
-        });
+        hospitalResponses.unshift(anyHospitalOption);
+
+        //default to the "Any hospital" option
+        setHospitalSelectedOption(anyHospitalOption)
+
+
+        console.log(hospitalResponses);
 
         setHospitalOptions(hospitalResponses);
 
@@ -82,12 +86,8 @@ function App() {
 
     })();
 
-
-
   }
 
-
-  //TODO put the search results in its own component
 
   //TODO better function names
   const handleButtonClick = () => {
@@ -109,8 +109,10 @@ function App() {
         const patientHospitalVisitsRequest: PatientHospitalVisitsRequest = {
           PatientFirstNamePrefix: normalise(firstNamePrefix),
           PatientLastNamePrefix: normalise(lastNamePrefix),
-          HospitalId: hospitalOption === ANY_HOSPITAL_WILDCARD ? undefined : hospitalOption
+          HospitalId: hospitalSelectedOption?.hospitalId
         }
+
+console.log(patientHospitalVisitsRequest)
 
         const patientHospitalVisitsResponses: PatientHospitalVisitResponse[] = await patientSearchService.getPatientHospitalVisits(patientHospitalVisitsRequest);
 
@@ -209,6 +211,7 @@ function App() {
       } catch (err) {
         //TODO might need to catch other types of error, too
         console.log(err);
+        //TODO check if axios error?  throw from service layer?
         setError(err.response.data)
       }
 
@@ -250,9 +253,9 @@ function App() {
         <PatientVisitSearchCriteria
           onFirstNamePrefixChange={handleFirstNamePrefixChange}
           onLastNamePrefixChange={handleLastNamePrefixChange}
-          onHospitalOptionChange={handleHospitalOptionChange}
+          onHospitalSelectedOptionChange={handleHospitalSelecteOptionChange}
           hospitalOptions={hospitalOptions}
-          onButtonClick={handleButtonClick} />
+          onSearchButtonClick={handleButtonClick} />
 
         {/* TODO should use CSS styling for the colour */}
         <p style={{ color: 'red' }}>{error} </p>

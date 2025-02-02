@@ -1,3 +1,4 @@
+import HospitalResponse from "./types/HospitalResponse";
 import React, { useState } from "react";
 
 
@@ -5,16 +6,16 @@ import React, { useState } from "react";
 interface PatientVisitSearchCriteriaProps {
   onFirstNamePrefixChange: (value: string) => void;
   onLastNamePrefixChange: (value: string) => void;
-  onHospitalOptionChange: (value: any) => void;//TODO use option type
-  onButtonClick: () => void;
-  hospitalOptions: any[];//TODO better type
+  onHospitalSelectedOptionChange: (value: HospitalResponse) => void;
+  onSearchButtonClick: () => void;
+  hospitalOptions: HospitalResponse[];
 }
 
 
-const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({ onFirstNamePrefixChange, onLastNamePrefixChange, onHospitalOptionChange, onButtonClick, hospitalOptions }) => {
+const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({ onFirstNamePrefixChange, onLastNamePrefixChange, onHospitalSelectedOptionChange, onSearchButtonClick, hospitalOptions }) => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
-  const [selected, setSelected] = useState(hospitalOptions[0]);
+  const [selectedHospital, setSelectedHospital] = useState<HospitalResponse>(hospitalOptions[0]);
 
   const handleFirstNamePrefixChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
@@ -28,14 +29,15 @@ const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({
     onLastNamePrefixChange(newValue); // Send input value to parent component
   };
 
-  const handleHistoryOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const newValue = event.target.value;
-    setSelected(newValue);
-    onHospitalOptionChange(newValue); // Send input value to parent component
+  const handleHistorySelectedOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newValue: HospitalResponse = JSON.parse(event.target.value);
+    setSelectedHospital(newValue);//TODO is local state actually required?
+    console.log(newValue);
+    onHospitalSelectedOptionChange(newValue); // Send input value to parent component
   }
 
-  const handleClick = () => {
-    onButtonClick();
+  const handleSearchButtonClick = () => {
+    onSearchButtonClick();
   }
 
   return (
@@ -77,12 +79,12 @@ const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({
             <td>
 
 
-              <select id="hospital" value={selected} onChange={handleHistoryOptionChange}>
+              <select id="hospital" value={JSON.stringify(selectedHospital)} onChange={handleHistorySelectedOptionChange}>
 
                 {/* dynamically add an option for each hospital */}
                 {/* NB type-ahead might be nice, might be nice to keep the selection from last time */}
                 {hospitalOptions.map((hospitalOption, index) => (
-                  <option key={index} value={hospitalOption.hospitalId}>
+                  <option key={index} value={JSON.stringify(hospitalOption)}>
                     {hospitalOption.name}
                   </option>
                 ))}
@@ -97,7 +99,7 @@ const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({
         </tbody>
       </table>
       <br />
-      <button onClick={handleClick} type="submit">Search</button>
+      <button onClick={handleSearchButtonClick} type="submit">Search</button>
       {/* </form> */}
 
       {/* NB could have a "clear" button which resets the form back to how it was at page load time */}

@@ -1,5 +1,5 @@
 type HospitalResponse = {
-  hospitalId: string;
+  hospitalId?: string;
   name: string;
   };
   
