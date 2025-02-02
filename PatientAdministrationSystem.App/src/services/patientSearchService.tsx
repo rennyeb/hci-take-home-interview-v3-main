@@ -8,11 +8,9 @@ const patientSearchService = {
 
         //TODO does the response take a generic type?
         const patientHospitalVisitsResponse: AxiosResponse = await apiClient.get(`/api/patients/hospitalVisits`, {
-            //TODO is this level required?
-            params: {
-                patientHospitalVisitsRequest
-            }
-        });
+            params: patientHospitalVisitsRequest
+        }
+        );
 
         return patientHospitalVisitsResponse.data;
 

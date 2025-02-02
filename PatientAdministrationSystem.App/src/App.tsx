@@ -117,19 +117,6 @@ function App() {
       //TODO perhaps accept a date/time range, validate that end isn't before start - do on client or server?
       //   const queryString: string = `q=${encodeURIComponent('followers:>=60000')}&sort=followers&order=desc`;
       try {
-        //TODO do lots of awaits in series
-
-
-        //TODO use javascript/typescript features to set text from  variables
-        //TODO encode the json payload - need a struct, but use raw json for now?
-        //TODO does the response take a generic type?
-        const patientHospitalVisitsResponse: AxiosResponse = await apiClient.get(`/api/patients/hospitalVisits`, {
-          params: {
-            PatientFirstNamePrefix: normalise(firstNamePrefix),
-            PatientLastNamePrefix: normalise(lastNamePrefix),
-            HospitalId: hospitalOption === ANY_HOSPITAL_WILDCARD ? null : hospitalOption
-          }
-        });
 
         const patientHospitalVisitsRequest: PatientHospitalVisitsRequest = {
           PatientFirstNamePrefix: normalise(firstNamePrefix),
@@ -137,14 +124,7 @@ function App() {
           HospitalId: hospitalOption === ANY_HOSPITAL_WILDCARD ? undefined : hospitalOption
         }
 
-        //TODO implement
-        // const patientHospitalVisitsResponse2: AxiosResponse = await patientSearchService.getPatientHospitalVisits(`/api/patients/hospitalVisits`, {
-        //   params: {
-        //     PatientFirstNamePrefix: normalise(firstNamePrefix),
-        //     PatientLastNamePrefix: normalise(lastNamePrefix),
-        //     HospitalId: hospitalOption === ANY_HOSPITAL_WILDCARD ? null : hospitalOption
-        //   }
-        // });
+        const patientHospitalVisitsResponses: PatientHospitalVisitResponse[] = await patientSearchService.getPatientHospitalVisits(patientHospitalVisitsRequest);
 
 
         //look up the data for each entry in the response
@@ -160,7 +140,7 @@ function App() {
          * a more sophisticated implementation could perform these queries in parallel, or get all these 
          * details along with the visits above by using something like GraphQL.
          */
-        for (const patientHospitalVisitResponse of patientHospitalVisitsResponse.data) {
+        for (const patientHospitalVisitResponse of patientHospitalVisitsResponses) {
 
           //look up the hospital name
           var hospitalName: string;
@@ -240,6 +220,7 @@ function App() {
 
       } catch (err) {
         //TODO might need to catch other types of error, too
+        console.log(err);
         setError(err.response.data)
       }
 
