@@ -1,8 +1,6 @@
 import HospitalResponse from "./types/HospitalResponse";
 import React, { useState } from "react";
 
-
-//TODO tidy, document
 interface PatientVisitSearchCriteriaProps {
   onFirstNamePrefixChange: (value: string) => void;
   onLastNamePrefixChange: (value: string) => void;
@@ -10,7 +8,6 @@ interface PatientVisitSearchCriteriaProps {
   onSearchButtonClick: () => void;
   hospitalOptions: HospitalResponse[];
 }
-
 
 const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({ onFirstNamePrefixChange, onLastNamePrefixChange, onHospitalSelectedOptionChange, onSearchButtonClick, hospitalOptions }) => {
   const [firstName, setFirstName] = useState<string>("");

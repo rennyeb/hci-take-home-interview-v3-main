@@ -1,8 +1,8 @@
 import React from "react";
+import PatientHospitalVisitSearchResult from "./types/PatientHospitalVisitSearchResult"
 
-//TODO tidy, document
 interface PatientVisitSearchResultsProps {
-  searchResults: any[];//TODO better type
+  searchResults: PatientHospitalVisitSearchResult[];
 }
 
 const PatientVisitSearchResults: React.FC<PatientVisitSearchResultsProps> = ({ searchResults }) => {
