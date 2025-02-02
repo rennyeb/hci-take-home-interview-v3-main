@@ -5,6 +5,7 @@ import apiClient from "./api/apiClient";
 //TODO remove - go via the other ts file
 import axios, { AxiosResponse } from 'axios';
 import PatientVisitSearchCriteria from "./PatientVisitSearchCriteria"
+import PatientVisitSearchResults from "./PatientVisitSearchResults"
 import { useState } from 'react';
 
 //TODO remove anything unused
@@ -291,7 +292,12 @@ function App() {
         {/* only show search results if a search has been performed */}
         {searchExecuted && (
 
+
           <div>
+
+            <PatientVisitSearchResults searchResults={searchResults} />
+
+
             <h1>Search Results</h1>
 
             {searchResults.length ? (

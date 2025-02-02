@@ -14,9 +14,7 @@ interface PatientVisitSearchCriteriaProps {
 const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({ onFirstNamePrefixChange, onLastNamePrefixChange, onHospitalOptionChange, onButtonClick, hospitalOptions }) => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
-  const options = ["Option 1", "Option 2", "Option 3", "Option 4"];
-  //TODO update to use hospitalOptions, remove the above
-  const [selected, setSelected] = useState(options[0]);
+  const [selected, setSelected] = useState(hospitalOptions[0]);
 
   const handleFirstNamePrefixChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
