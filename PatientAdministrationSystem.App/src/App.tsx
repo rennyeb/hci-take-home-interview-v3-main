@@ -9,8 +9,6 @@ import { useState } from 'react';
 
 //TODO remove anything unused
 
-//TODO why is everything called twice, according to the browser console?  Is it because of the async?  Or is it because of the "()" at the end of the function?
-
 //TODO put types somewhere else?  How to populate from the JSON response?
 type Hospital = {
   name: string;
@@ -27,8 +25,6 @@ function App() {
   const [lastNamePrefix, setLastNamePrefix] = useState<string>("");
 
   const [searchResults, setSearchResults] = useState([]);
-
-  //TODO need the chosen hospital
 
   const [isLoading, setLoading] = useState<boolean>(false);
 
@@ -48,8 +44,6 @@ function App() {
   //TODO better type
   const handleHospitalOptionChange = (value: any) => {
     setHospitalOption(value); // Update state with value from child component
-    console.log("in handleHospitalOptionChange")
-    console.log(value)
   }
 
   onload = () => {
@@ -63,17 +57,10 @@ function App() {
 
       //TODO test e.g. url not found, server down... or put in a TODO for more advanced
       //TODO perhaps accept a date/time range, validate that end isn't before start - do on client or server?
-      //   const queryString: string = `q=${encodeURIComponent('followers:>=60000')}&sort=followers&order=desc`;
       try {
         //TODO use javascript/typescript features to set text from  variables
         const hospitalsResponse: AxiosResponse = await client.get(`/api/hospitals`);
 
-        //TODO need to find out how to do this - might need to loop through?  get chatgpt to gen some code
-        //TODO should hospital option be a component, with an onchoose/onclick or something?
-        // var hospitals: Hospital[]=hospitalsResponse;
-
-
-        console.log(hospitalsResponse.data);
 
         //TODO use the right types
         const hospitals = hospitalsResponse.data.map((hospitalResponse: { name: any; id: any; }) => ({
@@ -87,12 +74,7 @@ function App() {
           hospitalId: ANY_HOSPITAL_WILDCARD
         });
 
-        console.log(hospitals);
-
         setHospitalOptions(hospitals);
-
-        //TODO create a structure and map it
-        // console.log(hospitalsResponse.data);
 
       } catch (err) {
         //TODO display an error on screen
@@ -111,10 +93,6 @@ function App() {
 
   //TODO better function names
   const handleButtonClick = () => {
-    // console.log("button clicked, input value=" + inputValue)
-    // alert("button clicked")
-
-    //TODO display "waiting" logo
 
     //TODO how to set timeout?
     (async () => {
@@ -123,13 +101,6 @@ function App() {
       setError("")
       setSearchExecuted(false)
       setSearchResults([])
-
-      //TODO remove
-      // const client = axios.create({
-      //   baseURL: 'https://localhost:7260/',
-      // });
-
-      //TODO change "waiting" to "loading"
 
       const client = apiClient;
 
@@ -152,7 +123,6 @@ function App() {
           }
         });
 
-        console.log(patientHospitalVisitsResponse.data)
 
         //look up the data for each entry in the response
 
@@ -277,148 +247,34 @@ function App() {
   //TODO create structs for the return data
 
 
-  // (async () => {
-  //   const config: AxiosRequestConfig = {
-  //     headers: {
-  //       'Accept': 'application/vnd.github+json',
-  //     } as RawAxiosRequestHeaders,
-  //   };
-  //   const queryString: string = `q=${encodeURIComponent('followers:>=60000')}&sort=followers&order=desc`;
-  //   try {
-  //     const searchResponse: AxiosResponse = await client.get(`/search/users?${queryString}`, config);
-  //     const foundUsers: githubFoundUser[] = searchResponse.data.items;
-
-  //     const username: string = foundUsers[0].login;
-  //     const userResponse: AxiosResponse = await client.get(`/users/${username}`, config);
-  //     const user: githubUser = userResponse.data;
-  //     const followersCount = user.followers;
-
-  //     console.log(`The most followed user on GitHub is "${username}" with ${followersCount} followers.`)
-
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // })();
-
-
   //TODO should there be error handling?  what args does the async take?
 
-  //TODO remove
-  (async () => {
-    const client = axios.create({
-      baseURL: 'https://localhost:7260/',
-    });
-
-
-    //TODO test e.g. url not found, server down... or put in a TODO for more advanced
-    //TODO perhaps accept a date/time range, validate that end isn't before start - do on client or server?
-    // const config: AxiosRequestConfig = {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   } as RawAxiosRequestHeaders,
-    // };
-    // //   const queryString: string = `q=${encodeURIComponent('followers:>=60000')}&sort=followers&order=desc`;
-    try {
-      //   // throw new Error("test2")
-      //   const searchResponse: AxiosResponse = await client.get(`/api/patients/hi?name=zzz2`);
-      //   // const foundUsers: githubFoundUser[] = searchResponse.data.items;
-      //   //TODO how to get the response data?  Wrong header?
-      //   // console.log("search response: " + JSON.stringify(searchResponse))
-      //   console.log("data= " + JSON.stringify(searchResponse.data));
-
-      //   //     // const username: string = foundUsers[0].login;
-      //   //     // const userResponse: AxiosResponse = await client.get(`/users/${username}`, config);
-      //   //     // const user: githubUser = userResponse.data;
-      //   //     // const followersCount = user.followers;
-
-      //   //     // console.log(`The most followed user on GitHub is "${username}" with ${followersCount} followers.`)
-
-      //   console.log("here")
-    } catch (err) {
-      console.log(err);
-    }
-  })();
-
-
-
-
-  // const config: AxiosRequestConfig = {
-  //   headers: {
-  //     'Accept': 'application/vnd.github+json',
-  //   } as RawAxiosRequestHeaders,
-  // };
-
-
-  // async () => {
-  //   const config: AxiosRequestConfig = {
-  //     headers: {
-  //       'Accept': 'application/vnd.github+json',
-  //     } as RawAxiosRequestHeaders,
-  //   };
-  //   const queryString: string = `q=${encodeURIComponent('followers:>=60000')}&sort=followers&order=desc`;
-  //   try {
-  //     const searchResponse: AxiosResponse = await client.get(`/search/users?${queryString}`, config);
-  //     const foundUsers: githubFoundUser[] = searchResponse.data.items;
-
-  //     const username: string = foundUsers[0].login;
-  //     const userResponse: AxiosResponse = await client.get(`/users/${username}`, config);
-  //     const user: githubUser = userResponse.data;
-  //     const followersCount = user.followers;
-
-  //     console.log(`The most followed user on GitHub is "${username}" with ${followersCount} followers.`)
-  //   } catch(err) {
-  //     console.log(err);
-  //   }  
-  // }();
 
   //TODO turn off server, see where to trap connection refused error, timeouts...
 
-  //TODO create a "clear" button
+  //TODO could have a "clear" button which resets the form back to how it was at page load time
 
 
   //TODO put all this in a component
   return (
     <div>
       <img src="./public/hci-main-logo.svg" alt="HCI logo" />
-      {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <h1>Implement me4</h1>
-      </div> */}
 
-      {/*TODO nice formatting*/}
+      {/*TODO nice formatting - does the below do anything?*/}
 
       <div style={{ justifyContent: 'left', alignItems: 'center', height: '100vh' }}>
         <table>
 
           <tbody>
-            {/* <tr>
-              <th>input name</th>
-            </tr>
-
-            <tr>
-              <td><input value="1234" /></td>
-            </tr>
-
-            <tr>
-              <td><button onClick={() => myFunction('test')}> MyButton</button></td>
-            </tr> */}
-
-            {/* <tr>
-            <td><TestComponent defaultName="Alice2" value="abc" /></td>
-          </tr> */}
-
 
             {/* //TODO might not need to bother with a component?  Or have one component that does everything? */}
             {/* TODO remove unnecessary table stuff */}
-            {/* //TODO react to hospital option change */}
             <tr>
               <td>
                 <h1>Patient Visit Search</h1>
                 <TextInput onFirstNamePrefixChange={handleFirstNamePrefixChange} onLastNamePrefixChange={handleLastNamePrefixChange} onHospitalOptionChange={handleHospitalOptionChange} hospitalOptions={hospitalOptions} onButtonClick={handleButtonClick} />
 
-                {/* //TODO pass the chosen hospital to the server too */}
-
-                {/* //TODO remove */}
-                {/* //TODO should use CSS styling for the colour */}
+                {/* TODO should use CSS styling for the colour */}
                 <p style={{ color: 'red' }}>{error} </p>
                 {isLoading ? <p>loading...</p> : <p />}
               </td>
@@ -430,17 +286,9 @@ function App() {
 
         </table>
 
-        {/* TODO show/hide */}
 
-        {/* TODO a more advanced implementation could support ascending/descending sort, and pagination */}
 
         {/* only show search results if a search has been performed */}
-
-
-        {/* //TODO put back in */}
-        {/* {rows ? ( */}
-
-
         {searchExecuted && (
 
           <div>
@@ -449,6 +297,7 @@ function App() {
             {searchResults.length ? (
               <table border={1}>
                 <thead>
+                  {/* NB a more advanced implementation could support ascending/descending sorting options in the table headers , and pagination */}
                   <tr>
                     <th>Date</th>
                     <th>Patient</th>
@@ -460,12 +309,12 @@ function App() {
 
                   {searchResults.map((searchResult) => (
                     <tr key={searchResult.visitId}>
-                      {/* NB should be in date descending order for usability - user is likely to be more interested in more recent visits */}
+                      {/* NB already sorted into date descending order for usability - user is likely to be more interested in more recent visits */}
                       <td>{searchResult.visitDateString}</td>
-                      {/* //TODO change to hyperlinks */}
-                      {/* //TODO concatening for usability */}
+                      {/* Concatenate the full patient name - easier on the user */}
                       <td>{searchResult.patientFirstName} {searchResult.patientLastName}</td>
                       <td>{searchResult.hospitalName}</td>
+                      {/* NB a more advanced implementation would show full details of the visit, the patient's email address, etc. */}
                       <td><a href="#" onClick={() => alert('Not yet implemented')}>details</a></td>
                     </tr>
                   ))}
@@ -480,7 +329,6 @@ function App() {
         )}
 
 
-        {/* ):""} */}
 
       </div>
     </div>

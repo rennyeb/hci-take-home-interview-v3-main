@@ -22,8 +22,6 @@ public class PatientsRepository : IPatientsRepository
 	public List<PatientEntity> getByNamePrefixes(String lastNamePrefix, String? firstNamePrefix)
 	{
 
-		//TODO test trimming - and also trim on the client
-
 		return _context.Patients.Where(
 			//NB against a real database, an index on last name should be able to cope with prefix searches
 

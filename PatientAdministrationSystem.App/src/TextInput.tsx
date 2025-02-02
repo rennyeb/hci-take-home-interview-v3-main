@@ -17,6 +17,7 @@ const TextInput: React.FC<TextInputProps> = ({ onFirstNamePrefixChange, onLastNa
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const options = ["Option 1", "Option 2", "Option 3", "Option 4"];
+  //TODO update to use hospitalOptions, remove the above
   const [selected, setSelected] = useState(options[0]);
 
   const handleFirstNamePrefixChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +46,7 @@ const TextInput: React.FC<TextInputProps> = ({ onFirstNamePrefixChange, onLastNa
 
   return (
     <div>
-      {/* //TODO set the surname as the default field for focus */}
+      {/* //NB could set the surname as the default field for focus */}
 
       {/* //TODO not working */}
       {/* <form> */}
@@ -85,7 +86,7 @@ const TextInput: React.FC<TextInputProps> = ({ onFirstNamePrefixChange, onLastNa
               <select id="hospital" value={selected} onChange={handleHistoryOptionChange}>
 
                 {/* dynamically add an option for each hospital */}
-                {/* //TODO type-ahead might be nice, might be nice to keep the selection from last time */}
+                {/* NB type-ahead might be nice, might be nice to keep the selection from last time */}
                 {hospitalOptions.map((hospitalOption, index) => (
                   <option key={index} value={hospitalOption.hospitalId}>
                     {hospitalOption.name}
@@ -95,9 +96,9 @@ const TextInput: React.FC<TextInputProps> = ({ onFirstNamePrefixChange, onLastNa
               </select>
             </td>
 
-            {/* //TODO could add date range for visit */}
+            {/* NB could add date range to further filter down the visits, or something like "in the last week"/"in the last month"... */}
 
-            {/* //TODO links to the hospital home page, patient home page, visit home page... */}
+            {/* NB could have hyperlinks to the hospital details, patient details, visit details... */}
           </tr>
         </tbody>
       </table>
