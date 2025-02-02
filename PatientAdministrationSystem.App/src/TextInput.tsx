@@ -4,18 +4,18 @@ import React, { useState } from "react";
 //TODO rename
 //TODO tidy, document
 interface TextInputProps {
-  onFirstNameChange: (value: string) => void;
+  onFirstNamePrefixChange: (value: string) => void;
   onButtonClick: () => void;
   hospitalOptions: string[];//TODO better type
 }
 
-const TextInput: React.FC<TextInputProps> = ({ onFirstNameChange, onButtonClick, hospitalOptions }) => {
+const TextInput: React.FC<TextInputProps> = ({ onFirstNamePrefixChange, onButtonClick, hospitalOptions }) => {
   const [firstName, setFirstName] = useState<string>("");
 
-  const handleFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFirstNamePrefixChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     setFirstName(newValue);
-    onFirstNameChange(newValue); // Send input value to parent component
+    onFirstNamePrefixChange(newValue); // Send input value to parent component
   };
 
   const handleClick = () => {
@@ -29,36 +29,38 @@ const TextInput: React.FC<TextInputProps> = ({ onFirstNameChange, onButtonClick,
       <table>
         <tbody>
           <tr>
-            <td>First Name:</td>
+            {/* //TODO complain client side if this value not populated */}
+            <td>Last Name prefix *:</td>
             <td>
               <input
-                id="firstName"
+                id="lastNamePrefix"
                 type="text"
-                placeholder='e.g. John'
-                value={firstName}
-                onChange={handleFirstNameChange}
+                placeholder='e.g. Smith or Smi'
+              // value={lastName}
+              // onChange={handleLastNamePrefixChange}
               />
             </td>
           </tr>
           <tr>
-            <td>Last Name:</td>
+            <td>First Name prefix:</td>
             <td>
               <input
-                id="lastName"
+                id="firstNamePrefix"
                 type="text"
-                placeholder='e.g. Smith'
-              // value={lastName}
-              // onChange={handleLastNameChange}
+                placeholder='e.g. John or Jo'
+                value={firstName}
+                onChange={handleFirstNamePrefixChange}
               />
             </td>
           </tr>
+
           <tr>
             <td>Hospital:</td>
             <td>
 
 
-                {/* //TODO populate from state */}
-                <select id="hospital">
+              {/* //TODO populate from state */}
+              <select id="hospital">
                 <option value="*">(Any hospital)</option>
                 <option value="St. Mary's">St. Mary's</option>
               </select>

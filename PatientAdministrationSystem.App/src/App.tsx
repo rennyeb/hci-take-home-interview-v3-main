@@ -19,7 +19,7 @@ type Hospital = {
 
 function App() {
 
-  const [firstName, setFirstName] = useState<string>("");
+  const [firstNamePrefix, setFirstNamePrefix] = useState<string>("");
 
   const [responseValue, setResponseValue] = useState<string>("(not yet called)");
 
@@ -27,8 +27,8 @@ function App() {
 
   const [hospitalOptions, setHospitalOptions] = useState([]);
 
-  const handleFirstNameChange = (value: string) => {
-    setFirstName(value); // Update state with value from child component
+  const handleFirstNamePrefixChange = (value: string) => {
+    setFirstNamePrefix(value); // Update state with value from child component
   };
 
   onload = () => {
@@ -111,7 +111,7 @@ function App() {
       //   const queryString: string = `q=${encodeURIComponent('followers:>=60000')}&sort=followers&order=desc`;
       try {
         //TODO use javascript/typescript features to set text from  variables
-        const searchResponse: AxiosResponse = await client.get(`/api/patients/hi?name=` + firstName);
+        const searchResponse: AxiosResponse = await client.get(`/api/patients/hi?name=` + firstNamePrefix);
 
         setResponseValue(searchResponse.data.name)
 
@@ -278,8 +278,8 @@ function App() {
             <tr>
               <td>
                 <h1>Patient Visit Search</h1>
-                <TextInput onFirstNameChange={handleFirstNameChange} onButtonClick={handleButtonClick} hospitalOptions={hospitalOptions}/>
-                <p>You typed: {firstName}</p>
+                <TextInput onFirstNamePrefixChange={handleFirstNamePrefixChange} onButtonClick={handleButtonClick} hospitalOptions={hospitalOptions}/>
+                <p>You typed: {firstNamePrefix}</p>
                 <p>Response from server: <b>{responseValue}</b></p>
                 {isWaiting ? <p>waiting...</p> : <p />}
               </td>
