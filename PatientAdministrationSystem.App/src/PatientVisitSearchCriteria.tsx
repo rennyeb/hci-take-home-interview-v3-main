@@ -38,8 +38,6 @@ const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({
     onButtonClick();
   }
 
-  console.log("hospitalOptions " + JSON.stringify(hospitalOptions));
-
   return (
     <div>
       {/* //NB could set the surname as the default field for focus */}
@@ -101,6 +99,9 @@ const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({
       <br />
       <button onClick={handleClick} type="submit">Search</button>
       {/* </form> */}
+
+      {/* NB could have a "clear" button which resets the form back to how it was at page load time */}
+
     </div>
   );
 };

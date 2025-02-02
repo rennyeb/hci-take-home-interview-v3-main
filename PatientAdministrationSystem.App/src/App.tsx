@@ -31,7 +31,7 @@ function App() {
 
   const [hospitalOptions, setHospitalOptions] = useState([]);
 
-  //TODO better types?  non null value?
+  //TODO better types?  
   const [hospitalOption, setHospitalOption] = useState(null);
 
   const handleFirstNamePrefixChange = (value: string) => {
@@ -241,10 +241,6 @@ function App() {
     }
   }
 
-  // const client = axios.create({
-  //   baseURL: 'https://api.github.com',
-  // });
-
   //TODO create structs for the return data
 
 
@@ -253,17 +249,21 @@ function App() {
 
   //TODO turn off server, see where to trap connection refused error, timeouts...
 
-  //TODO could have a "clear" button which resets the form back to how it was at page load time
 
 
-  //TODO put all this in a component
+  //TODO put all this in a component - patient visit search
   return (
     <div>
       <img src="./public/hci-main-logo.svg" alt="HCI logo" />
 
       <div>
         <h1>Patient Visit Search</h1>
-        <PatientVisitSearchCriteria onFirstNamePrefixChange={handleFirstNamePrefixChange} onLastNamePrefixChange={handleLastNamePrefixChange} onHospitalOptionChange={handleHospitalOptionChange} hospitalOptions={hospitalOptions} onButtonClick={handleButtonClick} />
+        <PatientVisitSearchCriteria
+          onFirstNamePrefixChange={handleFirstNamePrefixChange}
+          onLastNamePrefixChange={handleLastNamePrefixChange}
+          onHospitalOptionChange={handleHospitalOptionChange}
+          hospitalOptions={hospitalOptions}
+          onButtonClick={handleButtonClick} />
 
         {/* TODO should use CSS styling for the colour */}
         <p style={{ color: 'red' }}>{error} </p>
