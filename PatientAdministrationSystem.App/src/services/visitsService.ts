@@ -3,7 +3,7 @@ import apiClient from "../api/apiClient";
 import VisitResponse from "../types/VisitResponse";
 
 const visitsService = {
-    async getVisit(visitId: string): Promise<VisitResponse> {
+    async getVisit(visitId: string): Promise<VisitResponse|null> {
         try {
             const visitsResponse = await apiClient.get(`/api/visits/${visitId}`);
             return visitsResponse.data;

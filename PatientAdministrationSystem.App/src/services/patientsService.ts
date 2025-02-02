@@ -3,7 +3,7 @@ import apiClient from "../api/apiClient";
 import PatientResponse from "../types/PatientResponse";
 
 const patientsService = {
-    async getPatient(patientId: string): Promise<PatientResponse> {
+    async getPatient(patientId: string): Promise<PatientResponse|null> {
         try {
             const patientsResponse = await apiClient.get(`/api/patients/${patientId}`);
             return patientsResponse.data;

@@ -8,8 +8,6 @@ import visitsService from "./services/visitsService";
 import PatientVisitSearchCriteria from "./PatientVisitSearchCriteria"
 import PatientVisitSearchResults from "./PatientVisitSearchResults"
 import HospitalResponse from "./types/HospitalResponse";
-import PatientResponse from "./types/PatientResponse";
-import VisitResponse from "./types/VisitResponse";
 import PatientHospitalVisitsRequest from "./types/PatientHospitalVisitsRequest";
 import PatientHospitalVisitResponse from "./types/PatientHospitalVisitResponse";
 import PatientHospitalVisitSearchResult from "./types/PatientHospitalVisitSearchResult"
@@ -55,7 +53,7 @@ function App() {
 
       try {
 
-        const hospitalResponses: HospitalResponse[] = await hospitalsService.getHospitals();
+        const hospitalResponses = await hospitalsService.getHospitals();
 
         //prepend the actual hospitals with a wildcard option
         hospitalResponses.unshift(anyHospitalOption);
@@ -113,7 +111,7 @@ function App() {
           //look up the hospital name
           var hospitalName: string;
 
-          const hospitalResponse: HospitalResponse = await hospitalsService.getHospital(patientHospitalVisitResponse.hospitalId);
+          const hospitalResponse = await hospitalsService.getHospital(patientHospitalVisitResponse.hospitalId);
           if (hospitalResponse) {
             hospitalName = hospitalResponse.name;
           } else {
@@ -123,7 +121,7 @@ function App() {
           //look up the patient name
           var patientFirstName: string;
           var patientLastName: string;
-          const patientResponse: PatientResponse = await patientsService.getPatient(patientHospitalVisitResponse.patientId);
+          const patientResponse = await patientsService.getPatient(patientHospitalVisitResponse.patientId);
           if (patientResponse) {
 
             patientFirstName = patientResponse.firstName;
@@ -137,7 +135,7 @@ function App() {
           //look up the visit date
           var visitDate: Date;
           var visitDateString: string;
-          const visitResponse: VisitResponse = await visitsService.getVisit(patientHospitalVisitResponse.visitId);
+          const visitResponse = await visitsService.getVisit(patientHospitalVisitResponse.visitId);
           if (visitResponse) {
             visitDate = new Date(visitResponse.date)
 

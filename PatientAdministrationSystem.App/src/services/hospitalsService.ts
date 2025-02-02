@@ -8,7 +8,7 @@ const hospitalsService = {
         return hospitalsResponse.data;
     },
 
-    async getHospital(hospitalId: string): Promise<HospitalResponse> {
+    async getHospital(hospitalId: string): Promise<HospitalResponse|null> {
         try {
             const hospitalsResponse = await apiClient.get(`/api/hospitals/${hospitalId}`);
             return hospitalsResponse.data;
