@@ -1,8 +1,5 @@
 import './App.css'
 
-import { AxiosResponse } from 'axios';
-import apiClient from "./api/apiClient";
-
 import hospitalsService from "./services/hospitalsService";
 import patientsService from "./services/patientsService";
 import patientSearchService from "./services/patientSearchService";
@@ -15,6 +12,7 @@ import PatientResponse from "./types/PatientResponse";
 import VisitResponse from "./types/VisitResponse";
 import PatientHospitalVisitsRequest from "./types/PatientHospitalVisitsRequest";
 import PatientHospitalVisitResponse from "./types/PatientHospitalVisitResponse";
+import PatientHospitalVisitSearchResult from "./types/PatientHospitalVisitSearchResult"
 import { useState } from 'react';
 
 //TODO remove anything unused
@@ -29,11 +27,9 @@ function App() {
   const [error, setError] = useState<string>("");
   const [searchExecuted, setSearchExecuted] = useState<boolean>(false);
   const [firstNamePrefix, setFirstNamePrefix] = useState<string>("");
-  //temp TODO revert
-  // const [lastNamePrefix, setLastNamePrefix] = useState<string>("");
-  const [lastNamePrefix, setLastNamePrefix] = useState<string>("s");
+  const [lastNamePrefix, setLastNamePrefix] = useState<string>("");
 
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState<PatientHospitalVisitSearchResult[]>([]);
 
   const [isLoading, setLoading] = useState<boolean>(false);
 
@@ -89,10 +85,8 @@ function App() {
   }
 
 
-  //TODO better function names
-  const handleButtonClick = () => {
+  const handleSearchButtonClick = () => {
 
-    //TODO how to set timeout?
     (async () => {
 
       setLoading(true)
@@ -101,9 +95,7 @@ function App() {
       setSearchResults([])
 
 
-      //TODO test e.g. url not found, server down... or put in a TODO for more advanced
-      //TODO perhaps accept a date/time range, validate that end isn't before start - do on client or server?
-      //   const queryString: string = `q=${encodeURIComponent('followers:>=60000')}&sort=followers&order=desc`;
+      //NB could accept a date/time range, server would need to validate that end isn't before start - and could validate in the app as well
       try {
 
         const patientHospitalVisitsRequest: PatientHospitalVisitsRequest = {
@@ -112,18 +104,13 @@ function App() {
           HospitalId: hospitalSelectedOption?.hospitalId
         }
 
-console.log(patientHospitalVisitsRequest)
+        console.log(patientHospitalVisitsRequest)
 
         const patientHospitalVisitsResponses: PatientHospitalVisitResponse[] = await patientSearchService.getPatientHospitalVisits(patientHospitalVisitsRequest);
 
 
         //look up the data for each entry in the response
-
-
-        //TODO use strong type
-        var theRows: any[] = [];
-
-        //TODO a "no results found" message on screen
+        const patientHospitalVisitSearchResults: PatientHospitalVisitSearchResult[] = [];
 
         /**
          * Note that there is a series of API calls below (to get display text for details of each visit) - 
@@ -178,41 +165,35 @@ console.log(patientHospitalVisitsRequest)
             visitDateString = "(Unknown)" //be resilient to data integrity issues
           }
 
-
-
-
-          //TODO a type for the row
-          var row: any = {
-            "visitId": patientHospitalVisitResponse.visitId,
-            "patientFirstName": patientFirstName,
-            "patientLastName": patientLastName,
-            "hospitalName": hospitalName,
-            "visitDateString": visitDateString,
-            "visitDate": visitDate
+          const patientHospitalVisitSearchResult: PatientHospitalVisitSearchResult = {
+            visitId: patientHospitalVisitResponse.visitId,
+            patientFirstName: patientFirstName,
+            patientLastName: patientLastName,
+            hospitalName: hospitalName,
+            visitDateString: visitDateString,
+            visitDate: visitDate
           };
-          theRows.push(row);
+          patientHospitalVisitSearchResults.push(patientHospitalVisitSearchResult);
 
         }
 
         //sort the rows by date descending
-        theRows.sort((a, b) => b.visitDate - a.visitDate)
+        patientHospitalVisitSearchResults.sort((a, b) => b.visitDate.getTime() - a.visitDate.getTime())
 
 
-        //TODO rename this set/var
-        setSearchResults(theRows)
+        setSearchResults(patientHospitalVisitSearchResults)
         setSearchExecuted(true)
 
-
-
-        // setResponseValue(searchResponse.data.name)
-
-
-
       } catch (err) {
-        //TODO might need to catch other types of error, too
-        console.log(err);
-        //TODO check if axios error?  throw from service layer?
-        setError(err.response.data)
+
+        if (err instanceof Error && 'apiMessage' in err) {
+          setError((err as any).apiMessage)
+        } else {
+          //rethrow any other type of error
+          console.log(err);
+          throw err;
+        }
+
       }
 
       //TODO enable/disable the button, as well
@@ -222,28 +203,10 @@ console.log(patientHospitalVisitsRequest)
 
   }
 
+  //TODO turn off server, see where to trap connection refused error...
 
-  //TODO need a return type
-  const normalise = (input: string) => {
-    if (!input) {
-      return undefined;
-    } else {
-      input = input.trim();
-      return input.length === 0 ? undefined : input;
-    }
-  }
-
-  //TODO create structs for the return data
-
-
-  //TODO should there be error handling?  what args does the async take?
-
-
-  //TODO turn off server, see where to trap connection refused error, timeouts...
-
-
-
-  //TODO put all this in a component - patient visit search
+  //NB this should really be put in a component - patient visit search - rather than at the top level of the App
+  //Leaving it here for simplicity for the sake of the coding exercise
   return (
     <div>
       <img src="./hci-main-logo.svg" alt="HCI logo" />
@@ -255,7 +218,7 @@ console.log(patientHospitalVisitsRequest)
           onLastNamePrefixChange={handleLastNamePrefixChange}
           onHospitalSelectedOptionChange={handleHospitalSelecteOptionChange}
           hospitalOptions={hospitalOptions}
-          onSearchButtonClick={handleButtonClick} />
+          onSearchButtonClick={handleSearchButtonClick} />
 
         {/* TODO should use CSS styling for the colour */}
         <p style={{ color: 'red' }}>{error} </p>
@@ -268,6 +231,16 @@ console.log(patientHospitalVisitsRequest)
       </div>
     </div>
   )
+}
+
+//TODO need a return type
+const normalise = (input: string) => {
+  if (!input) {
+    return undefined;
+  } else {
+    input = input.trim();
+    return input.length === 0 ? undefined : input;
+  }
 }
 
 export default App

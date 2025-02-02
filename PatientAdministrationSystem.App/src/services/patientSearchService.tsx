@@ -6,13 +6,33 @@ import PatientHospitalVisitResponse from "../types/PatientHospitalVisitResponse"
 const patientSearchService = {
     async getPatientHospitalVisits(patientHospitalVisitsRequest: PatientHospitalVisitsRequest): Promise<PatientHospitalVisitResponse[]> {
 
-        //TODO does the response take a generic type?
-        const patientHospitalVisitsResponse: AxiosResponse = await apiClient.get(`/api/patients/hospitalVisits`, {
-            params: patientHospitalVisitsRequest
-        }
-        );
 
-        return patientHospitalVisitsResponse.data;
+        try {
+            const patientHospitalVisitsResponse = await apiClient.get(`/api/patients/hospitalVisits`, {
+                params: patientHospitalVisitsRequest
+            }
+            );
+
+            return patientHospitalVisitsResponse.data;
+
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                if (error?.response?.status === 400) {
+
+                    const invalidRequestError: any = new Error();
+
+                    //push in the error message
+                    invalidRequestError.apiMessage = error?.response?.data
+                    invalidRequestError.cause = error
+
+                    throw invalidRequestError
+                }
+            }
+
+            //otherwise rethrow any other type of error
+            throw error;
+
+        }
 
     }
 }
