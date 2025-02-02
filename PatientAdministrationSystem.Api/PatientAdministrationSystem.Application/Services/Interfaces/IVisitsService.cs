@@ -4,7 +4,6 @@ namespace PatientAdministrationSystem.Application.Interfaces;
 
 public interface IVisitsService
 {
-
-	VisitResponse? getById(Guid VisitId);
+	VisitResponse? getById(Guid visitId);
 
 }

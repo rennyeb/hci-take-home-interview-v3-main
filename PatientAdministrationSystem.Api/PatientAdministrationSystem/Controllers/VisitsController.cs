@@ -19,20 +19,17 @@ public class VisitsController : ControllerBase
 	// Define your API contracts here
 
 	[HttpGet]
-	[Route("{VisitId}")]
-	public IActionResult getVisit([FromRoute] Guid VisitId)
+	[Route("{visitId}")]
+	public IActionResult getVisit([FromRoute] Guid visitId)
 	{
-		VisitResponse? visitResponse = _visitsService.getById(VisitId);
+		VisitResponse? visitResponse = _visitsService.getById(visitId);
 
-		//TODO test - curl? unit test?
 		if (visitResponse == null)
 		{
-			return NotFound();
 			return NotFound();
 		}
 		else
 		{
-
 			return Ok(visitResponse);
 		}
 

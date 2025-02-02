@@ -21,9 +21,9 @@ public class HospitalsService : IHospitalsService
 
 	}
 
-	public HospitalResponse? getById(Guid HospitalId)
+	public HospitalResponse? getById(Guid hospitalId)
 	{
-		HospitalEntity? hospitalEntity = _repository.getById(HospitalId);
+		HospitalEntity? hospitalEntity = _repository.getById(hospitalId);
 		if (hospitalEntity == null)
 		{
 			return null;

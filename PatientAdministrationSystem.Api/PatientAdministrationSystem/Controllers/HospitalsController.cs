@@ -18,7 +18,7 @@ public class HospitalsController : ControllerBase
 
 	// Define your API contracts here
 
-	//TODO note where caches could come in handy
+	//NB if there is a large amount of rarely-changing data (e.g. hospitals), there could be a use for a cache (with a suitable invalidation strategy).
 
 	[HttpGet]
 	[Route("")]
@@ -30,20 +30,17 @@ public class HospitalsController : ControllerBase
 	}
 
 	[HttpGet]
-	[Route("{HospitalId}")]
-	//TODO should parameter names be initial upper?
-	public IActionResult getHospital([FromRoute] Guid HospitalId)
+	[Route("{hospitalId}")]
+	public IActionResult getHospital([FromRoute] Guid hospitalId)
 	{
-		HospitalResponse? hospitalResponse = _hospitalsService.getById(HospitalId);
+		HospitalResponse? hospitalResponse = _hospitalsService.getById(hospitalId);
 
-		//TODO test - curl? unit test?
 		if (hospitalResponse == null)
 		{
 			return NotFound();
 		}
 		else
 		{
-
 			return Ok(hospitalResponse);
 		}
 

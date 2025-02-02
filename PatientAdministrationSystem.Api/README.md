@@ -26,3 +26,10 @@ These could be reimplemented in something more robust like PowerShell if require
 ###TODO mention test data - I've augmented it, including some with intentionally bad foreign key relationships
 
 ###TODO design decision that APIs return minimal data, could be chatty, calls are done sequentially
+
+###TODO  just return Guids so that the client can call more apis
+
+### Code naming rules
+
+The server code has been written according to the naming rules in https://google.github.io/styleguide/csharp-style.html.
+

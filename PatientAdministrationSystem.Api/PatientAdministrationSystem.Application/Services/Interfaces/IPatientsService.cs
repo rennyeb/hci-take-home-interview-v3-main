@@ -16,10 +16,10 @@ public interface IPatientsService
 	/// <summary>
 	/// Finds a patient by their unique identifier
 	/// </summary>
-	/// <param name="PatientId">
+	/// <param name="patientId">
 	/// The unique identifier of the patient</param>
 	/// <returns>Details of the patient, or null if not found</returns>
-	PatientResponse? getById(Guid PatientId);
+	PatientResponse? getById(Guid patientId);
 
 	/// <summary>
 	/// Retrieves a list of patient hospital visits based on the criteria in the request.

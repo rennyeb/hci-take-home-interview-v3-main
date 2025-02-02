@@ -14,9 +14,9 @@ public class PatientsService : IPatientsService
 
 	// Define your patient search logic here based on the interface method definition
 
-	public PatientResponse? getById(Guid PatientId)
+	public PatientResponse? getById(Guid patientId)
 	{
-		PatientEntity? patientEntity = _repository.getById(PatientId);
+		PatientEntity? patientEntity = _repository.getById(patientId);
 		if (patientEntity == null)
 		{
 			return null;
@@ -72,8 +72,6 @@ public class PatientsService : IPatientsService
 
 			}
 		}
-
-
 
 		return patientHospitalVisits;
 	}

@@ -6,6 +6,6 @@ public interface IHospitalsService
 {
 	List<HospitalResponse> getAll();
 
-	HospitalResponse? getById(Guid HospitalId);
+	HospitalResponse? getById(Guid hospitalId);
 
 }

@@ -16,9 +16,9 @@ public class VisitsService : IVisitsService
 
 
 
-	public VisitResponse? getById(Guid VisitId)
+	public VisitResponse? getById(Guid visitId)
 	{
-		VisitEntity? visitEntity = _repository.getById(VisitId);
+		VisitEntity? visitEntity = _repository.getById(visitId);
 		if (visitEntity == null)
 		{
 			return null;

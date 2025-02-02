@@ -14,7 +14,6 @@ public class HospitalsRepository : IHospitalsRepository
 
 	public List<HospitalEntity> getAll()
 	{
-		//TODO test this
 		return _context.Hospitals.OrderBy(hospital => hospital.Name).ToList();
 	}
 

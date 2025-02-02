@@ -19,13 +19,12 @@ public class PatientsController : ControllerBase
 	// Define your API contracts here
 
 	[HttpGet]
-	[Route("{PatientId}")]
+	[Route("{patientId}")]
 	//TODO should parameter names be initial upper?
-	public IActionResult getPatient([FromRoute] Guid PatientId)
+	public IActionResult getPatient([FromRoute] Guid patientId)
 	{
-		PatientResponse? patientResponse = _patientsService.getById(PatientId);
+		PatientResponse? patientResponse = _patientsService.getById(patientId);
 
-		//TODO test - curl? unit test?
 		if (patientResponse == null)
 		{
 			return NotFound();
@@ -40,7 +39,6 @@ public class PatientsController : ControllerBase
 
 	[HttpGet]
 	[Route("hospitalVisits")]
-	//TODO should parameter names be initial upper?
 	public IActionResult getPatientHospitalVisits([FromQuery] PatientHospitalVisitsRequest patientHospitalVisitsRequest)
 	{
 		try
@@ -50,14 +48,9 @@ public class PatientsController : ControllerBase
 		}
 		catch (PatientHospitalVisitException e)
 		{
-			//TODO test this
 			return BadRequest(e.Message);
 		}
 
 	}
-
-
-
-	//TODO note where caches could come in handy
 
 }
