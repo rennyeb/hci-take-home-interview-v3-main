@@ -20,7 +20,7 @@ public class PatientsRepository : IPatientsRepository
 		return _context.Patients.Where(patient => patient.Id.Equals(id)).SingleOrDefault();
 	}
 
-	public IQueryable<PatientEntity> getByNamePrefixes(String lastNamePrefix, String? firstNamePrefix)
+	public List<PatientEntity> getByNamePrefixes(String lastNamePrefix, String? firstNamePrefix)
 	{
 
 		//TODO test trimming - and also trim on the client
@@ -36,7 +36,7 @@ public class PatientsRepository : IPatientsRepository
 			// case-insensitive prefix match on first name, if present
 			(firstNamePrefix == null || firstNamePrefix.Trim().Length == 0 || patient.FirstName.ToUpper().Contains(firstNamePrefix.Trim().ToUpper()))
 
-			).Include(patient => patient.PatientHospitals);
+			).Include(patient => patient.PatientHospitals).ToList();
 	}
 
 }

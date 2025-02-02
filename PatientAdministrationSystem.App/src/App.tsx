@@ -195,11 +195,12 @@ function App() {
           }
 
           //look up the visit date
+          var visitDate: Date;
           var visitDateString: string;
           try {
             const visitResponse: AxiosResponse = await client.get(`/api/visits/${patientHospitalVisitResponse.visitId}`);
 
-            var visitDate: Date = new Date(visitResponse.data.date)
+            visitDate = new Date(visitResponse.data.date)
 
             //Format the date nicely
             visitDateString = visitDate.toLocaleDateString("en-IE", {
@@ -213,23 +214,28 @@ function App() {
           } catch (err) {
             console.log(err)
             //TODO deal with other types of error
-            //TODO how to test these branches?
+            visitDate = new Date(0);//low date value, to permit sorting against other populated dates
             visitDateString = "(Unknown)"
           }
 
 
 
 
+          //TODO a type for the row
           var row: any = {
             "visitId": patientHospitalVisitResponse.visitId,
             "patientFirstName": patientFirstName,
             "patientLastName": patientLastName,
             "hospitalName": hospitalName,
-            "visitDate": visitDateString
+            "visitDateString": visitDateString,
+            "visitDate": visitDate
           };
           theRows.push(row);
 
         }
+
+        //sort the rows by date descending
+        theRows.sort((a, b) => b.visitDate - a.visitDate)
 
 
         //TODO rename this set/var
@@ -444,9 +450,9 @@ function App() {
               <table border={1}>
                 <thead>
                   <tr>
+                    <th>Date</th>
                     <th>Patient</th>
                     <th>Hospital</th>
-                    <th>Date</th>
                     <th>Details</th>
                   </tr>
                 </thead>
@@ -454,11 +460,12 @@ function App() {
 
                   {searchResults.map((searchResult) => (
                     <tr key={searchResult.visitId}>
+                      {/* NB should be in date descending order for usability - user is likely to be more interested in more recent visits */}
+                      <td>{searchResult.visitDateString}</td>
                       {/* //TODO change to hyperlinks */}
                       {/* //TODO concatening for usability */}
                       <td>{searchResult.patientFirstName} {searchResult.patientLastName}</td>
                       <td>{searchResult.hospitalName}</td>
-                      <td>{searchResult.visitDate}</td>
                       <td><a href="#" onClick={() => alert('Not yet implemented')}>details</a></td>
                     </tr>
                   ))}
