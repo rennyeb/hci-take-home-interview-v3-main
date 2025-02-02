@@ -152,21 +152,17 @@ function App() {
 
         //TODO a "no results found" message on screen
 
+        /**
+         * Note that there is a series of API calls below (to get display text for details of each visit) - 
+         * a more sophisticated implementation could perform these queries in parallel, or get all these 
+         * details along with the visits above by using something like GraphQL.
+         */
         for (const patientHospitalVisitResponse of patientHospitalVisitsResponse.data) {
-          console.log("visitResponse: " + JSON.stringify(patientHospitalVisitResponse))
-
-          //TODO remove
-          // patientHospitalVisitsResponse.data.forEach(visitResponse => {
 
           //look up the hospital name
           var hospitalName: string;
           try {
-            //TODO deal with bad data - what if the hospital doesn't exist?
-            const hospitalResponse: any = await client.get(`/api/hospitals/${patientHospitalVisitResponse.hospitalId}`);
-            // const hospitalResponse: AxiosResponse = await client.get(`/api/hospitals/${visitResponse.HospitalId}`);
-
-            //TODO remove
-            console.log("hospitalResponse: " + JSON.stringify(hospitalResponse))
+            const hospitalResponse: AxiosResponse = await client.get(`/api/hospitals/${patientHospitalVisitResponse.hospitalId}`);
 
             hospitalName = hospitalResponse.data.name;
           } catch (err) {
@@ -178,9 +174,7 @@ function App() {
           var patientFirstName: string;
           var patientLastName: string;
           try {
-            const patientResponse: any = await client.get(`/api/patients/${patientHospitalVisitResponse.patientId}`);
-            // const hospitalResponse: AxiosResponse = await client.get(`/api/hospitals/${visitResponse.HospitalId}`);
-
+            const patientResponse: AxiosResponse = await client.get(`/api/patients/${patientHospitalVisitResponse.patientId}`);
 
             patientFirstName = patientResponse.data.firstName;
             patientLastName = patientResponse.data.lastName;
@@ -193,20 +187,16 @@ function App() {
           //look up the visit date
           var visitDateString: string;
           try {
-            const visitResponse: any = await client.get(`/api/visits/${patientHospitalVisitResponse.visitId}`);
-            // const hospitalResponse: AxiosResponse = await client.get(`/api/hospitals/${visitResponse.HospitalId}`);
-
-            //TODO remove
-            console.log("visitResponse: " + JSON.stringify(visitResponse))
+            const visitResponse: AxiosResponse = await client.get(`/api/visits/${patientHospitalVisitResponse.visitId}`);
 
             var visitDate: Date = new Date(visitResponse.data.date)
 
             //Format the date nicely
             visitDateString = visitDate.toLocaleDateString("en-IE", {
-              weekday: "long", // "Monday"
-              year: "numeric", // "2024"
-              month: "long", // "February"
-              day: "numeric" // "2"
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric"
             });
 
 
