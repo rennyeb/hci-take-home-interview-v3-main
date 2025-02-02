@@ -73,8 +73,8 @@ public class PatientsService : IPatientsService
 				if (patientHospitalVisitsRequest.HospitalId == null || patientHospitalRelation.HospitalId.Equals(patientHospitalVisitsRequest.HospitalId))
 				{
 					PatientHospitalVisitResponse patientHospitalVisitResponse = new PatientHospitalVisitResponse();
-					patientHospitalVisitResponse.HospitalId = patientHospitalRelation.PatientId;
-					patientHospitalVisitResponse.PatientId = patientHospitalRelation.HospitalId;
+					patientHospitalVisitResponse.HospitalId = patientHospitalRelation.HospitalId;
+					patientHospitalVisitResponse.PatientId = patientHospitalRelation.PatientId;
 					patientHospitalVisitResponse.VisitId = patientHospitalRelation.VisitId;
 					patientHospitalVisits.Add(patientHospitalVisitResponse);
 

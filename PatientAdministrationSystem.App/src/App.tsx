@@ -174,12 +174,28 @@ function App() {
             hospitalName = "(Not found)"
           }
 
+          var patientFirstName: string;
+          var patientLastName: string;
+          try {
+            const patientResponse: any = await client.get(`/api/patients/${visitResponse.patientId}`);
+            // const hospitalResponse: AxiosResponse = await client.get(`/api/hospitals/${visitResponse.HospitalId}`);
+
+
+            patientFirstName = patientResponse.data.firstName;
+            patientLastName = patientResponse.data.lastName;
+          } catch (err) {
+            //TODO deal with other types of error
+            patientFirstName = "(Not found)"
+            patientLastName = "";
+          }
+
+
 
 
           var row: any = {
             "visitId": visitResponse.visitId,
-            "patientFirstName": visitResponse.visitId,
-            "patientLastName": visitResponse.visitId,
+            "patientFirstName": patientFirstName,
+            "patientLastName": patientLastName,
             "hospitalName": hospitalName,
             "visitDate": visitResponse.visitId
           };
