@@ -79,7 +79,7 @@ const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({
               <td>
 
 
-                <select id="hospital" value={JSON.stringify(selectedHospital)} onChange={handleHistorySelectedOptionChange}>
+                <select id="hospital" value={JSON.stringify(selectedHospital)} onChange={handleHistorySelectedOptionChange} style={{ width: "100%", padding: "5px" }}>
 
                   {/* dynamically add an option for each hospital */}
                   {/* NB type-ahead might be nice, might be nice to keep the selection from last time */}
