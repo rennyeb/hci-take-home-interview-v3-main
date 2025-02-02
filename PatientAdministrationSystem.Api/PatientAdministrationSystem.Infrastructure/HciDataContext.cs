@@ -34,29 +34,6 @@ public class HciDataContext : DbContext, IHciDataContext
 					Name = "Default hospital"
 				}
 				
-				//TODO replace with original files if need be
-				//,
-			   // Extra test data added
-			  // new HospitalEntity
-			  // {
-				 //  Id = new Guid("9ca78c33-4590-43c1-a7c4-55696a5efd45"),
-				 //  Name = "St James's",
-				 //  PatientHospitals = new List<PatientHospitalRelation>
-					//{
-					//	new()
-					//	{
-					//		PatientId = new Guid("c00b9ff3-b1b6-42fe-8b5a-4c28408fb640"),
-					//		HospitalId = new Guid("ff0c022e-1aff-4ad8-2231-08db0378ac90"),
-					//		VisitId = new Guid("a7a5182a-995c-4bce-bce0-6038be112b70")
-					//	}
-					//}
-			  // },
-				 //new HospitalEntity
-				 //{
-					// Id = new Guid("9ca78c33-4590-43c1-a7c4-55696a5efd46"),
-					// Name = "St Vincent's"
-				 //}
-
 			);
 
 		modelBuilder.Entity<PatientEntity>();
@@ -115,9 +92,6 @@ public class HciDataContext : DbContext, IHciDataContext
 					HospitalId = new Guid("9ca78c33-4590-43c1-a7c4-55696a5efd44"),
 					VisitId = new Guid("a7a5182a-995c-4bce-bce0-6038be112b7b")
 				});
-
-
-
 
 	}
 }

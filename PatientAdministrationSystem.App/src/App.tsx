@@ -7,17 +7,13 @@ import hospitalService from "./services/hospitalsService";
 import axios, { AxiosResponse } from 'axios';
 import PatientVisitSearchCriteria from "./PatientVisitSearchCriteria"
 import PatientVisitSearchResults from "./PatientVisitSearchResults"
+import HospitalResponse from "./types/HospitalResponse";
 import { useState } from 'react';
 
 //TODO remove anything unused
 
 //TODO put types somewhere else?  How to populate from the JSON response?
 type Hospital = {
-  name: string;
-  hospitalId: string;
-};
-
-type HospitalResponse = {
   name: string;
   hospitalId: string;
 };
@@ -31,7 +27,9 @@ function App() {
   const [error, setError] = useState<string>("");
   const [searchExecuted, setSearchExecuted] = useState<boolean>(false);
   const [firstNamePrefix, setFirstNamePrefix] = useState<string>("");
-  const [lastNamePrefix, setLastNamePrefix] = useState<string>("");
+  //temp TODO revert
+  // const [lastNamePrefix, setLastNamePrefix] = useState<string>("");
+  const [lastNamePrefix, setLastNamePrefix] = useState<string>("s");
 
   const [searchResults, setSearchResults] = useState([]);
 
@@ -69,8 +67,8 @@ function App() {
         const hospitalsResponse: AxiosResponse = await apiClient.get(`/api/hospitals`);
 
         //TODO start using, remove the above
-        // const hospitalResponses: HospitalResponse[] = await hospitalService.getHospitals();
-        // console.log(hospitalResponses);
+        const hospitalResponses: HospitalResponse[] = await hospitalService.getHospitals();
+        console.log(hospitalResponses);
 
 
         //TODO use the right types
@@ -151,9 +149,9 @@ function App() {
           //look up the hospital name
           var hospitalName: string;
           try {
-            const hospitalResponse: AxiosResponse = await apiClient.get(`/api/hospitals/${patientHospitalVisitResponse.hospitalId}`);
+            const hospitalResponse: HospitalResponse = await hospitalService.getHospital(patientHospitalVisitResponse.hospitalId);
 
-            hospitalName = hospitalResponse.data.name;
+            hospitalName = hospitalResponse.name;
           } catch (err) {
             //TODO deal with other types of error
             hospitalName = "(Not found)"
@@ -262,7 +260,7 @@ function App() {
   //TODO put all this in a component - patient visit search
   return (
     <div>
-      <img src="./public/hci-main-logo.svg" alt="HCI logo" />
+      <img src="./hci-main-logo.svg" alt="HCI logo" />
 
       <div>
         <h1>Patient Visit Search</h1>
