@@ -22,6 +22,13 @@ function App() {
   const [firstNamePrefix, setFirstNamePrefix] = useState<string>("");
   const [lastNamePrefix, setLastNamePrefix] = useState<string>("");
 
+  //TODO temp
+  const [rows, setRows] = useState([
+    { id: 1, name: 'John Doe', age: 28 },
+    { id: 2, name: 'Jane Smith', age: 34 },
+    { id: 3, name: 'Sam Brown', age: 25 },
+  ]);
+
   //TODO need the chosen hospital
 
   const [responseValue, setResponseValue] = useState<string>("(not yet called)");
@@ -338,7 +345,13 @@ function App() {
           </thead>
           <tbody>
 
-            {/* //TODO the rows */}
+            {rows.map((row) => (
+              <tr key={row.id}>
+                <td>{row.id}</td>
+                <td>{row.name}</td>
+                <td>{row.age}</td>
+              </tr>
+            ))}
           </tbody>
 
         </table>
