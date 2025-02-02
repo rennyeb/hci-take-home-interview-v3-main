@@ -3,6 +3,7 @@ import './App.css'
 import apiClient from "./api/apiClient";
 import hospitalsService from "./services/hospitalsService";
 import patientsService from "./services/patientsService";
+import patientSearchService from "./services/patientSearchService";
 import visitsService from "./services/visitsService";
 
 
@@ -13,6 +14,8 @@ import PatientVisitSearchResults from "./PatientVisitSearchResults"
 import HospitalResponse from "./types/HospitalResponse";
 import PatientResponse from "./types/PatientResponse";
 import VisitResponse from "./types/VisitResponse";
+import PatientHospitalVisitsRequest from "./types/PatientHospitalVisitsRequest";
+import PatientHospitalVisitResponse from "./types/PatientHospitalVisitResponse";
 import { useState } from 'react';
 
 //TODO remove anything unused
@@ -35,7 +38,7 @@ function App() {
   const [hospitalOptions, setHospitalOptions] = useState([]);
 
   //TODO better types?  
-  const [hospitalOption, setHospitalOption] = useState(null);
+  const [hospitalOption, setHospitalOption] = useState<string>(ANY_HOSPITAL_WILDCARD);
 
   const handleFirstNamePrefixChange = (value: string) => {
     setFirstNamePrefix(value); // Update state with value from child component
@@ -127,6 +130,21 @@ function App() {
             HospitalId: hospitalOption === ANY_HOSPITAL_WILDCARD ? null : hospitalOption
           }
         });
+
+        const patientHospitalVisitsRequest: PatientHospitalVisitsRequest = {
+          PatientFirstNamePrefix: normalise(firstNamePrefix),
+          PatientLastNamePrefix: normalise(lastNamePrefix),
+          HospitalId: hospitalOption === ANY_HOSPITAL_WILDCARD ? undefined : hospitalOption
+        }
+
+        //TODO implement
+        // const patientHospitalVisitsResponse2: AxiosResponse = await patientSearchService.getPatientHospitalVisits(`/api/patients/hospitalVisits`, {
+        //   params: {
+        //     PatientFirstNamePrefix: normalise(firstNamePrefix),
+        //     PatientLastNamePrefix: normalise(lastNamePrefix),
+        //     HospitalId: hospitalOption === ANY_HOSPITAL_WILDCARD ? null : hospitalOption
+        //   }
+        // });
 
 
         //look up the data for each entry in the response
@@ -233,12 +251,13 @@ function App() {
   }
 
 
+  //TODO need a return type
   const normalise = (input: string) => {
     if (!input) {
-      return null;
+      return undefined;
     } else {
       input = input.trim();
-      return input.length === 0 ? null : input;
+      return input.length === 0 ? undefined : input;
     }
   }
 
