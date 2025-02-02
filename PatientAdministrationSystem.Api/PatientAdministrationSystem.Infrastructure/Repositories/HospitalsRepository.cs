@@ -7,12 +7,18 @@ namespace PatientAdministrationSystem.Infrastructure.Repositories;
 
 public class HospitalsRepository : IHospitalsRepository
 {
-    private readonly HciDataContext _context;
+	private readonly HciDataContext _context;
 
-    public HospitalsRepository(HciDataContext context)
-    {
-        _context = context;
-    }
+	public HospitalsRepository(HciDataContext context)
+	{
+		_context = context;
+	}
+
+	public List<HospitalEntity> getAll()
+	{
+		//TODO test this
+		return _context.Hospitals.OrderBy(hospital => hospital.Name).ToList();
+	}
 
 	// Add logic here for your querying the data context
 

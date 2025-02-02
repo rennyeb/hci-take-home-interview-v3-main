@@ -7,6 +7,8 @@ public interface IHospitalsRepository
 {
 	// Add interfaces here for your repository methods
 
+	public List<HospitalEntity> getAll();
+
 	public HospitalEntity? getById(Guid id);
 
 

@@ -4,6 +4,8 @@ using PatientAdministrationSystem.Application.Repositories.Interfaces;
 
 namespace PatientAdministrationSystem.Application.Services;
 
+
+
 public class HospitalsService : IHospitalsService
 {
 
@@ -14,7 +16,11 @@ public class HospitalsService : IHospitalsService
 		_repository = repository;
 	}
 
+	public List<HospitalResponse> getAll()
+	{
+		return _repository.getAll().Select(hospital => createResponse(hospital)).ToList();
 
+	}
 
 	public HospitalResponse? getById(Guid HospitalId)
 	{
@@ -25,17 +31,22 @@ public class HospitalsService : IHospitalsService
 		}
 		else
 		{
-			return new HospitalResponse
-			{
-				//NB could use an auto-mapper to replace this field-by-field manual mapping
-				Id = hospitalEntity.Id,
-				CreatedTime = hospitalEntity.CreatedTime,
-				UpdatedTime = hospitalEntity.UpdatedTime,
-				Name = hospitalEntity.Name
-			};
+			return createResponse(hospitalEntity);
+
 		}
 	}
 
+	private HospitalResponse createResponse(HospitalEntity hospitalEntity)
+	{
+		return new HospitalResponse
+		{
+			//NB could use an auto-mapper to replace this field-by-field manual mapping
+			Id = hospitalEntity.Id,
+			CreatedTime = hospitalEntity.CreatedTime,
+			UpdatedTime = hospitalEntity.UpdatedTime,
+			Name = hospitalEntity.Name
+		};
+	}
 }
 
 //TODO find all TODOs, all unused "using"... - is there a TODO marker for C# in visual studio?

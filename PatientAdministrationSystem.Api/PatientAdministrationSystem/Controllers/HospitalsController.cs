@@ -22,6 +22,16 @@ public class HospitalsController : ControllerBase
 	// Define your API contracts here
 
 	//TODO note where caches could come in handy
+
+	[HttpGet]
+	[Route("")]
+	public IActionResult getHospitals()
+	{
+		List<HospitalResponse> hospitalResponses = _hospitalsService.getAll();
+		return Ok(hospitalResponses);
+
+	}
+
 	[HttpGet]
 	[Route("{HospitalId}")]
 	//TODO should parameter names be initial upper?

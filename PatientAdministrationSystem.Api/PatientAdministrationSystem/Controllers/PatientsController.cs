@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PatientAdministrationSystem.Application.Interfaces;
-using System.Net.WebSockets;
-using System;
-using System.Text.Json;
 using PatientAdministrationSystem.Application.Services;
-using System.Diagnostics;
 
 namespace Hci.Ah.Home.Api.Gateway.Controllers.Patients;
 
@@ -49,8 +45,6 @@ public class PatientsController : ControllerBase
 		try
 		{
 			List<PatientHospitalVisitResponse> patientHospitalVisits = _patientsService.getPatientHospitalVisits(patientHospitalVisitsRequest);
-			//TODO remove
-			//Debug.WriteLine("hi");
 			return Ok(patientHospitalVisits);
 		} catch (PatientHospitalVisitException e)
 		{
