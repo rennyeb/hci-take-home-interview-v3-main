@@ -261,32 +261,13 @@ function App() {
     <div>
       <img src="./public/hci-main-logo.svg" alt="HCI logo" />
 
-      {/*TODO nice formatting - does the below do anything?*/}
+      <div>
+        <h1>Patient Visit Search</h1>
+        <PatientVisitSearchCriteria onFirstNamePrefixChange={handleFirstNamePrefixChange} onLastNamePrefixChange={handleLastNamePrefixChange} onHospitalOptionChange={handleHospitalOptionChange} hospitalOptions={hospitalOptions} onButtonClick={handleButtonClick} />
 
-      <div style={{ justifyContent: 'left', alignItems: 'center', height: '100vh' }}>
-        <table>
-
-          <tbody>
-
-            {/* //TODO might not need to bother with a component?  Or have one component that does everything? */}
-            {/* TODO remove unnecessary table stuff */}
-            <tr>
-              <td>
-                <h1>Patient Visit Search</h1>
-                <PatientVisitSearchCriteria onFirstNamePrefixChange={handleFirstNamePrefixChange} onLastNamePrefixChange={handleLastNamePrefixChange} onHospitalOptionChange={handleHospitalOptionChange} hospitalOptions={hospitalOptions} onButtonClick={handleButtonClick} />
-
-                {/* TODO should use CSS styling for the colour */}
-                <p style={{ color: 'red' }}>{error} </p>
-                {isLoading ? <p>loading...</p> : <p />}
-              </td>
-            </tr>
-
-            {/* TODO display search results in a table, maybe with fake hyperlinks (with an alert that shows how this would link to more info) */}
-
-          </tbody>
-
-        </table>
-
+        {/* TODO should use CSS styling for the colour */}
+        <p style={{ color: 'red' }}>{error} </p>
+        {isLoading ? <p>loading...</p> : <p />}
         {/* only show search results if a search has been performed */}
         {searchExecuted && (
           <PatientVisitSearchResults searchResults={searchResults} />
