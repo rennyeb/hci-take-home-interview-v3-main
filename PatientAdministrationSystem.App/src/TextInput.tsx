@@ -5,17 +5,25 @@ import React, { useState } from "react";
 //TODO tidy, document
 interface TextInputProps {
   onFirstNamePrefixChange: (value: string) => void;
+  onLastNamePrefixChange: (value: string) => void;
   onButtonClick: () => void;
   hospitalOptions: string[];//TODO better type
 }
 
-const TextInput: React.FC<TextInputProps> = ({ onFirstNamePrefixChange, onButtonClick, hospitalOptions }) => {
+const TextInput: React.FC<TextInputProps> = ({ onFirstNamePrefixChange, onLastNamePrefixChange, onButtonClick, hospitalOptions }) => {
   const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
 
   const handleFirstNamePrefixChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     setFirstName(newValue);
     onFirstNamePrefixChange(newValue); // Send input value to parent component
+  };
+
+  const handleLastNamePrefixChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    setLastName(newValue);
+    onLastNamePrefixChange(newValue); // Send input value to parent component
   };
 
   const handleClick = () => {
@@ -36,8 +44,8 @@ const TextInput: React.FC<TextInputProps> = ({ onFirstNamePrefixChange, onButton
                 id="lastNamePrefix"
                 type="text"
                 placeholder='e.g. Smith or Smi'
-              // value={lastName}
-              // onChange={handleLastNamePrefixChange}
+                value={lastName}
+                onChange={handleLastNamePrefixChange}
               />
             </td>
           </tr>

@@ -11,15 +11,18 @@ import { useState } from 'react';
 
 //TODO why is everything called twice, according to the browser console?  Is it because of the async?  Or is it because of the "()" at the end of the function?
 
-//TODO put types somewhere else?
+//TODO put types somewhere else?  How to populate from the JSON response?
 type Hospital = {
   name: string;
-  guid: string;
+  hospitalId: string;
 };
 
 function App() {
 
   const [firstNamePrefix, setFirstNamePrefix] = useState<string>("");
+  const [lastNamePrefix, setLastNamePrefix] = useState<string>("");
+
+  //TODO need the chosen hospital
 
   const [responseValue, setResponseValue] = useState<string>("(not yet called)");
 
@@ -29,11 +32,14 @@ function App() {
 
   const handleFirstNamePrefixChange = (value: string) => {
     setFirstNamePrefix(value); // Update state with value from child component
-  };
+  }
+
+  const handleLastNamePrefixChange = (value: string) => {
+    setLastNamePrefix(value); // Update state with value from child component
+  }
 
   onload = () => {
 
-    //TODO check whether already populated?
     //Retrieve the hospitals once at page load time
     //TODO move to a function?  should the async be outside or inside the function?
     (async () => {
@@ -278,8 +284,10 @@ function App() {
             <tr>
               <td>
                 <h1>Patient Visit Search</h1>
-                <TextInput onFirstNamePrefixChange={handleFirstNamePrefixChange} onButtonClick={handleButtonClick} hospitalOptions={hospitalOptions}/>
-                <p>You typed: {firstNamePrefix}</p>
+                <TextInput onFirstNamePrefixChange={handleFirstNamePrefixChange} onLastNamePrefixChange={handleLastNamePrefixChange} onButtonClick={handleButtonClick} hospitalOptions={hospitalOptions}/>
+
+                {/* //TODO remove */}
+                <p>You typed: {firstNamePrefix}  {lastNamePrefix}</p>
                 <p>Response from server: <b>{responseValue}</b></p>
                 {isWaiting ? <p>waiting...</p> : <p />}
               </td>
