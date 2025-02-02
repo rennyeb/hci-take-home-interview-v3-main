@@ -7,7 +7,6 @@ namespace PatientAdministrationSystem.Application.Services;
 public class HospitalsService : IHospitalsService
 {
 
-	//TODO change the repo
 	private readonly IHospitalsRepository _repository;
 
 	public HospitalsService(IHospitalsRepository repository)

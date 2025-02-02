@@ -28,7 +28,9 @@ builder.Services.AddScoped<IHospitalsRepository, HospitalsRepository>();
 builder.Services.AddScoped<IPatientsService, PatientsService>();
 
 //Added during coding exercise
+builder.Services.AddScoped<IVisitsRepository, VisitsRepository>();
 builder.Services.AddScoped<IHospitalsService, HospitalsService>();
+builder.Services.AddScoped<IVisitsService, VisitsService>();
 
 builder.Services.AddDbContext<HciDataContext>(options =>
 	options.UseInMemoryDatabase("InMemoryDatabase"));

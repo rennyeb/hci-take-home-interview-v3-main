@@ -27,7 +27,7 @@ public class HospitalsController : ControllerBase
 	//TODO should parameter names be initial upper?
 	public IActionResult getHospital([FromRoute] Guid HospitalId)
 	{
-		HospitalResponse hospitalResponse = _hospitalsService.getById(HospitalId);
+		HospitalResponse? hospitalResponse = _hospitalsService.getById(HospitalId);
 
 		//TODO test - curl? unit test?
 		if (hospitalResponse == null)
