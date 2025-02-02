@@ -151,7 +151,7 @@ function App() {
           //look up the hospital name
           var hospitalName: string;
           try {
-            const hospitalResponse: AxiosResponse = await client.get(`/api/hospitals/${patientHospitalVisitResponse.hospitalId}`);
+            const hospitalResponse: AxiosResponse = await apiClient.get(`/api/hospitals/${patientHospitalVisitResponse.hospitalId}`);
 
             hospitalName = hospitalResponse.data.name;
           } catch (err) {
@@ -163,7 +163,7 @@ function App() {
           var patientFirstName: string;
           var patientLastName: string;
           try {
-            const patientResponse: AxiosResponse = await client.get(`/api/patients/${patientHospitalVisitResponse.patientId}`);
+            const patientResponse: AxiosResponse = await apiClient.get(`/api/patients/${patientHospitalVisitResponse.patientId}`);
 
             patientFirstName = patientResponse.data.firstName;
             patientLastName = patientResponse.data.lastName;
