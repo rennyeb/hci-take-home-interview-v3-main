@@ -15,8 +15,6 @@ import PatientHospitalVisitResponse from "./types/PatientHospitalVisitResponse";
 import PatientHospitalVisitSearchResult from "./types/PatientHospitalVisitSearchResult"
 import { useState } from 'react';
 
-//TODO remove anything unused
-
 function App() {
 
   const anyHospitalOption: HospitalResponse = {
@@ -45,20 +43,16 @@ function App() {
   }
 
   const handleHospitalSelecteOptionChange = (value: HospitalResponse) => {
-    console.log(value);
+    console.log(value);//TODO remove
     setHospitalSelectedOption(value); // Update state with value from child component
-    console.log(hospitalSelectedOption);//TODO not updating properly
+    console.log(hospitalSelectedOption);//TODO not updating properly //TODO remove
   }
 
   onload = () => {
 
     //Retrieve the hospitals once at page load time
-    //TODO move to a function?  should the async be outside or inside the function?
     (async () => {
 
-
-      //TODO test e.g. url not found, server down... or put in a TODO for more advanced
-      //TODO perhaps accept a date/time range, validate that end isn't before start - do on client or server?
       try {
 
         const hospitalResponses: HospitalResponse[] = await hospitalsService.getHospitals();
@@ -68,9 +62,6 @@ function App() {
 
         //default to the "Any hospital" option
         setHospitalSelectedOption(anyHospitalOption)
-
-
-        console.log(hospitalResponses);
 
         setHospitalOptions(hospitalResponses);
 
@@ -104,7 +95,7 @@ function App() {
           HospitalId: hospitalSelectedOption?.hospitalId
         }
 
-        console.log(patientHospitalVisitsRequest)
+        console.log(patientHospitalVisitsRequest)//TODO remove
 
         const patientHospitalVisitsResponses: PatientHospitalVisitResponse[] = await patientSearchService.getPatientHospitalVisits(patientHospitalVisitsRequest);
 
@@ -202,8 +193,6 @@ function App() {
     })();
 
   }
-
-  //TODO turn off server, see where to trap connection refused error...
 
   //NB this should really be put in a component - patient visit search - rather than at the top level of the App
   //Leaving it here for simplicity for the sake of the coding exercise

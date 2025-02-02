@@ -32,7 +32,7 @@ const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({
   const handleHistorySelectedOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newValue: HospitalResponse = JSON.parse(event.target.value);
     setSelectedHospital(newValue);//TODO is local state actually required?
-    console.log(newValue);
+    console.log(newValue);//TODO remove
     onHospitalSelectedOptionChange(newValue); // Send input value to parent component
   }
 
