@@ -17,14 +17,6 @@ import { useState } from 'react';
 
 //TODO remove anything unused
 
-//TODO put types somewhere else?  How to populate from the JSON response?
-type Hospital = {
-  name: string;
-  hospitalId: string;
-};
-
-
-
 function App() {
 
   const ANY_HOSPITAL_WILDCARD: string = "*"
@@ -77,6 +69,7 @@ function App() {
 
 
         //TODO use the right types
+        //TODO use hospitalResponses directly
         const hospitals = hospitalsResponse.data.map((hospitalResponse: { name: any; id: any; }) => ({
           name: hospitalResponse.name,//TODO are these right?
           hospitalId: hospitalResponse.id
