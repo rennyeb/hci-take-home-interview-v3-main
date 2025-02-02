@@ -1,8 +1,6 @@
 using PatientAdministrationSystem.Application.Entities;
 using PatientAdministrationSystem.Application.Interfaces;
 using PatientAdministrationSystem.Application.Repositories.Interfaces;
-using System.Diagnostics;
-using System.Linq.Expressions;
 
 namespace PatientAdministrationSystem.Application.Services;
 
@@ -43,8 +41,6 @@ public class PatientsService : IPatientsService
 
 	public List<PatientHospitalVisitResponse> getPatientHospitalVisits(PatientHospitalVisitsRequest patientHospitalVisitsRequest)
 	{
-		//TODO validate that at least part of surname is present, create an exception type, catch in controller and return a bad request with info
-
 		List<PatientHospitalVisitResponse> patientHospitalVisits = new List<PatientHospitalVisitResponse>();
 
 		//validate that the required data is present
@@ -53,8 +49,8 @@ public class PatientsService : IPatientsService
 			throw new PatientHospitalVisitException("The prefix for the patient's last name must be populated");
 		}
 
-			//iterate through every patient that matches on name prefixes
-			foreach (PatientEntity patientEntity in _repository.getByNamePrefixes(patientHospitalVisitsRequest.PatientLastNamePrefix, patientHospitalVisitsRequest.PatientFirstNamePrefix))
+		//iterate through every patient that matches on name prefixes
+		foreach (PatientEntity patientEntity in _repository.getByNamePrefixes(patientHospitalVisitsRequest.PatientLastNamePrefix, patientHospitalVisitsRequest.PatientFirstNamePrefix))
 		{
 			//iterate through every patient/hospital relationship for the patient - there should be relatively few records for each patient, but if we start to find that patients have a large number of records, then for database query efficiency
 			//we may need to retrieve only the first chunk of records (and indicate that more are available), or insist on further filtering details (e.g. date ranges)

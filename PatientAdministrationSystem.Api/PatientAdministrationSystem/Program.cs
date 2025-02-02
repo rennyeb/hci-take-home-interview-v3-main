@@ -159,8 +159,7 @@ using (var serviceScope = app.Services.CreateScope())
 			Email = "bill.smith@someorg.com",
 			PatientHospitals = new List<PatientHospitalRelation>
 		{
-			//Bill has 2 visits to the hospital - they should be retrieved in date descending order
-			//TODO mention as a usability concern
+			//Bill has 2 visits to the hospital - there is no guarantee what order they are retrieved in, so it's up to clients of this API to do any required sorting
 			{
 				new()
 				{
@@ -195,12 +194,12 @@ using (var serviceScope = app.Services.CreateScope())
 
 		//Test data with intentionally-invalid foreign keys from the PatientHospitals data to related entities
 		dbContext.Patients.Add(new PatientEntity
-			{
-				Id = new Guid("c00b9ff3-b1b6-42fe-8b5a-4c28408fb643"),
-				FirstName = "Wendy",
-				LastName = "O'Connor",
-				Email = "wendy.oconnor@someorg.com",
-				PatientHospitals = new List<PatientHospitalRelation>
+		{
+			Id = new Guid("c00b9ff3-b1b6-42fe-8b5a-4c28408fb643"),
+			FirstName = "Wendy",
+			LastName = "O'Connor",
+			Email = "wendy.oconnor@someorg.com",
+			PatientHospitals = new List<PatientHospitalRelation>
 			{
 				new()
 				{

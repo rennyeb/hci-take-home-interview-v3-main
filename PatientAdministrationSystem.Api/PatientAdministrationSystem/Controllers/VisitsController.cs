@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PatientAdministrationSystem.Application.Interfaces;
-using System.Net.WebSockets;
-using System;
-using System.Text.Json;
 using PatientAdministrationSystem.Application.Services;
 
 namespace Hci.Ah.Home.Api.Gateway.Controllers.Visits;
@@ -30,6 +27,7 @@ public class VisitsController : ControllerBase
 		//TODO test - curl? unit test?
 		if (visitResponse == null)
 		{
+			return NotFound();
 			return NotFound();
 		}
 		else

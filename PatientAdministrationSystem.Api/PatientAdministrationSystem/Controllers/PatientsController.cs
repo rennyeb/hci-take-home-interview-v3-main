@@ -30,11 +30,12 @@ public class PatientsController : ControllerBase
 		{
 			return NotFound();
 		}
-		else { 
+		else
+		{
 
 			return Ok(patientResponse);
 		}
-	
+
 	}
 
 	[HttpGet]
@@ -46,7 +47,8 @@ public class PatientsController : ControllerBase
 		{
 			List<PatientHospitalVisitResponse> patientHospitalVisits = _patientsService.getPatientHospitalVisits(patientHospitalVisitsRequest);
 			return Ok(patientHospitalVisits);
-		} catch (PatientHospitalVisitException e)
+		}
+		catch (PatientHospitalVisitException e)
 		{
 			//TODO test this
 			return BadRequest(e.Message);

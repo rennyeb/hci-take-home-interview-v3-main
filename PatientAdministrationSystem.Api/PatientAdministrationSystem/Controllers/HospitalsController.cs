@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PatientAdministrationSystem.Application.Interfaces;
-using System.Net.WebSockets;
-using System;
-using System.Text.Json;
 using PatientAdministrationSystem.Application.Services;
 
 namespace Hci.Ah.Home.Api.Gateway.Controllers.Hospitals;

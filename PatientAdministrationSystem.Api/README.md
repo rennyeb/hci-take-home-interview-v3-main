@@ -20,6 +20,9 @@ There are also some curl scripts in .\CurlScripts.bat which you can run to infor
 
 These could be reimplemented in something more robust like PowerShell if required, and/or could have their output piped through a JSON pretty-printer for easier reading.
 
+###TODO existing entity design is completely untouched, there could be pre-existing business and/or technical reasons for it, and we don't necessarily want a migration.  That said, if this were a greenfield implementation, I would have the following observations:
 ###TODO structure of server?  Concerns about entity modelling?  Use of LINQ to avoid tying into a particular storage (or mock storage) implementation?
 
 ###TODO mention test data - I've augmented it, including some with intentionally bad foreign key relationships
+
+###TODO design decision that APIs return minimal data, could be chatty, calls are done sequentially

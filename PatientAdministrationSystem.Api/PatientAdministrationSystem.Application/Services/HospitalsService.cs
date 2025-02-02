@@ -5,7 +5,6 @@ using PatientAdministrationSystem.Application.Repositories.Interfaces;
 namespace PatientAdministrationSystem.Application.Services;
 
 
-
 public class HospitalsService : IHospitalsService
 {
 
@@ -48,5 +47,3 @@ public class HospitalsService : IHospitalsService
 		};
 	}
 }
-
-//TODO find all TODOs, all unused "using"... - is there a TODO marker for C# in visual studio?
