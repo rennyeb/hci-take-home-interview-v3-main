@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
 
+//TODO rename
 //TODO tidy, document
-interface PatientVisitSearchCriteriaProps {
+interface TextInputProps {
   onFirstNamePrefixChange: (value: string) => void;
   onLastNamePrefixChange: (value: string) => void;
   onHospitalOptionChange: (value: any) => void;//TODO use option type
@@ -11,7 +12,8 @@ interface PatientVisitSearchCriteriaProps {
 }
 
 
-const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({ onFirstNamePrefixChange, onLastNamePrefixChange, onHospitalOptionChange, onButtonClick, hospitalOptions }) => {
+//TODO rename
+const PatientVisitSearchCriteria: React.FC<TextInputProps> = ({ onFirstNamePrefixChange, onLastNamePrefixChange, onHospitalOptionChange, onButtonClick, hospitalOptions }) => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const options = ["Option 1", "Option 2", "Option 3", "Option 4"];
