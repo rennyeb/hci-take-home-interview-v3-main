@@ -4,7 +4,7 @@ import apiClient from "./api/apiClient";
 
 //TODO remove - go via the other ts file
 import axios, { AxiosResponse } from 'axios';
-import TextInput from "./TextInput"
+import PatientVisitSearchCriteria from "./PatientVisitSearchCriteria"
 import { useState } from 'react';
 
 //TODO remove anything unused
@@ -272,7 +272,7 @@ function App() {
             <tr>
               <td>
                 <h1>Patient Visit Search</h1>
-                <TextInput onFirstNamePrefixChange={handleFirstNamePrefixChange} onLastNamePrefixChange={handleLastNamePrefixChange} onHospitalOptionChange={handleHospitalOptionChange} hospitalOptions={hospitalOptions} onButtonClick={handleButtonClick} />
+                <PatientVisitSearchCriteria onFirstNamePrefixChange={handleFirstNamePrefixChange} onLastNamePrefixChange={handleLastNamePrefixChange} onHospitalOptionChange={handleHospitalOptionChange} hospitalOptions={hospitalOptions} onButtonClick={handleButtonClick} />
 
                 {/* TODO should use CSS styling for the colour */}
                 <p style={{ color: 'red' }}>{error} </p>
