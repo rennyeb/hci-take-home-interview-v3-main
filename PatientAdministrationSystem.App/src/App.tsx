@@ -1,13 +1,15 @@
 import './App.css'
 
 import apiClient from "./api/apiClient";
-import hospitalService from "./services/hospitalsService";
+import hospitalsService from "./services/hospitalsService";
+import patientsService from "./services/patientsService";
 
 //TODO remove - go via the other ts file
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import PatientVisitSearchCriteria from "./PatientVisitSearchCriteria"
 import PatientVisitSearchResults from "./PatientVisitSearchResults"
 import HospitalResponse from "./types/HospitalResponse";
+import PatientResponse from "./types/PatientResponse";
 import { useState } from 'react';
 
 //TODO remove anything unused
@@ -67,7 +69,7 @@ function App() {
         const hospitalsResponse: AxiosResponse = await apiClient.get(`/api/hospitals`);
 
         //TODO start using, remove the above
-        const hospitalResponses: HospitalResponse[] = await hospitalService.getHospitals();
+        const hospitalResponses: HospitalResponse[] = await hospitalsService.getHospitals();
         console.log(hospitalResponses);
 
 
@@ -149,25 +151,24 @@ function App() {
           //look up the hospital name
           var hospitalName: string;
           try {
-            const hospitalResponse: HospitalResponse = await hospitalService.getHospital(patientHospitalVisitResponse.hospitalId);
-
+            const hospitalResponse: HospitalResponse = await hospitalsService.getHospital(patientHospitalVisitResponse.hospitalId);
             hospitalName = hospitalResponse.name;
           } catch (err) {
             //TODO deal with other types of error
-            hospitalName = "(Not found)"
+            hospitalName = "(Not found)"//be resilient to data integrity issues
           }
 
           //look up the patient name
           var patientFirstName: string;
           var patientLastName: string;
           try {
-            const patientResponse: AxiosResponse = await apiClient.get(`/api/patients/${patientHospitalVisitResponse.patientId}`);
+            const patientResponse: PatientResponse = await patientsService.getPatient(patientHospitalVisitResponse.patientId);
 
-            patientFirstName = patientResponse.data.firstName;
-            patientLastName = patientResponse.data.lastName;
+            patientFirstName = patientResponse.firstName;
+            patientLastName = patientResponse.lastName;
           } catch (err) {
             //TODO deal with other types of error
-            patientFirstName = "(Not found)"
+            patientFirstName = "(Not found)"//be resilient to data integrity issues
             patientLastName = "";
           }
 
@@ -180,6 +181,7 @@ function App() {
             visitDate = new Date(visitResponse.data.date)
 
             //Format the date nicely
+            //NB should get the appropriate locale from the browser
             visitDateString = visitDate.toLocaleDateString("en-IE", {
               weekday: "long",
               year: "numeric",
@@ -192,7 +194,7 @@ function App() {
             console.log(err)
             //TODO deal with other types of error
             visitDate = new Date(0);//low date value, to permit sorting against other populated dates
-            visitDateString = "(Unknown)"
+            visitDateString = "(Unknown)" //be resilient to data integrity issues
           }
 
 

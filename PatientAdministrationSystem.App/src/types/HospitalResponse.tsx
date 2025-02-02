@@ -1,6 +1,6 @@
 type HospitalResponse = {
-    name: string;
-    hospitalId: string;
+  hospitalId: string;
+  name: string;
   };
   
 export default HospitalResponse;  
