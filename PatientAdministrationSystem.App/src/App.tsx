@@ -23,7 +23,7 @@ function App() {
   const [firstNamePrefix, setFirstNamePrefix] = useState<string>("");
   const [lastNamePrefix, setLastNamePrefix] = useState<string>("");
 
-  //TODO temp
+  //TODO temp - rename, get rid of initial data, should be null - or have other flag about whether a search has executed
   const [rows, setRows] = useState([
     { visitId: 1, patientFirstName: 'John', patientLastName: 'Doe', hospitalName: "St Judes", visitDate: "2025-01-01" },
     { visitId: 2, patientFirstName: 'Jane', patientLastName: 'Smith', hospitalName: "St Judes", visitDate: "2025-01-01" },
@@ -152,8 +152,8 @@ function App() {
 
         //TODO a "no results found" message on screen
 
-        for (const visitResponse of patientHospitalVisitsResponse.data) {
-          console.log("visitResponse: " + JSON.stringify(visitResponse))
+        for (const patientHospitalVisitResponse of patientHospitalVisitsResponse.data) {
+          console.log("visitResponse: " + JSON.stringify(patientHospitalVisitResponse))
 
           //TODO remove
           // patientHospitalVisitsResponse.data.forEach(visitResponse => {
@@ -162,7 +162,7 @@ function App() {
           var hospitalName: string;
           try {
             //TODO deal with bad data - what if the hospital doesn't exist?
-            const hospitalResponse: any = await client.get(`/api/hospitals/${visitResponse.hospitalId}`);
+            const hospitalResponse: any = await client.get(`/api/hospitals/${patientHospitalVisitResponse.hospitalId}`);
             // const hospitalResponse: AxiosResponse = await client.get(`/api/hospitals/${visitResponse.HospitalId}`);
 
             //TODO remove
@@ -174,10 +174,11 @@ function App() {
             hospitalName = "(Not found)"
           }
 
+          //look up the patient name
           var patientFirstName: string;
           var patientLastName: string;
           try {
-            const patientResponse: any = await client.get(`/api/patients/${visitResponse.patientId}`);
+            const patientResponse: any = await client.get(`/api/patients/${patientHospitalVisitResponse.patientId}`);
             // const hospitalResponse: AxiosResponse = await client.get(`/api/hospitals/${visitResponse.HospitalId}`);
 
 
@@ -189,15 +190,42 @@ function App() {
             patientLastName = "";
           }
 
+          //look up the visit date
+          var visitDateString: string;
+          try {
+            const visitResponse: any = await client.get(`/api/visits/${patientHospitalVisitResponse.visitId}`);
+            // const hospitalResponse: AxiosResponse = await client.get(`/api/hospitals/${visitResponse.HospitalId}`);
+
+            //TODO remove
+            console.log("visitResponse: " + JSON.stringify(visitResponse))
+
+            var visitDate: Date = new Date(visitResponse.data.date)
+
+            //Format the date nicely
+            visitDateString = visitDate.toLocaleDateString("en-IE", {
+              weekday: "long", // "Monday"
+              year: "numeric", // "2024"
+              month: "long", // "February"
+              day: "numeric" // "2"
+            });
+
+
+          } catch (err) {
+            console.log(err)
+            //TODO deal with other types of error
+            //TODO how to test these branches?
+            visitDateString = "(Unknown)"
+          }
+
 
 
 
           var row: any = {
-            "visitId": visitResponse.visitId,
+            "visitId": patientHospitalVisitResponse.visitId,
             "patientFirstName": patientFirstName,
             "patientLastName": patientLastName,
             "hospitalName": hospitalName,
-            "visitDate": visitResponse.visitId
+            "visitDate": visitDateString
           };
           theRows.push(row);
 
