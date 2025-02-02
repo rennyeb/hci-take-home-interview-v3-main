@@ -1,0 +1,1 @@
+TODO mention CurlScripts.bat - could change to e.g. powershell
