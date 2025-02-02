@@ -46,7 +46,9 @@ const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({
       <table>
         <tbody>
           <tr>
-            {/* //TODO complain client side if this value not populated */}
+            {/* NB could include client-side validation if this value not populated, highlight the field in red, etc.
+            
+            For now, leaving to the server to validate and return an error message. */}
             <td>Last Name prefix *:</td>
             <td>
               <input

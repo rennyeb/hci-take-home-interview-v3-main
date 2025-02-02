@@ -130,7 +130,6 @@ function App() {
             patientLastName = patientResponse.lastName;
 
           } else {
-            //TODO deal with other types of error
             patientFirstName = "(Not found)"//be resilient to data integrity issues
             patientLastName = "";
           }
@@ -222,8 +221,7 @@ function App() {
   )
 }
 
-//TODO need a return type
-const normalise = (input: string) => {
+const normalise = (input: string): string | undefined => {
   if (!input) {
     return undefined;
   } else {
