@@ -114,25 +114,26 @@ using (var serviceScope = app.Services.CreateScope())
 		});
 
 
-	// Extra test data added
-	dbContext.Hospitals.Add(new HospitalEntity
 	{
-		Id = new Guid("9ca78c33-4590-43c1-a7c4-55696a5efd46"),
-		Name = "St Vincent's"
-	});
-	dbContext.Hospitals.Add(new HospitalEntity
-	{
-		Id = new Guid("9ca78c33-4590-43c1-a7c4-55696a5efd45"),
-		Name = "St James's",
-	});
+		// Extra test data added
+		dbContext.Hospitals.Add(new HospitalEntity
+		{
+			Id = new Guid("9ca78c33-4590-43c1-a7c4-55696a5efd46"),
+			Name = "St Vincent's"
+		});
+		dbContext.Hospitals.Add(new HospitalEntity
+		{
+			Id = new Guid("9ca78c33-4590-43c1-a7c4-55696a5efd45"),
+			Name = "St James's",
+		});
 
-	dbContext.Patients.Add(new PatientEntity
-	{
-		Id = new Guid("c00b9ff3-b1b6-42fe-8b5a-4c28408fb640"),
-		FirstName = "Jane",
-		LastName = "Smith",
-		Email = "jane.smith@someorg.com",
-		PatientHospitals = new List<PatientHospitalRelation>
+		dbContext.Patients.Add(new PatientEntity
+		{
+			Id = new Guid("c00b9ff3-b1b6-42fe-8b5a-4c28408fb640"),
+			FirstName = "Jane",
+			LastName = "Smith",
+			Email = "jane.smith@someorg.com",
+			PatientHospitals = new List<PatientHospitalRelation>
 		{
 			new()
 			{
@@ -141,22 +142,22 @@ using (var serviceScope = app.Services.CreateScope())
 				VisitId = new Guid("a7a5182a-995c-4bce-bce0-6038be112b70")
 			}
 		}
-	});
-	dbContext.Visits.Add(
-		new VisitEntity
-		{
-			Id = new Guid("a7a5182a-995c-4bce-bce0-6038be112b70"),
-			Date = new DateTime(2025, 01, 01)
 		});
+		dbContext.Visits.Add(
+			new VisitEntity
+			{
+				Id = new Guid("a7a5182a-995c-4bce-bce0-6038be112b70"),
+				Date = new DateTime(2025, 01, 01)
+			});
 
 
-	dbContext.Patients.Add(new PatientEntity
-	{
-		Id = new Guid("c00b9ff3-b1b6-42fe-8b5a-4c28408fb641"),
-		FirstName = "Bill",
-		LastName = "Smith",
-		Email = "bill.smith@someorg.com",
-		PatientHospitals = new List<PatientHospitalRelation>
+		dbContext.Patients.Add(new PatientEntity
+		{
+			Id = new Guid("c00b9ff3-b1b6-42fe-8b5a-4c28408fb641"),
+			FirstName = "Bill",
+			LastName = "Smith",
+			Email = "bill.smith@someorg.com",
+			PatientHospitals = new List<PatientHospitalRelation>
 		{
 			//Bill has 2 visits to the hospital - they should be retrieved in date descending order
 			//TODO mention as a usability concern
@@ -177,41 +178,43 @@ using (var serviceScope = app.Services.CreateScope())
 				}
 			}
 		}
-	});
-	dbContext.Visits.Add(
-		new VisitEntity
-		{
-			Id = new Guid("a7a5182a-995c-4bce-bce0-6038be112b71"),
-			Date = new DateTime(2025, 01, 02)
 		});
-	dbContext.Visits.Add(
-		new VisitEntity
-		{
-			Id = new Guid("a7a5182a-995c-4bce-bce0-6038be112b72"),
-			Date = new DateTime(2025, 01, 04)
-		});
-
-
-	//Looks like the db context takes care of enforcing foreign keys
-	dbContext.Patients.Add(new PatientEntity
-	{
-		Id = new Guid("c00b9ff3-b1b6-42fe-8b5a-4c28408fb643"),
-		FirstName = "Wendy",
-		LastName = "O'Connor",
-		Email = "wendy.oconnor@someorg.com",
-		PatientHospitals = new List<PatientHospitalRelation>
-		{
-			new()
+		dbContext.Visits.Add(
+			new VisitEntity
 			{
-				//Bad foreign keys
-				PatientId = new Guid("9ca78c33-4590-43c1-a7c4-55696a5efd45"),
-				HospitalId = new Guid("c00b9ff3-b1b6-42fe-8b5a-4c28408fb641"),
-				VisitId =  new Guid("c00b9ff3-b1b6-42fe-8b5a-4c28408fb641")
+				Id = new Guid("a7a5182a-995c-4bce-bce0-6038be112b71"),
+				Date = new DateTime(2025, 01, 02)
+			});
+		dbContext.Visits.Add(
+			new VisitEntity
+			{
+				Id = new Guid("a7a5182a-995c-4bce-bce0-6038be112b72"),
+				Date = new DateTime(2025, 01, 04)
+			});
+
+
+		//Test data with intentionally-invalid foreign keys from the PatientHospitals data to related entities
+		dbContext.Patients.Add(new PatientEntity
+			{
+				Id = new Guid("c00b9ff3-b1b6-42fe-8b5a-4c28408fb643"),
+				FirstName = "Wendy",
+				LastName = "O'Connor",
+				Email = "wendy.oconnor@someorg.com",
+				PatientHospitals = new List<PatientHospitalRelation>
+			{
+				new()
+				{
+					//Bad foreign keys
+					PatientId = new Guid("9ca78c33-4590-43c1-a7c4-55696a5efd45"),
+					HospitalId = new Guid("c00b9ff3-b1b6-42fe-8b5a-4c28408fb641"),
+					VisitId =  new Guid("c00b9ff3-b1b6-42fe-8b5a-4c28408fb641")
+				}
 			}
-		}
 
-	});
+		});
 
+		//End of extra data added
+	}
 
 
 	dbContext.SaveChanges();

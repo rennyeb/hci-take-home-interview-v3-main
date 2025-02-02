@@ -20,19 +20,13 @@ type Hospital = {
 function App() {
 
   const [error, setError] = useState<string>("");
+  const [searchExecuted, setSearchExecuted] = useState<boolean>(false);
   const [firstNamePrefix, setFirstNamePrefix] = useState<string>("");
   const [lastNamePrefix, setLastNamePrefix] = useState<string>("");
 
-  //TODO temp - rename, get rid of initial data, should be null - or have other flag about whether a search has executed
-  const [rows, setRows] = useState([
-    { visitId: 1, patientFirstName: 'John', patientLastName: 'Doe', hospitalName: "St Judes", visitDate: "2025-01-01" },
-    { visitId: 2, patientFirstName: 'Jane', patientLastName: 'Smith', hospitalName: "St Judes", visitDate: "2025-01-01" },
-    { visitId: 3, patientFirstName: 'Sam', patientLastName: 'Brown', hospitalName: "St Barts", visitDate: "2024-12-31" },
-  ]);
+  const [searchResults, setSearchResults] = useState([]);
 
   //TODO need the chosen hospital
-
-  const [responseValue, setResponseValue] = useState<string>("(not yet called)");
 
   const [isWaiting, setWaiting] = useState<boolean>(false);
 
@@ -112,7 +106,8 @@ function App() {
 
       setWaiting(true)
       setError("")
-      setRows([])
+      setSearchExecuted(false)
+      setSearchResults([])
 
       //TODO remove
       // const client = axios.create({
@@ -223,7 +218,9 @@ function App() {
 
 
         //TODO rename this set/var
-        setRows(theRows);
+        setSearchResults(theRows)
+        setSearchExecuted(true)
+
 
 
         // setResponseValue(searchResponse.data.name)
@@ -403,7 +400,6 @@ function App() {
                 {/* //TODO should use CSS styling for the colour */}
                 <p style={{ color: 'red' }}>{error} </p>
                 <p>You typed: {firstNamePrefix}  {lastNamePrefix}</p>
-                <p>Response from server: <b>{responseValue}</b></p>
                 {isWaiting ? <p>waiting...</p> : <p />}
               </td>
             </tr>
@@ -424,10 +420,12 @@ function App() {
         {/* //TODO put back in */}
         {/* {rows ? ( */}
 
+
+{/* {searchExecuted?()} */}
         <div>
           <h1>Search Results</h1>
 
-          {rows.length ? (
+          {searchResults.length ? (
             <table border={1}>
               <thead>
                 <tr>
@@ -438,7 +436,7 @@ function App() {
               </thead>
               <tbody>
 
-                {rows.map((row) => (
+                {searchResults.map((row) => (
                   <tr key={row.visitId}>
                     {/* //TODO change to hyperlinks */}
                     {/* //TODO concatening for usability */}
