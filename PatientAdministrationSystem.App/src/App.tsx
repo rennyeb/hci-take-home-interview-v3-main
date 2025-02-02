@@ -94,6 +94,8 @@ function App() {
   }
 
 
+  //TODO put the search results in its own component
+
   //TODO better function names
   const handleButtonClick = () => {
     // console.log("button clicked, input value=" + inputValue)
@@ -420,41 +422,42 @@ function App() {
         {/* {rows ? ( */}
 
 
-{searchExecuted && (
+        {searchExecuted && (
 
-        <div>
-          <h1>Search Results</h1>
+          <div>
+            <h1>Search Results</h1>
 
-          {searchResults.length ? (
-            <table border={1}>
-              <thead>
-                <tr>
-                  <th>Patient</th>
-                  <th>Hospital</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody>
-
-                {searchResults.map((row) => (
-                  <tr key={row.visitId}>
-                    {/* //TODO change to hyperlinks */}
-                    {/* //TODO concatening for usability */}
-                    <td>{row.patientFirstName} {row.patientLastName}</td>
-                    <td>{row.hospitalName}</td>
-                    {/* //TODO format dates nicely */}
-                    <td>{row.visitDate}</td>
+            {searchResults.length ? (
+              <table border={1}>
+                <thead>
+                  <tr>
+                    <th>Patient</th>
+                    <th>Hospital</th>
+                    <th>Date</th>
+                    <th>Details</th>
                   </tr>
-                ))}
-              </tbody>
+                </thead>
+                <tbody>
 
-            </table>
+                  {searchResults.map((row) => (
+                    <tr key={row.visitId}>
+                      {/* //TODO change to hyperlinks */}
+                      {/* //TODO concatening for usability */}
+                      <td>{row.patientFirstName} {row.patientLastName}</td>
+                      <td>{row.hospitalName}</td>
+                      <td>{row.visitDate}</td>
+                      <td><a href="#" onClick={() => alert('Not yet implemented')}>details</a></td>
+                    </tr>
+                  ))}
+                </tbody>
 
-          ) : "No results found.  Please check your search criteria and try again."}
+              </table>
 
-        </div>
+            ) : "No results found.  Please check your search criteria and try again."}
 
-)}
+          </div>
+
+        )}
 
 
         {/* ):""} */}
