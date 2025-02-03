@@ -15,12 +15,10 @@ namespace ApiTests
 	{
 		private HttpClient _client;
 
-		[SetUp]
-		public void Setup()
+		//Only run once for this class - otherwise there are problems with duplicate keys for data
+		[OneTimeSetUp]
+		public void OneTimeSetUp()
 		{
-			//TODO remove
-			Debug.WriteLine("setup called");
-
 			// Setup the WebApplicationFactory to spin up the API
 			var factory = new CustomWebApplicationFactory<Program>(); // Assuming 'Program' is your startup class
 			_client = factory.CreateClient();
