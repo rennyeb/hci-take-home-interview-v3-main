@@ -1,5 +1,8 @@
 # Patiend Administrator System API
 
+
+#TODO think through the structure of this document, edit in Eclipse?
+
 ## Running the server
 Open the PatientAdministrationSystem.sln file in Visual Studio and run the solution.
 
