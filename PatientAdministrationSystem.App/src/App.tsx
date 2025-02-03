@@ -63,7 +63,7 @@ function App() {
 
       } catch (err) {
         console.log(err);
-        setError("Error retrieving hospitals")
+        setError("Error retrieving hospitals.  Please refresh this page and try again.")
       }
 
 
