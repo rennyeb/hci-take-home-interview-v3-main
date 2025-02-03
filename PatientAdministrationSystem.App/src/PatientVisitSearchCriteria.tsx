@@ -28,7 +28,7 @@ const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({
 
   const handleHistorySelectedOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newValue: HospitalResponse = JSON.parse(event.target.value);
-    setSelectedHospital(newValue);//TODO is local state actually required?
+    setSelectedHospital(newValue);
     onHospitalSelectedOptionChange(newValue); // Send input value to parent component
   }
 
@@ -78,6 +78,7 @@ const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({
               <td>
 
 
+                {/* NB should use CSS styling for the width */}
                 <select id="hospital" value={JSON.stringify(selectedHospital)} onChange={handleHistorySelectedOptionChange} style={{ width: "100%" }}>
 
                   {/* dynamically add an option for each hospital */}

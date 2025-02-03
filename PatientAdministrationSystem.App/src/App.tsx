@@ -62,8 +62,8 @@ function App() {
         setHospitalOptions(hospitalResponses);
 
       } catch (err) {
-        //TODO display an error on screen
         console.log(err);
+        setError("Error retrieving hospitals")
       }
 
 
@@ -201,7 +201,7 @@ function App() {
           hospitalOptions={hospitalOptions}
           onSearchButtonClick={handleSearchButtonClick} />
 
-        {/* TODO should use CSS styling for the colour */}
+        {/* NB should use CSS styling for the colour */}
         <p style={{ color: 'red' }}>{error} </p>
         {isLoading ? <p>loading...</p> : <p />}
         {/* only show search results if a search has been performed */}
