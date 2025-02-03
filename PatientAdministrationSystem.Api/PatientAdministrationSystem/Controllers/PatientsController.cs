@@ -18,6 +18,12 @@ public class PatientsController : ControllerBase
 
 	// Define your API contracts here
 
+	/// <summary>
+	/// Gets a patient by its unique identifier.
+	/// </summary>
+	/// <param name="patientId">the unique identifer of the patient</param>
+	/// <returns>the patient for the unique identifier provided</returns>
+
 	[HttpGet]
 	[Route("{patientId}")]
 	public IActionResult getPatient([FromRoute] Guid patientId)
@@ -35,6 +41,12 @@ public class PatientsController : ControllerBase
 		}
 
 	}
+
+	/// <summary>
+	/// Searches for patient/hospital visits matching the criteria provided.
+	/// </summary>
+	/// <param name="patientHospitalVisitsRequest">The search critieria for the patient/hospital visits required.</param>
+	/// <returns>the patient/hospital visits matching the criteria provided</returns>
 
 	[HttpGet]
 	[Route("hospitalVisits")]

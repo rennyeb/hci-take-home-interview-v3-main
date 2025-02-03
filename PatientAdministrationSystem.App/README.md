@@ -1,6 +1,6 @@
 # Patient Admin Search
 
-The document describes the REACT application for the "Patient Admin Search" coding exercise.
+This document describes the REACT application for the "Patient Admin Search" coding exercise.
 
 ## Running the application
 
@@ -64,13 +64,19 @@ Possibilities for improvement:
 * A "clear" button to return the screen to its freshly-loaded state.
 * Highlight a field with a red box when it is in error (e.g. no data entered in the mandatory "Last name prefix" field).
 * Avoid searches altogether by tracking the user's most recently-searched patients and/or "favourite" patients.
-* The various fields in the search results could like to details of the patient (e.g. John Sweeney's details), hospital (e.g. Default Hospital's details), or visit (the "details" link shown on the page is currently not implemented).
+* The various fields in the search results could link to details of the patient (e.g. John Sweeney's details), hospital (e.g. Default Hospital's details), or visit (the "details" link shown on the page is currently not implemented).
 
 ### Scalability
 
-The application does not attempt to limit the number of search results.  This could be problematic as the number of visits grow in the system, and a more advanced application might need to introduce pagination or some other method of keeping the search results displayed to a reasonable numbers, whilst still remaining helpful to the user.
+The application does not attempt to limit the number of search results.  This could be problematic as the number of visits grow in the system, and a more advanced application might need to introduce pagination or some other method of keeping the search results displayed to a reasonable number, whilst still remaining helpful to the user.
 
 The "prefix last name" search is probably too generous, and might need to be limited to a minimum number of characters, to avoid finding a large number of patients (and their associated visits).
+
+### Performance
+
+When the application receives the response from the server API to search visits, the response only includes only the keys of the related patient, hospital and visit.  The application thus has to make a set of further calls to the server to retrieve the full details of each patient, hospital and visit.
+
+The current implementation performs all these further calls in sequence, whereas a more advanced application could perhaps perform them in parallel, and also avoid repeated calls to retrieve the same details (e.g. the same hospital name) multiple times.
 
 ### Concurrency
 
@@ -86,15 +92,21 @@ In a real-world application, the user would need to be authenticated before bein
 
 It may be necessary to restrict which patient/hospital/visit details a particular user is allowed to view, based on their role or other demographics, especially in a multi-tenant application (it might be a serious breach of data privacy if a user from one health organisation could see information about patients visiting another health organisation, say).
 
-A real-world application may also need to audit which reads a user has retrieved.
+A real-world application may also need to audit which business data a user has viewed.
 
 ### Robustness
 
 The application attempts to remain robust in the face of certain types of error:
-* Failure to load the list of hospitals at start-up - an error message displays on the page:
+* Failure to load the list of hospitals at start-up - an error message displays on the page.
 * Attempt to display search results which have bad foreign key links - the application displays "(Unknown)" for the visit date, and/or "(Not found)" for the hospital name.
 
-There may be other types of system availability issues which would require graceful handling by the application, and possibly a mechanismm for feeding back errors to the overall SaaS logs from the application.
+There may be other types of system availability issues which would require graceful handling by the application, and possibly a mechanism for feeding back errors to the overall SaaS logs from the application.
+
+### Operability
+
+There has been no consideration for how monitor the application for availability, errors and performance.
+
+A more advanced application implementation might need to log various outputs for collection in some facility available to system operators, but also taking into account the sensitivity of the business information (in particular, patient details and their medical records).
 
 ### Accessibility
 
@@ -102,13 +114,15 @@ There has been a minimal nod to accessibility (e.g. alt text for the HCI logo) b
 
 ### Localisation
 
-The application is hard-coded to use English only text, and the en-IE locale for date formatting.
+The application is hard-coded to use English-only text, and the en-IE locale for date formatting.
 
 A more advanced application could externalise the screen labels and error messages for translation into various locales, and could format e.g. dates based on the browser's locale or the user's preferences.
 
-### Standard and conventions
+### Standards and conventions
 
 Without knowledge of the company's coding standards and conventions, it is difficult to know whether the implementation passes code quality checks:
 * The application source code has been placed in a directory structure which attempts to categorise the different types of source file.
-* There are comments (and suggestions for improvement) here and there in he source.
+* There are comments (and suggestions for improvement) here and there in the source.
+
+The typescript data structures for handling server requests and response have been hand-coded.  It might be possible to generate these structures directly from the OpenAPI specification ("Swagger") for the REST API, saving on development and maintenance costs.
 

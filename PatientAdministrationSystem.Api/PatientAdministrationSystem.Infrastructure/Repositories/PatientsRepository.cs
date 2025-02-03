@@ -14,11 +14,13 @@ public class PatientsRepository : IPatientsRepository
 	}
 
 	// Add logic here for your querying the data context
-	public PatientEntity? getById(Guid id)
+
+
+	
+	/ public PatientEntity? getById(Guid id)
 	{
 		return _context.Patients.Where(patient => patient.Id.Equals(id)).SingleOrDefault();
 	}
-
 	public List<PatientEntity> getByNamePrefixes(String lastNamePrefix, String? firstNamePrefix)
 	{
 

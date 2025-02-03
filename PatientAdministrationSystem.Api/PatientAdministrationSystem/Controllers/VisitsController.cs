@@ -18,6 +18,12 @@ public class VisitsController : ControllerBase
 
 	// Define your API contracts here
 
+
+	/// <summary>
+	/// Gets a visit by its unique identifier, or null if not found.
+	/// </summary>
+	/// <param name="visitId">the unique identifer of the visit</param>
+	/// <returns>the visit for the unique identifier provided</returns>
 	[HttpGet]
 	[Route("{visitId}")]
 	public IActionResult getVisit([FromRoute] Guid visitId)
