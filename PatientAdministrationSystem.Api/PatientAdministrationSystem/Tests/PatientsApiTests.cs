@@ -25,8 +25,10 @@ namespace ApiTests
 		}
 
 		[Test]
-		public async Task GetPatient_Found()
+		public async Task getPatient_Found()
+
 		{
+
 			// Arrange
 			var requestUrl = "/api/patients/c00b9ff3-b1b6-42fe-8b5a-4c28408fb64a";
 
@@ -38,15 +40,20 @@ namespace ApiTests
 			Dictionary<string, string> data = JsonSerializer.Deserialize<Dictionary<string, string>>(content);
 
 			//Call should be successful
-			Microsoft.VisualStudio.TestTools.UnitTesting .Assert.IsTrue(response.IsSuccessStatusCode);
+			NUnit.Framework.Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
 
 			//check some of the retrieved details
 			Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual("John", data.GetValueOrDefault("firstName"));
 			Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual("Sweeney", data.GetValueOrDefault("lastName"));
+
+			NUnit.Framework.Assert.That(data.GetValueOrDefault("firstName"), Is.EqualTo("John"));
+			NUnit.Framework.Assert.That(data.GetValueOrDefault("lastName"), Is.EqualTo("Sweeney"));
+
+
 		}
 
 		[Test]
-		public async Task GetPatient_NotFound()
+		public async Task getPatient_NotFound()
 		{
 			// Arrange
 			var requestUrl = "/api/patients/00000000-0000-0000-0000-000000000000";
@@ -56,9 +63,33 @@ namespace ApiTests
 
 			// Assert
 			//Call should result in not found
-			Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(System.Net.HttpStatusCode.NotFound, response.StatusCode);
+			NUnit.Framework.Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.NotFound));
+
 
 		}
-				
+
+
+		[Test]
+		public async Task getPatient_InvalidGuid()
+		{
+			// Arrange
+			var requestUrl = "/api/patients/not-a-guid";
+
+			// Act
+			var response = await _client.GetAsync(requestUrl);
+
+			// Assert
+			//Call should result in a bad request
+			NUnit.Framework.Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.BadRequest));
+			var content = await response.Content.ReadAsStringAsync();
+
+			NUnit.Framework.Assert.That(content, Does.Contain("The value 'not-a-guid' is not valid."));
+
+
+
+		}
+
+		//TODO some visit searches, look at curl scripts
+
 	}
 }

@@ -44,4 +44,4 @@ curl "https://localhost:7260/api/patients/hospitalVisits?PatientLastNamePrefix=s
 REM ################## GUID formatting errors ##################
 
 REM GUID is invalid - expect a 400 error with an error message
-curl https://localhost:7260/api/visits/not-a-guid
+curl https://localhost:7260/api/patients/not-a-guid
