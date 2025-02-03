@@ -5,8 +5,8 @@ import patientsService from "./services/patientsService";
 import patientSearchService from "./services/patientSearchService";
 import visitsService from "./services/visitsService";
 
-import PatientVisitSearchCriteria from "./PatientVisitSearchCriteria"
-import PatientVisitSearchResults from "./PatientVisitSearchResults"
+import PatientVisitSearchCriteria from "./components/PatientVisitSearchCriteria"
+import PatientVisitSearchResults from "./components/PatientVisitSearchResults"
 import HospitalResponse from "./types/HospitalResponse";
 import PatientHospitalVisitsRequest from "./types/PatientHospitalVisitsRequest";
 import PatientHospitalVisitResponse from "./types/PatientHospitalVisitResponse";

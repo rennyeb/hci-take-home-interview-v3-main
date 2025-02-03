@@ -1,4 +1,4 @@
-import HospitalResponse from "./types/HospitalResponse";
+import HospitalResponse from "../types/HospitalResponse";
 import React, { useState } from "react";
 
 interface PatientVisitSearchCriteriaProps {

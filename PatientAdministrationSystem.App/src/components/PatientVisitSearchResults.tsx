@@ -1,5 +1,5 @@
 import React from "react";
-import PatientHospitalVisitSearchResult from "./types/PatientHospitalVisitSearchResult"
+import PatientHospitalVisitSearchResult from "../types/PatientHospitalVisitSearchResult"
 
 interface PatientVisitSearchResultsProps {
   searchResults: PatientHospitalVisitSearchResult[];
@@ -14,7 +14,7 @@ const PatientVisitSearchResults: React.FC<PatientVisitSearchResultsProps> = ({ s
       <h1>Search Results</h1>
 
       {searchResults.length ? (
-        <table border={1}>
+        <table data-testid="SearchResultsTable" border={1}>
           <thead>
             {/* NB a more advanced implementation could support ascending/descending sorting options in the table headers , and pagination */}
             <tr>
@@ -41,7 +41,7 @@ const PatientVisitSearchResults: React.FC<PatientVisitSearchResultsProps> = ({ s
 
         </table>
 
-      ) : "No results found.  Please check your search criteria and try again."}
+      ) : <div data-testid="NoResultsFound">No results found.  Please check your search criteria and try again.</div>}
     </div>
   );
 };
