@@ -7,9 +7,10 @@ interface PatientVisitSearchCriteriaProps {
   onHospitalSelectedOptionChange: (value: HospitalResponse) => void;
   onSearchButtonClick: () => void;
   hospitalOptions: HospitalResponse[];
+  isLoading: boolean;
 }
 
-const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({ onFirstNamePrefixChange, onLastNamePrefixChange, onHospitalSelectedOptionChange, onSearchButtonClick, hospitalOptions }) => {
+const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({ onFirstNamePrefixChange, onLastNamePrefixChange, onHospitalSelectedOptionChange, onSearchButtonClick, hospitalOptions, isLoading }) => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [selectedHospital, setSelectedHospital] = useState<HospitalResponse>(hospitalOptions[0]);
@@ -100,7 +101,7 @@ const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({
           </tbody>
         </table>
         <br />
-        <button onClick={handleSearchButtonClick} type="submit">Search</button>
+        <button onClick={handleSearchButtonClick} type="submit" disabled={isLoading}>Search</button>
       </form>
 
       {/* NB could have a "clear" button which resets the form back to how it was at page load time */}

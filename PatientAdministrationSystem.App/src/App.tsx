@@ -199,7 +199,8 @@ function App() {
           onLastNamePrefixChange={handleLastNamePrefixChange}
           onHospitalSelectedOptionChange={handleHospitalSelecteOptionChange}
           hospitalOptions={hospitalOptions}
-          onSearchButtonClick={handleSearchButtonClick} />
+          onSearchButtonClick={handleSearchButtonClick}
+          isLoading={isLoading} />
 
         {/* NB should use CSS styling for the colour */}
         <p style={{ color: 'red' }}>{error} </p>
