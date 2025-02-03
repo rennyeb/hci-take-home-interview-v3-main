@@ -65,6 +65,8 @@ Possibilities for improvement:
 * Highlight a field with a red box when it is in error (e.g. no data entered in the mandatory "Last name prefix" field).
 * Avoid searches altogether by tracking the user's most recently-searched patients and/or "favourite" patients.
 * The various fields in the search results could link to details of the patient (e.g. John Sweeney's details), hospital (e.g. Default Hospital's details), or visit (the "details" link shown on the page is currently not implemented).
+* Advanced text searching (any substring), SoundEx matching.
+* Any attempt to port the application from a web page to a mobile or tablet application will likely involve more usability and UX considerations.
 
 ### Scalability
 
