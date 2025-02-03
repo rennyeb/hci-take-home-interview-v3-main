@@ -179,7 +179,6 @@ function App() {
 
       }
 
-      //TODO enable/disable the button, as well
       setLoading(false)
 
     })();
