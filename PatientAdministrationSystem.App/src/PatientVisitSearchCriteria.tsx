@@ -45,11 +45,12 @@ const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({
             <tr>
               {/* NB could include client-side validation if this value not populated, highlight the field in red, etc.
             
-            For now, leaving to the server to validate and return an error message. */}
+                  For now, leaving to the server to validate and return an error message. */}
+
               <td>Last Name prefix *:</td>
 
-              {/* //NB set the last name as the default field for focus */}
               <td>
+                {/* Set the last name as the default field for focus */}
                 <input
                   id="lastNamePrefix"
                   type="text"
