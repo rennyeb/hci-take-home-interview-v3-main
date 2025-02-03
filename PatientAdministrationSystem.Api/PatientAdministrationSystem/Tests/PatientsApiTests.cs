@@ -1,10 +1,4 @@
-using System.Diagnostics;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.Routing;
 using NUnit.Framework;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text.Json;
 
 namespace ApiTests
@@ -26,7 +20,6 @@ namespace ApiTests
 
 		[Test]
 		public async Task getPatient_Found()
-
 		{
 
 			// Arrange
@@ -40,14 +33,11 @@ namespace ApiTests
 			Dictionary<string, string> data = JsonSerializer.Deserialize<Dictionary<string, string>>(content);
 
 			//Call should be successful
-			NUnit.Framework.Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
+			Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
 
 			//check some of the retrieved details
-			Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual("John", data.GetValueOrDefault("firstName"));
-			Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual("Sweeney", data.GetValueOrDefault("lastName"));
-
-			NUnit.Framework.Assert.That(data.GetValueOrDefault("firstName"), Is.EqualTo("John"));
-			NUnit.Framework.Assert.That(data.GetValueOrDefault("lastName"), Is.EqualTo("Sweeney"));
+			Assert.That(data.GetValueOrDefault("firstName"), Is.EqualTo("John"));
+			Assert.That(data.GetValueOrDefault("lastName"), Is.EqualTo("Sweeney"));
 
 
 		}
@@ -63,7 +53,7 @@ namespace ApiTests
 
 			// Assert
 			//Call should result in not found
-			NUnit.Framework.Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.NotFound));
+			Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.NotFound));
 
 
 		}
@@ -80,10 +70,10 @@ namespace ApiTests
 
 			// Assert
 			//Call should result in a bad request
-			NUnit.Framework.Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.BadRequest));
+			Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.BadRequest));
 			var content = await response.Content.ReadAsStringAsync();
 
-			NUnit.Framework.Assert.That(content, Does.Contain("The value 'not-a-guid' is not valid."));
+			Assert.That(content, Does.Contain("The value 'not-a-guid' is not valid."));
 
 
 
