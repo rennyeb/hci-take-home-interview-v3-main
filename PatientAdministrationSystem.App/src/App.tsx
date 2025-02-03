@@ -41,9 +41,7 @@ function App() {
   }
 
   const handleHospitalSelecteOptionChange = (value: HospitalResponse) => {
-    console.log(value);//TODO remove
     setHospitalSelectedOption(value); // Update state with value from child component
-    console.log(hospitalSelectedOption);//TODO not updating properly //TODO remove
   }
 
   onload = () => {
@@ -90,13 +88,10 @@ function App() {
         const patientHospitalVisitsRequest: PatientHospitalVisitsRequest = {
           PatientFirstNamePrefix: normalise(firstNamePrefix),
           PatientLastNamePrefix: normalise(lastNamePrefix),
-          HospitalId: hospitalSelectedOption?.hospitalId
+          HospitalId: hospitalSelectedOption?.id
         }
 
-        console.log(patientHospitalVisitsRequest)//TODO remove
-
         const patientHospitalVisitsResponses: PatientHospitalVisitResponse[] = await patientSearchService.getPatientHospitalVisits(patientHospitalVisitsRequest);
-
 
         //look up the data for each entry in the response
         const patientHospitalVisitSearchResults: PatientHospitalVisitSearchResult[] = [];
