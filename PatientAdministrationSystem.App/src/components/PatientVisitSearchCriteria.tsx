@@ -48,7 +48,7 @@ const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({
             
                   For now, leaving to the server to validate and return an error message. */}
 
-              <td>Last Name prefix *:</td>
+              <td>Last name prefix *:</td>
 
               <td>
                 {/* Set the last name as the default field for focus */}
@@ -63,7 +63,7 @@ const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({
               </td>
             </tr>
             <tr>
-              <td>First Name prefix:</td>
+              <td>First name prefix:</td>
               <td>
                 <input
                   id="firstNamePrefix"
@@ -76,7 +76,7 @@ const PatientVisitSearchCriteria: React.FC<PatientVisitSearchCriteriaProps> = ({
             </tr>
 
             <tr>
-              <td>Hospital:</td>
+              <td>Hospital visited:</td>
               <td>
 
 

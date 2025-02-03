@@ -37,8 +37,6 @@ public class PatientsService : IPatientsService
 	}
 
 
-	//TODO use null-coalescing/null-conditional in various places, rerun tests
-
 	public List<PatientHospitalVisitResponse> getPatientHospitalVisits(PatientHospitalVisitsRequest patientHospitalVisitsRequest)
 	{
 		List<PatientHospitalVisitResponse> patientHospitalVisits = new List<PatientHospitalVisitResponse>();

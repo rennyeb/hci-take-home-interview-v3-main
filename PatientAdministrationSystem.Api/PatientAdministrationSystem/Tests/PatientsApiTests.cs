@@ -168,8 +168,10 @@ namespace ApiTests
 
 		}
 
-
-		//NB more tests for the various search parameters to  getPatientHospitalVisits
+		//NB more tests for e.g.:
+		//* the various search parameters to  getPatientHospitalVisits
+		//* test case-insensitive search
+		//* whitespace trimming
 
 	}
 }

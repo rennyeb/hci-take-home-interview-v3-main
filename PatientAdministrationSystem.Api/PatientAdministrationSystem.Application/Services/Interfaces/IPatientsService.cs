@@ -4,9 +4,6 @@ namespace PatientAdministrationSystem.Application.Interfaces;
 
 public interface IPatientsService
 
-//TODO design decision to return a list rather than wrapping in a class that has a list as a member
-//TODO do a case-insensitive substring search - create tests
-
 {
 
 	// Define your service interface here for use in your API and service

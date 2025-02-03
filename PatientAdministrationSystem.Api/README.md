@@ -44,3 +44,7 @@ NB low level of comments in both client and server code (in line with the starte
 #TODO mention running PatientsApiTests, what could be added, tests directly for the service layer, mocking out storage, more test data - overhead of starting the web server - curl tests overlap a bit
 
 #TODO there are some compile warnings in the C# test code which could be attended to.
+
+#TODO use null-coalescing/null-conditional in various places, rerun tests
+
+//TODO design decision to return a list rather than wrapping in a class that has a list as a member
