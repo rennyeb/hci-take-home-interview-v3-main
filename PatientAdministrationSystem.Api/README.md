@@ -36,3 +36,8 @@ These could be reimplemented in something more robust like PowerShell if require
 
 The server code has been written according to the naming rules in https://google.github.io/styleguide/csharp-style.html.
 
+NB low level of comments in both client and server code (in line with the starter code) - not sure of company standards and conventions
+#TODO comment all the server APIs/controllers - the interfaces, anyway
+
+#TODO might be good to use mocks in testing - I haven't
+
