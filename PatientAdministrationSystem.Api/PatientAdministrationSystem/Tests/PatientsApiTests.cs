@@ -1,8 +1,13 @@
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace ApiTests
 {
+
+	/// <summary>
+	/// Tests calls to the Patients API.
+	/// </summary>
 
 	[TestFixture]
 	public class PatientsApiTests
@@ -75,11 +80,96 @@ namespace ApiTests
 
 			Assert.That(content, Does.Contain("The value 'not-a-guid' is not valid."));
 
+		}
+
+
+		[Test]
+		public async Task getPatientHospitalVisits_OneFound()
+		{
+
+			// Arrange
+			var requestUrl = "api/patients/hospitalVisits?PatientLastNamePrefix=Swee";
+
+			// Act
+			var response = await _client.GetAsync(requestUrl);
+
+			// Assert
+			var content = await response.Content.ReadAsStringAsync();
+			List<Object> data = JsonSerializer.Deserialize<List<Object>>(content);
+
+			//Call should be successful
+			Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
+
+			//check number of records found
+			Assert.That(data, Has.Count.EqualTo(1));
+
+		}
+
+		[Test]
+		public async Task getPatientHospitalVisits_MultipleFound()
+		{
+
+			// Arrange
+			var requestUrl = "api/patients/hospitalVisits?PatientLastNamePrefix=S";
+
+			// Act
+			var response = await _client.GetAsync(requestUrl);
+
+			// Assert
+			var content = await response.Content.ReadAsStringAsync();
+			List<Object> data = JsonSerializer.Deserialize<List<Object>>(content);
+
+			//Call should be successful
+			Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
+
+			//check number of records found
+			Assert.That(data, Has.Count.EqualTo(4));
+
+		}
+
+		[Test]
+		public async Task getPatientHospitalVisits_NoneFound()
+		{
+
+			// Arrange
+			var requestUrl = "api/patients/hospitalVisits?PatientLastNamePrefix=NotAPatient";
+
+			// Act
+			var response = await _client.GetAsync(requestUrl);
+
+			// Assert
+			var content = await response.Content.ReadAsStringAsync();
+			List<Object> data = JsonSerializer.Deserialize<List<Object>>(content);
+
+			//Call should be successful
+			Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
+
+			//check number of records found
+			Assert.That(data, Has.Count.EqualTo(0));
+
+		}
+
+		[Test]
+		public async Task getPatientHospitalVisits_MissingLastNamePrefix()
+		{
+
+			// Arrange
+			var requestUrl = "api/patients/hospitalVisits";
+
+			// Act
+			var response = await _client.GetAsync(requestUrl);
+
+			//Call should result in a bad request
+			Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.BadRequest));
+			var content = await response.Content.ReadAsStringAsync();
+
+			Assert.That(content, Is.EqualTo("The prefix for the patient's last name must be populated"));
 
 
 		}
 
-		//TODO some visit searches, look at curl scripts
+
+		//NB more tests for the various search parameters to  getPatientHospitalVisits
 
 	}
 }

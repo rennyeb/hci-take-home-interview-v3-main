@@ -41,3 +41,5 @@ NB low level of comments in both client and server code (in line with the starte
 
 #TODO might be good to use mocks in testing - I haven't
 
+#TODO mention running PatientsApiTests, what could be added, tests directly for the service layer, mocking out storage, more test data - overhead of starting the web server - curl tests overlap a bit
+
