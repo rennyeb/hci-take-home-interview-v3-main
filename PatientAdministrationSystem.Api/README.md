@@ -48,3 +48,12 @@ NB low level of comments in both client and server code (in line with the starte
 #TODO use null-coalescing/null-conditional in various places, rerun tests
 
 //TODO design decision to return a list rather than wrapping in a class that has a list as a member
+
+#TODO back end design choice - get the visits via the patient, not via the hospital, for efficiency reasons.
+
+#TODO the same set of headings as per the front end
+#TODO look at Aidan's implementation notes
+#TODO could add more annotations to generate more descriptive swagger docs
+
+#TODO start server - first time accept certs, note that swagger displays in browser window
+#TODO a real applicaiton will have a real database, getting realistic test data might be tricky, no PII; production issues need to be handled carefully ("break glass"?)
